@@ -21,10 +21,10 @@ const Footer = () => {
               Kerala, Andhra Pradesh, Karnataka, and Pondicherry.
             </p>
             <div className="d-flex gap-3 mt-3">
-              <a href="#" className="text-white bg-primary p-2 rounded-circle"><FaFacebook /></a>
-              <a href="#" className="text-white bg-info p-2 rounded-circle"><FaTwitter /></a>
-              <a href="#" className="text-white bg-danger p-2 rounded-circle"><FaInstagram /></a>
-              <a href="#" className="text-white bg-danger p-2 rounded-circle"><FaYoutube /></a>
+              <a  className="text-white bg-primary p-2 rounded-circle"><FaFacebook /></a>
+              <a  className="text-white bg-info p-2 rounded-circle"><FaTwitter /></a>
+              <a  className="text-white bg-danger p-2 rounded-circle"><FaInstagram /></a>
+              <a  className="text-white bg-danger p-2 rounded-circle"><FaYoutube /></a>
             </div>
           </Col>
 

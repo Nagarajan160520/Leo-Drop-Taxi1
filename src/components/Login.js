@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FaSignInAlt, FaEnvelope, FaLock, FaCar } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaCar } from 'react-icons/fa';
 
 const Login = () => {
   const [formData, setFormData] = useState({

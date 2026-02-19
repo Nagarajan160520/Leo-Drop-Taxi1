@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FaUserPlus, FaUser, FaEnvelope, FaLock, FaPhone, FaCar } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock, FaPhone, FaCar } from 'react-icons/fa';
 
 const Register = () => {
   const [formData, setFormData] = useState({

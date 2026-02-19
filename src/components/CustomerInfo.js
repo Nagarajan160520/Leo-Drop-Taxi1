@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card, ListGroup } from 'react-bootstrap';
-import { FaInfoCircle, FaRupeeSign, FaClock, FaCar, FaMapMarkerAlt, FaPhone, FaWhatsapp } from 'react-icons/fa';
+import { FaInfoCircle,  FaPhone, FaWhatsapp } from 'react-icons/fa';
 
 const CustomerInfo = () => {
   return (

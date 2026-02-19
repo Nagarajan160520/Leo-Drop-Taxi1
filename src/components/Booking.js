@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { FaCar, FaCalendarAlt, FaClock, FaMapMarkerAlt, FaUser, FaPhone } from 'react-icons/fa';
+import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaUser, FaPhone } from 'react-icons/fa';
 
 const API_URL = 'http://localhost:5000/api';
 
