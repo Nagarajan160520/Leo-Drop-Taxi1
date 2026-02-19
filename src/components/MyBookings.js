@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Badge, Spinner, Alert, Modal } from 'react-bootstrap';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Container, Row, Col, Card, Button, Badge, Spinner, Modal } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -10,9 +10,7 @@ import {
   FaCar, 
   FaMapMarkerAlt, 
   FaTrash, 
-  FaEye, 
-  FaRupeeSign,
-  FaWhatsapp,
+  FaEye,
   FaHistory,
   FaPlusCircle
 } from 'react-icons/fa';
@@ -51,17 +49,25 @@ const MyBookings = () => {
     }
   }, [user, navigate]);
 
-  // Fetch bookings
-  useEffect(() => {
-    if (user && backendStatus === 'online') {
-      fetchBookings();
-    } else if (backendStatus === 'offline') {
-      // Load demo bookings from localStorage
-      loadLocalBookings();
+  // Load local bookings function
+  const loadLocalBookings = useCallback(() => {
+    try {
+      const localBookings = JSON.parse(localStorage.getItem('localBookings') || '[]');
+      if (localBookings.length > 0) {
+        setBookings(localBookings);
+      } else {
+        setBookings([]);
+      }
+    } catch (error) {
+      console.error('Error loading local bookings:', error);
+      setBookings([]);
+    } finally {
+      setLoading(false);
     }
-  }, [user, backendStatus]);
+  }, []);
 
-  const fetchBookings = async () => {
+  // Fetch bookings from API
+  const fetchBookings = useCallback(async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
@@ -88,23 +94,16 @@ const MyBookings = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [navigate, loadLocalBookings]);
 
-  const loadLocalBookings = () => {
-    try {
-      const localBookings = JSON.parse(localStorage.getItem('localBookings') || '[]');
-      if (localBookings.length > 0) {
-        setBookings(localBookings);
-      } else {
-        setBookings([]);
-      }
-    } catch (error) {
-      console.error('Error loading local bookings:', error);
-      setBookings([]);
-    } finally {
-      setLoading(false);
+  // Fetch bookings when conditions are met
+  useEffect(() => {
+    if (user && backendStatus === 'online') {
+      fetchBookings();
+    } else if (backendStatus === 'offline') {
+      loadLocalBookings();
     }
-  };
+  }, [user, backendStatus, fetchBookings, loadLocalBookings]);
 
   const handleCancel = async (bookingId) => {
     if (!window.confirm('Are you sure you want to cancel this booking?')) {
