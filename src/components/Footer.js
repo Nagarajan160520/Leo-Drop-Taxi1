@@ -6,6 +6,34 @@ import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaMapMarkerAlt, FaPhone,
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  // Social media links with valid URLs
+  const socialLinks = [
+    { 
+      icon: <FaFacebook />, 
+      url: 'https://facebook.com/leodroptaxi', 
+      label: 'Facebook',
+      color: '#1877f2'
+    },
+    { 
+      icon: <FaTwitter />, 
+      url: 'https://twitter.com/leodroptaxi', 
+      label: 'Twitter',
+      color: '#1da1f2'
+    },
+    { 
+      icon: <FaInstagram />, 
+      url: 'https://instagram.com/leodroptaxi', 
+      label: 'Instagram',
+      color: '#e4405f'
+    },
+    { 
+      icon: <FaYoutube />, 
+      url: 'https://youtube.com/@leodroptaxi', 
+      label: 'YouTube',
+      color: '#ff0000'
+    }
+  ];
+
   return (
     <footer className="bg-dark text-white pt-5 pb-3">
       <Container>
@@ -20,35 +48,85 @@ const Footer = () => {
               comfortable, and on time. Since 2023, we've been proudly serving Tamilnadu, 
               Kerala, Andhra Pradesh, Karnataka, and Pondicherry.
             </p>
+            
+            {/* Social Links with valid href */}
             <div className="d-flex gap-3 mt-3">
-              <a  className="text-white bg-primary p-2 rounded-circle"><FaFacebook /></a>
-              <a  className="text-white bg-info p-2 rounded-circle"><FaTwitter /></a>
-              <a  className="text-white bg-danger p-2 rounded-circle"><FaInstagram /></a>
-              <a  className="text-white bg-danger p-2 rounded-circle"><FaYoutube /></a>
+              {socialLinks.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="d-flex align-items-center justify-content-center rounded-circle"
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    backgroundColor: social.color,
+                    color: 'white',
+                    transition: 'all 0.3s ease',
+                    textDecoration: 'none'
+                  }}
+                  aria-label={social.label}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 5px 10px rgba(0,0,0,0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  {social.icon}
+                </a>
+              ))}
             </div>
           </Col>
 
           <Col lg={2} md={6}>
             <h4 className="text-white mb-4">Quick Links</h4>
             <ul className="list-unstyled">
-              <li className="mb-2"><Link to="/" className="text-light text-decoration-none">Home</Link></li>
-              <li className="mb-2"><Link to="/tariff" className="text-light text-decoration-none">Tariff</Link></li>
-              <li className="mb-2"><Link to="/popular-routes" className="text-light text-decoration-none">Popular Routes</Link></li>
-              <li className="mb-2"><Link to="/customer-info" className="text-light text-decoration-none">Customer Info</Link></li>
-              <li className="mb-2"><Link to="/about" className="text-light text-decoration-none">About Us</Link></li>
-              <li className="mb-2"><Link to="/contact" className="text-light text-decoration-none">Contact</Link></li>
+              <li className="mb-2">
+                <Link to="/" className="text-light text-decoration-none hover-warning">Home</Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/tariff" className="text-light text-decoration-none hover-warning">Tariff</Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/popular-routes" className="text-light text-decoration-none hover-warning">Popular Routes</Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/customer-info" className="text-light text-decoration-none hover-warning">Customer Info</Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/about" className="text-light text-decoration-none hover-warning">About Us</Link>
+              </li>
+              <li className="mb-2">
+                <Link to="/contact" className="text-light text-decoration-none hover-warning">Contact</Link>
+              </li>
             </ul>
           </Col>
 
           <Col lg={3} md={6}>
             <h4 className="text-white mb-4">Our Services</h4>
             <ul className="list-unstyled">
-              <li className="mb-2 text-light">🚗 One Way Trips</li>
-              <li className="mb-2 text-light">🔄 Round Trips</li>
-              <li className="mb-2 text-light">🏔️ Hill Station Trips</li>
-              <li className="mb-2 text-light">✈️ Airport Transfers</li>
-              <li className="mb-2 text-light">🚐 Corporate Travel</li>
-              <li className="mb-2 text-light">👨‍👩‍👧 Family Tours</li>
+              <li className="mb-2 text-light">
+                <span className="text-warning me-2">🚗</span> One Way Trips
+              </li>
+              <li className="mb-2 text-light">
+                <span className="text-warning me-2">🔄</span> Round Trips
+              </li>
+              <li className="mb-2 text-light">
+                <span className="text-warning me-2">🏔️</span> Hill Station Trips
+              </li>
+              <li className="mb-2 text-light">
+                <span className="text-warning me-2">✈️</span> Airport Transfers
+              </li>
+              <li className="mb-2 text-light">
+                <span className="text-warning me-2">🚐</span> Corporate Travel
+              </li>
+              <li className="mb-2 text-light">
+                <span className="text-warning me-2">👨‍👩‍👧</span> Family Tours
+              </li>
             </ul>
           </Col>
 
@@ -64,14 +142,23 @@ const Footer = () => {
             <div className="d-flex mb-3">
               <FaPhone className="text-warning me-3 mt-1" size={20} />
               <span className="text-light">
-                <a href="tel:+916381095854" className="text-light text-decoration-none">+91 63810 95854</a><br />
-                <a href="tel:+916381095854" className="text-light text-decoration-none">+91 63810 95854</a>
+                <a href="tel:+916381095854" className="text-light text-decoration-none hover-warning d-block">
+                  +91 63810 95854
+                </a>
+                <a href="tel:+917200343435" className="text-light text-decoration-none hover-warning d-block">
+                  +91 72003 43435
+                </a>
               </span>
             </div>
             <div className="d-flex mb-3">
               <FaEnvelope className="text-warning me-3 mt-1" size={20} />
               <span className="text-light">
-                <a href="nagarajan16052001@gmail.com" className="text-light text-decoration-none">nagarajan16052001.com</a>
+                <a href="mailto:info@leodroptaxi.com" className="text-light text-decoration-none hover-warning d-block">
+                  info@leodroptaxi.com
+                </a>
+                <a href="mailto:support@leodroptaxi.com" className="text-light text-decoration-none hover-warning d-block">
+                  support@leodroptaxi.com
+                </a>
               </span>
             </div>
           </Col>
@@ -81,13 +168,21 @@ const Footer = () => {
 
         <Row>
           <Col className="text-center">
-            <p className="text-light mb-0">
+            <p className="text-light mb-0 small">
               &copy; {currentYear} Leo Drop Taxi. All rights reserved. | 
               <span className="text-warning ms-2">15000+ TRIPS COMPLETED</span>
             </p>
           </Col>
         </Row>
       </Container>
+
+      {/* Custom CSS for hover effects */}
+      <style>{`
+        .hover-warning:hover {
+          color: #ffc107 !important;
+          transition: color 0.3s ease;
+        }
+      `}</style>
     </footer>
   );
 };
