@@ -20,9 +20,11 @@ import {
   FaQuoteRight
 } from 'react-icons/fa';
 
-const API_URL = 'https://leo-drop-taxi.onrender.com/api';
-
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://leo-drop-taxi.onrender.com/api'
+  : 'http://localhost:5000/api';
 // Client WhatsApp number
+
 const CLIENT_WHATSAPP_NUMBER = '916381095854';
 
 const Home = () => {
