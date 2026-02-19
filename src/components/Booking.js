@@ -6,7 +6,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaUser, FaPhone } from 'react-icons/fa';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://leo-drop-taxi.onrender.com/api';
 
 const Booking = () => {
   const { user } = useAuth();
