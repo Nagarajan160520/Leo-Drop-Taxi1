@@ -256,7 +256,7 @@ const Home = () => {
     });
     
     return encodeURIComponent(
-      `🚖 *NEW TAXI BOOKING - LEO DROP TAXI* 🚖\n\n` +
+      `🚖 *NEW TAXI BOOKING - Lexus DROP TAXI* 🚖\n\n` +
       `━━━━━━━━━━━━━━━━━━━━━\n` +
       `✅ *Booking ID:* ${booking.bookingId}\n` +
       `👤 *Customer Name:* ${booking.name}\n` +
@@ -781,7 +781,7 @@ const Home = () => {
               >
                 <Card.Body className="form-card-body" style={formStyles.cardBody}>
                   <h3 className="text-center fw-bold mb-4 form-title" style={formStyles.title}>
-                    <span style={{ color: '#000' }}>Leo-Drop</span>{' '}
+                    <span style={{ color: '#000' }}>Lexus-Drop</span>{' '}
                     <span style={{ color: '#ffc107' }}>Taxi</span>
                   </h3>
 
