@@ -40,7 +40,7 @@ const About = () => {
         <Row className="mb-5 align-items-center">
           <Col lg={6} className="mb-4 mb-lg-0">
             <img 
-              src="https://i.pinimg.com/736x/b5/91/d5/b591d51c0d731a00ea7bdb83b51844f5.jpg"
+              src="https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg"
               alt="Our Fleet"
               className="img-fluid rounded-3 shadow"
             />

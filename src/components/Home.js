@@ -17,7 +17,25 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaQuoteLeft,
-  FaQuoteRight
+  FaQuoteRight,
+  FaCar,
+  FaUsers,
+  FaAward,
+  FaHeart,
+  FaHandshake,
+  FaInfoCircle,
+  FaRoad,
+  FaMoneyBill,
+  FaMountain,
+  FaWater,
+  FaTree,
+  FaSun,
+  FaCloudSun,
+  FaEnvelope,
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaYoutube
 } from 'react-icons/fa';
 
 const API_URL = 'https://leo-drop-taxi.onrender.com/api';
@@ -54,6 +72,17 @@ const Home = () => {
   const [fareEstimate, setFareEstimate] = useState(null);
   const [recentBookings, setRecentBookings] = useState([]);
 
+  // Counter animation states
+  const [counters, setCounters] = useState({
+    trips: 0,
+    rating: 0,
+    awards: 0,
+    customers: 0
+  });
+
+  const [statsVisible, setStatsVisible] = useState(false);
+  const statsRef = useRef(null);
+
   // Background carousel images
   const carouselImages = [
     {
@@ -72,7 +101,7 @@ const Home = () => {
       description: 'Experience luxury with our premium fleet'
     },
     {
-      url: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2070&auto=format&fit=crop',
+      url: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg',
       title: 'Hill Station Trips',
       description: 'Special packages for mountain getaways'
     }
@@ -91,6 +120,74 @@ const Home = () => {
       }
     };
   }, [isAutoPlaying, carouselImages.length]);
+
+  // Intersection Observer for stats animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setStatsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => {
+      if (statsRef.current) {
+        observer.unobserve(statsRef.current);
+      }
+    };
+  }, []);
+
+  // Counter animation when stats become visible
+  useEffect(() => {
+    if (statsVisible) {
+      // Target values
+      const targets = {
+        trips: 15000,
+        rating: 48, // 4.8 * 10 for decimal handling
+        awards: 10,
+        customers: 5000
+      };
+
+      // Animation duration in ms
+      const duration = 2000;
+      const steps = 60;
+      const interval = duration / steps;
+
+      let currentStep = 0;
+
+      const timer = setInterval(() => {
+        currentStep++;
+        
+        if (currentStep <= steps) {
+          const progress = currentStep / steps;
+          
+          setCounters({
+            trips: Math.min(Math.round(targets.trips * progress), targets.trips),
+            rating: Math.min((targets.rating * progress) / 10, targets.rating / 10),
+            awards: Math.min(Math.round(targets.awards * progress), targets.awards),
+            customers: Math.min(Math.round(targets.customers * progress), targets.customers)
+          });
+        } else {
+          // Ensure final values are set
+          setCounters({
+            trips: targets.trips,
+            rating: targets.rating / 10,
+            awards: targets.awards,
+            customers: targets.customers
+          });
+          clearInterval(timer);
+        }
+      }, interval);
+
+      return () => clearInterval(timer);
+    }
+  }, [statsVisible]);
 
   // Pause auto-play on hover
   const handleMouseEnter = () => setIsAutoPlaying(false);
@@ -405,17 +502,10 @@ const Home = () => {
   };
 
   const stats = [
-    { icon: '🚗', value: '15000+', label: 'Trips Completed' },
-    { icon: '⭐', value: '4.8', label: 'Customer Rating' },
-    { icon: '🏆', value: '10+', label: 'Awards' },
-    { icon: '👥', value: '5000+', label: 'Happy Customers' }
-  ];
-
-  const carTypes = [
-    { name: 'SEDAN', model: 'SEDAN', rate: 14, image: '🚗' },
-    { name: 'ETIOS', model: 'ETIOS', rate: 15, image: '🚘' },
-    { name: 'MUV', model: 'MUV', rate: 19, image: '🚙' },
-    { name: 'INNOVA', model: 'INNOVA', rate: 20, image: '🚐' }
+    { icon: '🚗', value: counters.trips, label: 'Trips Completed', suffix: '+' },
+    { icon: '⭐', value: counters.rating, label: 'Customer Rating', suffix: '', isDecimal: true },
+    { icon: '🏆', value: counters.awards, label: 'Awards', suffix: '+' },
+    { icon: '👥', value: counters.customers, label: 'Happy Customers', suffix: '+' }
   ];
 
   const testimonials = [
@@ -433,6 +523,126 @@ const Home = () => {
       year: 'numeric'
     });
   };
+
+  // Tariff Data
+  const tariffCars = [
+    {
+      name: 'SEDAN',
+      model: 'TATA ZEST',
+      oneWayRate: 14,
+      roundTripRate: 13,
+      minKmOneWay: 130,
+      minKmRoundTrip: 250,
+      driverBata: 400,
+      hillCharges: 300,
+      permitCharge: 14,
+      image: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg'
+    },
+    {
+      name: 'SEDAN',
+      model: 'MARUTI CIAZ',
+      oneWayRate: 15,
+      roundTripRate: 14,
+      minKmOneWay: 130,
+      minKmRoundTrip: 250,
+      driverBata: 400,
+      hillCharges: 300,
+      permitCharge: 14,
+      image: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg'
+    },
+    {
+      name: 'SUV',
+      model: 'MARUTI ERTIGA',
+      oneWayRate: 19,
+      roundTripRate: 18,
+      minKmOneWay: 130,
+      minKmRoundTrip: 250,
+      driverBata: 500,
+      hillCharges: 500,
+      permitCharge: 14,
+      image: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg'
+    },
+    {
+      name: 'INNOVA',
+      model: 'INNOVA',
+      oneWayRate: 20,
+      roundTripRate: 19,
+      minKmOneWay: 130,
+      minKmRoundTrip: 250,
+      driverBata: 500,
+      hillCharges: 500,
+      permitCharge: 14,
+      image: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg'
+    }
+  ];
+
+  // Popular Routes Data
+  const popularRoutes = [
+    {
+      from: 'Chennai',
+      to: 'Kodaikanal',
+      icon: <FaMountain />,
+      image: 'https://i.pinimg.com/736x/88/70/b3/8870b3ccb1791acc57c6a5771dc9fab8.jpg',
+      description: 'Princess of Hill Stations - Scenic beauty & pleasant climate',
+      distance: '520 km',
+      cars: [
+        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
+        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
+        { type: 'SUV', oneWay: 19, roundTrip: 18 },
+        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+      ]
+    },
+    {
+      from: 'Chennai',
+      to: 'Coutralam',
+      icon: <FaWater />,
+      image: 'https://i.pinimg.com/736x/39/4d/db/394ddb010d843e99f28b76b01ad7e88a.jpg',
+      description: 'Famous waterfalls & natural spa - The Spa of South India',
+      distance: '650 km',
+      cars: [
+        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
+        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
+        { type: 'SUV', oneWay: 19, roundTrip: 18 },
+        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+      ]
+    },
+    {
+      from: 'Chennai',
+      to: 'Kanniyakumari',
+      icon: <FaSun />,
+      image: 'https://i.pinimg.com/736x/6e/ad/4c/6ead4caddfb2d3c18ae1bc89ce303e95.jpg',
+      description: 'Southernmost tip of India - Sunrise & sunset view',
+      distance: '720 km',
+      cars: [
+        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
+        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
+        { type: 'SUV', oneWay: 19, roundTrip: 18 },
+        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+      ]
+    },
+    {
+      from: 'Tenkasi',
+      to: 'Chennai',
+      icon: <FaRoad />,
+      image: 'https://i.pinimg.com/1200x/7a/76/1d/7a761d0c69df3858fceff11ef8708f48.jpg',
+      description: 'Temple town to Metropolitan city - Comfortable journey',
+      distance: '580 km',
+      cars: [
+        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
+        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
+        { type: 'SUV', oneWay: 19, roundTrip: 18 },
+        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+      ]
+    }
+  ];
+
+  // About Stats
+  const aboutStats = [
+    { icon: <FaCar />, value: '15000+', label: 'Trips Completed' },
+    { icon: <FaUsers />, value: '5000+', label: 'Happy Customers' },
+    { icon: <FaAward />, value: '10+', label: 'Awards' },
+    { icon: <FaHeart />, value: '100+', label: 'Fleet Size' }
+  ];
 
   // Form styles
   const formStyles = {
@@ -476,17 +686,14 @@ const Home = () => {
       padding: '0.75rem',
       fontSize: '0.9rem'
     },
-    // ============================================
-    // MOBILE-SPECIFIC LAYOUT: Carousel Top, Form Bottom
-    // ============================================
     mobileStyles: `
-      /* Desktop and Tablet Default (Carousel and Form side by side) */
+      /* Desktop and Tablet Default */
       .hero-row {
         display: flex;
         align-items: center;
       }
       
-      /* Mobile Breakpoint - Stack carousel on top, form below */
+      /* Mobile Breakpoint */
       @media (max-width: 991px) {
         .hero-row {
           flex-direction: column;
@@ -509,7 +716,6 @@ const Home = () => {
           width: 100% !important;
         }
         
-        /* Carousel takes full width on mobile */
         .carousel-container {
           width: 100% !important;
           height: 400px !important;
@@ -518,18 +724,15 @@ const Home = () => {
           overflow: hidden !important;
         }
         
-        /* Form card styling on mobile */
         .form-card {
           max-width: 100% !important;
           margin: 0 auto !important;
         }
         
-        /* Hide desktop navigation arrows on mobile */
         .carousel-arrow {
           display: none !important;
         }
         
-        /* Show mobile swipe hint */
         .carousel-swipe-hint {
           display: block !important;
         }
@@ -557,7 +760,6 @@ const Home = () => {
           bottom: 10px !important;
         }
         
-        /* Form styles */
         .form-card-body {
           padding: 1rem !important;
         }
@@ -604,6 +806,14 @@ const Home = () => {
           padding-left: 5px !important;
           padding-right: 5px !important;
         }
+        
+        h2 {
+          font-size: 1.8rem !important;
+        }
+        
+        .p-5 {
+          padding: 1.5rem !important;
+        }
       }
       
       @media (max-width: 480px) {
@@ -630,6 +840,11 @@ const Home = () => {
         .d-flex.gap-3 {
           gap: 0.5rem !important;
         }
+        
+        .col-6 {
+          flex: 0 0 100%;
+          max-width: 100%;
+        }
       }
     `
   };
@@ -649,9 +864,8 @@ const Home = () => {
         }}
       >
         <Container>
-          {/* Row with custom ordering for mobile */}
           <Row className="hero-row">
-            {/* Left Column - Text Content (Order 1 on mobile) */}
+            {/* Left Column - Text Content */}
             <Col lg={6} className="hero-col-text">
               <h1 
                 className="display-3 fw-bold mb-4 text-white" 
@@ -675,14 +889,13 @@ const Home = () => {
               </p>
             </Col>
 
-            {/* Middle Column - Carousel (Order 2 on mobile) */}
+            {/* Middle Column - Carousel */}
             <Col lg={6} className="hero-col-carousel">
               <div 
                 className="carousel-container"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
-                {/* Carousel Images */}
                 {carouselImages.map((image, index) => (
                   <div
                     key={index}
@@ -699,7 +912,6 @@ const Home = () => {
                       borderRadius: '15px'
                     }}
                   >
-                    {/* Caption for each slide */}
                     <div 
                       className="position-absolute text-white carousel-caption"
                       style={{
@@ -717,7 +929,7 @@ const Home = () => {
                   </div>
                 ))}
 
-                {/* Navigation Arrows - Hidden on mobile */}
+                {/* Navigation Arrows */}
                 <button
                   onClick={prevSlide}
                   className="position-absolute top-50 start-0 translate-middle-y btn btn-dark bg-opacity-50 border-0 rounded-end-0 carousel-arrow"
@@ -726,7 +938,6 @@ const Home = () => {
                     padding: '15px 10px',
                     backdropFilter: 'blur(5px)'
                   }}
-                  aria-label="Previous slide"
                 >
                   <FaChevronLeft size={20} className="text-white" />
                 </button>
@@ -739,7 +950,6 @@ const Home = () => {
                     padding: '15px 10px',
                     backdropFilter: 'blur(5px)'
                   }}
-                  aria-label="Next slide"
                 >
                   <FaChevronRight size={20} className="text-white" />
                 </button>
@@ -760,21 +970,14 @@ const Home = () => {
                         transition: 'all 0.3s ease',
                         transform: index === currentSlide ? 'scale(1.2)' : 'scale(1)'
                       }}
-                      aria-label={`Go to slide ${index + 1}`}
                     />
                   ))}
-                </div>
-
-                {/* Swipe Hint for Mobile */}
-                <div className="carousel-swipe-hint d-none position-absolute bottom-0 end-0 m-3 text-white-50 small">
-                 .
                 </div>
               </div>
             </Col>
 
-            {/* Right Column - Booking Form (Order 3 on mobile) */}
+            {/* Right Column - Booking Form */}
             <Col lg={6} className="hero-col-form">
-              {/* Integrated Booking Form */}
               <Card 
                 className="border-0 shadow-lg form-card" 
                 style={formStyles.card}
@@ -925,210 +1128,186 @@ const Home = () => {
                     </Row>
 
                     {/* Select Car Type */}
-                    {/* Select Car Type */}
-<div className="mb-3">
-  <label className="fw-bold form-label mb-3" style={{ fontSize: '1.1rem' }}>
-    Select Car Type *
-  </label>
-  
-  {/* Car Selection Grid - 2 Columns with Photos */}
-  <Row className="g-3">
-    {/* SEDAN */}
-    <Col xs={6}>
-      <div 
-        className={`car-option ${formData.carType === 'SEDAN' ? 'selected' : ''}`}
-        style={{
-          border: `2px solid ${formData.carType === 'SEDAN' ? '#ffc107' : '#dee2e6'}`,
-          borderRadius: '12px',
-          padding: '12px',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          backgroundColor: formData.carType === 'SEDAN' ? '#fff3cd' : 'white',
-          height: '100%'
-        }}
-        onClick={() => selectCar('SEDAN')}
-        onMouseEnter={(e) => {
-          if (formData.carType !== 'SEDAN') {
-            e.currentTarget.style.borderColor = '#ffc107';
-            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (formData.carType !== 'SEDAN') {
-            e.currentTarget.style.borderColor = '#dee2e6';
-            e.currentTarget.style.boxShadow = 'none';
-          }
-        }}
-      >
-        <img 
-          src="https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg"
-          alt="SEDAN"
-          style={{
-            width: '100%',
-            height: '90px',
-            objectFit: 'cover',
-            borderRadius: '8px',
-            marginBottom: '8px'
-          }}
-        />
-        <div className="fw-bold text-center">SEDAN</div>
-        <div className="text-warning fw-bold text-center">₹14/km</div>
-      </div>
-    </Col>
+                    <div className="mb-3">
+                      <label className="fw-bold form-label mb-3" style={{ fontSize: '1.1rem' }}>
+                        Select Car Type *
+                      </label>
+                      
+                      <Row className="g-3">
+                        {/* SEDAN */}
+                        <Col xs={6}>
+                          <div 
+                            className={`car-option ${formData.carType === 'SEDAN' ? 'selected' : ''}`}
+                            style={{
+                              border: `2px solid ${formData.carType === 'SEDAN' ? '#ffc107' : '#dee2e6'}`,
+                              borderRadius: '12px',
+                              padding: '12px',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              backgroundColor: formData.carType === 'SEDAN' ? '#fff3cd' : 'white',
+                              height: '100%'
+                            }}
+                            onClick={() => selectCar('SEDAN')}
+                            onMouseEnter={(e) => {
+                              if (formData.carType !== 'SEDAN') {
+                                e.currentTarget.style.borderColor = '#ffc107';
+                                e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (formData.carType !== 'SEDAN') {
+                                e.currentTarget.style.borderColor = '#dee2e6';
+                                e.currentTarget.style.boxShadow = 'none';
+                              }
+                            }}
+                          >
+                            <img 
+                              src="https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg"
+                              alt="SEDAN"
+                              style={{
+                                width: '100%',
+                                height: '90px',
+                                objectFit: 'cover',
+                                borderRadius: '8px',
+                                marginBottom: '8px'
+                              }}
+                            />
+                            <div className="fw-bold text-center">SEDAN</div>
+                            <div className="text-warning fw-bold text-center">₹14/km</div>
+                          </div>
+                        </Col>
 
-    {/* ETIOS */}
-    <Col xs={6}>
-      <div 
-        className={`car-option ${formData.carType === 'ETIOS' ? 'selected' : ''}`}
-        style={{
-          border: `2px solid ${formData.carType === 'ETIOS' ? '#ffc107' : '#dee2e6'}`,
-          borderRadius: '12px',
-          padding: '12px',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          backgroundColor: formData.carType === 'ETIOS' ? '#fff3cd' : 'white',
-          height: '100%'
-        }}
-        onClick={() => selectCar('ETIOS')}
-        onMouseEnter={(e) => {
-          if (formData.carType !== 'ETIOS') {
-            e.currentTarget.style.borderColor = '#ffc107';
-            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (formData.carType !== 'ETIOS') {
-            e.currentTarget.style.borderColor = '#dee2e6';
-            e.currentTarget.style.boxShadow = 'none';
-          }
-        }}
-      >
-        <img 
-          src="https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg"
-          alt="ETIOS"
-          style={{
-            width: '100%',
-            height: '90px',
-            objectFit: 'cover',
-            borderRadius: '8px',
-            marginBottom: '8px'
-          }}
-        />
-        <div className="fw-bold text-center">ETIOS</div>
-        <div className="text-warning fw-bold text-center">₹15/km</div>
-      </div>
-    </Col>
+                        {/* ETIOS */}
+                        <Col xs={6}>
+                          <div 
+                            className={`car-option ${formData.carType === 'ETIOS' ? 'selected' : ''}`}
+                            style={{
+                              border: `2px solid ${formData.carType === 'ETIOS' ? '#ffc107' : '#dee2e6'}`,
+                              borderRadius: '12px',
+                              padding: '12px',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              backgroundColor: formData.carType === 'ETIOS' ? '#fff3cd' : 'white',
+                              height: '100%'
+                            }}
+                            onClick={() => selectCar('ETIOS')}
+                            onMouseEnter={(e) => {
+                              if (formData.carType !== 'ETIOS') {
+                                e.currentTarget.style.borderColor = '#ffc107';
+                                e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (formData.carType !== 'ETIOS') {
+                                e.currentTarget.style.borderColor = '#dee2e6';
+                                e.currentTarget.style.boxShadow = 'none';
+                              }
+                            }}
+                          >
+                            <img 
+                              src="https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg"
+                              alt="ETIOS"
+                              style={{
+                                width: '100%',
+                                height: '90px',
+                                objectFit: 'cover',
+                                borderRadius: '8px',
+                                marginBottom: '8px'
+                              }}
+                            />
+                            <div className="fw-bold text-center">ETIOS</div>
+                            <div className="text-warning fw-bold text-center">₹15/km</div>
+                          </div>
+                        </Col>
 
-    {/* MUV */}
-    <Col xs={6}>
-      <div 
-        className={`car-option ${formData.carType === 'MUV' ? 'selected' : ''}`}
-        style={{
-          border: `2px solid ${formData.carType === 'MUV' ? '#ffc107' : '#dee2e6'}`,
-          borderRadius: '12px',
-          padding: '12px',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          backgroundColor: formData.carType === 'MUV' ? '#fff3cd' : 'white',
-          height: '100%'
-        }}
-        onClick={() => selectCar('MUV')}
-        onMouseEnter={(e) => {
-          if (formData.carType !== 'MUV') {
-            e.currentTarget.style.borderColor = '#ffc107';
-            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (formData.carType !== 'MUV') {
-            e.currentTarget.style.borderColor = '#dee2e6';
-            e.currentTarget.style.boxShadow = 'none';
-          }
-        }}
-      >
-        <img 
-          src="https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg"
-          alt="MUV"
-          style={{
-            width: '100%',
-            height: '90px',
-            objectFit: 'cover',
-            borderRadius: '8px',
-            marginBottom: '8px'
-          }}
-        />
-        <div className="fw-bold text-center">MUV</div>
-        <div className="text-warning fw-bold text-center">₹19/km</div>
-      </div>
-    </Col>
+                        {/* MUV */}
+                        <Col xs={6}>
+                          <div 
+                            className={`car-option ${formData.carType === 'MUV' ? 'selected' : ''}`}
+                            style={{
+                              border: `2px solid ${formData.carType === 'MUV' ? '#ffc107' : '#dee2e6'}`,
+                              borderRadius: '12px',
+                              padding: '12px',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              backgroundColor: formData.carType === 'MUV' ? '#fff3cd' : 'white',
+                              height: '100%'
+                            }}
+                            onClick={() => selectCar('MUV')}
+                            onMouseEnter={(e) => {
+                              if (formData.carType !== 'MUV') {
+                                e.currentTarget.style.borderColor = '#ffc107';
+                                e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (formData.carType !== 'MUV') {
+                                e.currentTarget.style.borderColor = '#dee2e6';
+                                e.currentTarget.style.boxShadow = 'none';
+                              }
+                            }}
+                          >
+                            <img 
+                              src="https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg"
+                              alt="MUV"
+                              style={{
+                                width: '100%',
+                                height: '90px',
+                                objectFit: 'cover',
+                                borderRadius: '8px',
+                                marginBottom: '8px'
+                              }}
+                            />
+                            <div className="fw-bold text-center">MUV</div>
+                            <div className="text-warning fw-bold text-center">₹19/km</div>
+                          </div>
+                        </Col>
 
-    {/* INNOVA */}
-    <Col xs={6}>
-      <div 
-        className={`car-option ${formData.carType === 'INNOVA' ? 'selected' : ''}`}
-        style={{
-          border: `2px solid ${formData.carType === 'INNOVA' ? '#ffc107' : '#dee2e6'}`,
-          borderRadius: '12px',
-          padding: '12px',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          backgroundColor: formData.carType === 'INNOVA' ? '#fff3cd' : 'white',
-          height: '100%'
-        }}
-        onClick={() => selectCar('INNOVA')}
-        onMouseEnter={(e) => {
-          if (formData.carType !== 'INNOVA') {
-            e.currentTarget.style.borderColor = '#ffc107';
-            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (formData.carType !== 'INNOVA') {
-            e.currentTarget.style.borderColor = '#dee2e6';
-            e.currentTarget.style.boxShadow = 'none';
-          }
-        }}
-      >
-        <img 
-          src="https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg"
-          alt="INNOVA"
-          style={{
-            width: '100%',
-            height: '90px',
-            objectFit: 'cover',
-            borderRadius: '8px',
-            marginBottom: '8px'
-          }}
-        />
-        <div className="fw-bold text-center">INNOVA</div>
-        <div className="text-warning fw-bold text-center">₹20/km</div>
-      </div>
-    </Col>
-  </Row>
-</div>
+                        {/* INNOVA */}
+                        <Col xs={6}>
+                          <div 
+                            className={`car-option ${formData.carType === 'INNOVA' ? 'selected' : ''}`}
+                            style={{
+                              border: `2px solid ${formData.carType === 'INNOVA' ? '#ffc107' : '#dee2e6'}`,
+                              borderRadius: '12px',
+                              padding: '12px',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              backgroundColor: formData.carType === 'INNOVA' ? '#fff3cd' : 'white',
+                              height: '100%'
+                            }}
+                            onClick={() => selectCar('INNOVA')}
+                            onMouseEnter={(e) => {
+                              if (formData.carType !== 'INNOVA') {
+                                e.currentTarget.style.borderColor = '#ffc107';
+                                e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (formData.carType !== 'INNOVA') {
+                                e.currentTarget.style.borderColor = '#dee2e6';
+                                e.currentTarget.style.boxShadow = 'none';
+                              }
+                            }}
+                          >
+                            <img 
+                              src="https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg"
+                              alt="INNOVA"
+                              style={{
+                                width: '100%',
+                                height: '90px',
+                                objectFit: 'cover',
+                                borderRadius: '8px',
+                                marginBottom: '8px'
+                              }}
+                            />
+                            <div className="fw-bold text-center">INNOVA</div>
+                            <div className="text-warning fw-bold text-center">₹20/km</div>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
 
-{/* Add CSS for animations */}
-<style>{`
-  .car-option {
-    transition: all 0.3s ease;
-  }
-  .car-option:hover {
-    transform: translateY(-3px);
-  }
-  .car-option.selected {
-    border-color: #ffc107;
-    background-color: #e8f001ff;
-    box-shadow: 0 6px 12px rgba(255,193,7,0.3);
-  }
-  @media (max-width: 576px) {
-    .car-option img {
-      height: 70px !important;
-    }
-    .car-option {
-      padding: 8px !important;
-    }
-  }
-`}</style>
                     {/* Fare Estimate */}
                     {fareEstimate && (
                       <div className="bg-light rounded mb-3 fare-box" style={formStyles.fareBox}>
@@ -1175,14 +1354,20 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Stats Section */}
-      <Container className="my-5">
+      {/* Stats Section - With Animated Counters */}
+      <Container className="my-5" ref={statsRef}>
+        <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
+          Our <span className="text-warning">Achievements</span>
+        </h2>
         <Row>
           {stats.map((stat, index) => (
             <Col md={3} sm={6} key={index} className="mb-4">
               <Card className="text-center p-4 border-0 shadow-sm h-100">
                 <div className="display-1 mb-3" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>{stat.icon}</div>
-                <h2 className="text-warning fw-bold" style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)' }}>{stat.value}</h2>
+                <h2 className="text-warning fw-bold" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.2rem)' }}>
+                  {stat.isDecimal ? stat.value.toFixed(1) : Math.round(stat.value).toLocaleString()}
+                  {stat.suffix}
+                </h2>
                 <p className="text-secondary" style={{ fontSize: 'clamp(0.8rem, 2vw, 0.9rem)' }}>{stat.label}</p>
               </Card>
             </Col>
@@ -1190,61 +1375,181 @@ const Home = () => {
         </Row>
       </Container>
 
-      {/* Recent Bookings Section */}
-      {user && recentBookings.length > 0 && (
-        <Container className="my-5">
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <h2 className="mb-0" style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)' }}>
-              <FaHistory className="text-warning me-2" size={20} />
-              Recent Bookings
-            </h2>
-            <Button 
-              variant="outline-warning" 
-              onClick={() => navigate('/my-bookings')}
-              size="sm"
-            >
-              View All
-            </Button>
-          </div>
-          
+      {/* TARIFF SECTION - From Tariff Page */}
+      <section className="py-5 bg-light">
+        <Container>
+          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
+            <span className="text-warning">Outstation</span> Tariff
+          </h2>
           <Row>
-            {recentBookings.map((booking, index) => (
-              <Col lg={4} md={6} key={booking._id || index} className="mb-4">
-                <Card className="border-0 shadow-sm h-100">
-                  <Card.Body className="p-3">
-                    <div className="d-flex justify-content-between align-items-start mb-2">
-                      <h6 className="fw-bold mb-0">{booking.carType}</h6>
-                      <Badge bg={booking.status === 'confirmed' ? 'success' : 'warning'} style={{ fontSize: '0.7rem' }}>
-                        {booking.status || 'confirmed'}
-                      </Badge>
+            {tariffCars.map((car, index) => (
+              <Col lg={6} md={6} key={index} className="mb-4">
+                <Card className="border-0 shadow h-100" style={{ borderRadius: '20px', overflow: 'hidden' }}>
+                  <div className="position-relative" style={{ height: '250px' }}>
+                    <img 
+                      src={car.image} 
+                      alt={`${car.name} - ${car.model}`}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center'
+                      }}
+                    />
+                    <div className="position-absolute bottom-0 start-0 w-100 p-3" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)', color: 'white' }}>
+                      <h4 className="fw-bold mb-0">{car.name}</h4>
+                      <p className="mb-0">{car.model}</p>
                     </div>
-                    
-                    <p className="mb-1 small">
-                      <FaMapMarkerAlt className="text-warning me-1" size={10} />
-                      {booking.pickupLocation?.slice(0, 15)}... → {booking.dropLocation?.slice(0, 15)}
-                    </p>
-                    
-                    <p className="mb-1 small">
-                      <FaCalendarAlt className="text-warning me-1" size={10} />
-                      {formatDate(booking.pickupDate || booking.bookingDate)} {booking.pickupTime}
-                    </p>
-                    
-                    <p className="mb-0 small fw-bold">
-                      <FaRupeeSign className="text-warning me-1" size={10} />
-                      ₹{booking.totalFare || booking.fareEstimate?.total}
-                    </p>
+                  </div>
+                  <Card.Body className="p-4">
+                    <div className="mb-4">
+                      <h6 className="fw-bold mb-3">TARIFF</h6>
+                      <Row className="g-3">
+                        <Col xs={6}>
+                          <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
+                            <h6 className="fw-bold mb-2">ONE WAY</h6>
+                            <h5 className="text-warning fw-bold mb-1">
+                              <FaRupeeSign className="me-1" /> {car.oneWayRate}/KM
+                            </h5>
+                            <small className="text-muted">(Min {car.minKmOneWay} KM)</small>
+                          </div>
+                        </Col>
+                        <Col xs={6}>
+                          <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
+                            <h6 className="fw-bold mb-2">ROUND TRIP</h6>
+                            <h5 className="text-warning fw-bold mb-1">
+                              <FaRupeeSign className="me-1" /> {car.roundTripRate}/KM
+                            </h5>
+                            <small className="text-muted">(Min {car.minKmRoundTrip} KM)</small>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                    <div>
+                      <h6 className="fw-bold mb-3"><FaInfoCircle className="text-warning me-2" />INCLUDE WITH</h6>
+                      <Row>
+                        <Col xs={6}>
+                          <ul className="list-unstyled">
+                            <li className="mb-2">• Driver Bata <strong>₹{car.driverBata}</strong></li>
+                            <li className="mb-2">• Hillstation Charges <strong>₹{car.hillCharges}</strong></li>
+                          </ul>
+                        </Col>
+                        <Col xs={6}>
+                          <ul className="list-unstyled">
+                            <li className="mb-2">• Other State Permit <strong>₹{car.permitCharge}/KM</strong></li>
+                            <li className="mb-2">• Parking</li>
+                          </ul>
+                        </Col>
+                      </Row>
+                    </div>
                   </Card.Body>
                 </Card>
               </Col>
             ))}
           </Row>
+          <div className="text-center mt-4">
+            <Button variant="warning" onClick={() => navigate('/tariff')}>View All Tariffs</Button>
+          </div>
         </Container>
-      )}
+      </section>
 
-      {/* Customer Reviews Section */}
+      {/* POPULAR ROUTES SECTION - From PopularRoutes Page */}
+      <section className="py-5">
+        <Container>
+          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
+            <span className="text-warning">Popular</span> Routes
+          </h2>
+          <Row>
+            {popularRoutes.slice(0, 4).map((route, index) => (
+              <Col lg={6} key={index} className="mb-4">
+                <Card className="border-0 shadow h-100" style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                  <div className="position-relative" style={{ height: '200px', overflow: 'hidden' }}>
+                    <img 
+                      src={route.image} 
+                      alt={`${route.from} to ${route.to}`}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s ease' }}
+                      className="route-image"
+                    />
+                    <div className="position-absolute bottom-0 start-0 w-100 p-3" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: 'white' }}>
+                      <h5 className="fw-bold mb-1">{route.from} to {route.to}</h5>
+                      <p className="mb-0 small">{route.description}</p>
+                    </div>
+                  </div>
+                  <Card.Body className="p-4">
+                    <div className="d-flex align-items-center mb-3">
+                      <div className="bg-warning text-dark rounded-circle p-2 me-3" style={{ width: '45px', height: '45px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <span className="fs-5">{route.icon}</span>
+                      </div>
+                      <div>
+                        <h6 className="fw-bold mb-1">{route.from} → {route.to}</h6>
+                        <small className="text-secondary">Distance: {route.distance}</small>
+                      </div>
+                    </div>
+                    <div className="small mb-3">
+                      <span className="fw-bold me-2">SEDAN:</span> ₹{route.cars[0].oneWay}/km | 
+                      <span className="fw-bold ms-2 me-2">SUV:</span> ₹{route.cars[2].oneWay}/km
+                    </div>
+                    <div className="mt-3">
+                      <Button variant="outline-warning" size="sm" className="w-100" onClick={() => navigate('/popular-routes')}>
+                        View Details
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+          <div className="text-center mt-4">
+            <Button variant="warning" onClick={() => navigate('/popular-routes')}>View All Routes</Button>
+          </div>
+        </Container>
+      </section>
+
+      {/* ABOUT SECTION - From About Page */}
       <section className="py-5 bg-light">
         <Container>
-          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)' }}>
+          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
+            About <span className="text-warning">Us</span>
+          </h2>
+          <Row className="align-items-center">
+            <Col lg={6} className="mb-4 mb-lg-0">
+              <img 
+                src="https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg"
+                alt="Our Fleet"
+                className="img-fluid rounded-3 shadow"
+              />
+            </Col>
+            <Col lg={6}>
+              <h3 className="text-warning mb-4">OUR COMPANY</h3>
+              <p className="lead mb-4">
+                At <strong>Lexus DROP TAXI</strong>, we believe every journey should be safe, comfortable, and on time.
+              </p>
+              <p className="mb-4">
+                Since 2023, we've been proudly serving Tamilnadu, Kerala, Andhra Pradesh, Karnataka, and Pondicherry with reliable taxi services.
+              </p>
+              <Row className="g-3">
+                {aboutStats.slice(0, 2).map((stat, idx) => (
+                  <Col xs={6} key={idx}>
+                    <Card className="border-0 shadow-sm p-3 text-center">
+                      <div className="text-warning h3 mb-2">{stat.icon}</div>
+                      <h5 className="fw-bold mb-1">{stat.value}</h5>
+                      <small className="text-secondary">{stat.label}</small>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+              <div className="mt-4">
+                <Button variant="warning" onClick={() => navigate('/about')}>Read More</Button>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+      {/* CUSTOMER REVIEWS */}
+      <section className="py-5">
+        <Container>
+          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
             Customer <span className="text-warning">Reviews</span>
           </h2>
           <Row>
@@ -1272,44 +1577,10 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Car Types Section */}
-      <section className="py-5">
-        <Container>
-          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)' }}>
-            <span className="text-warning">Select</span> Car Type
-          </h2>
-          <Row>
-            {carTypes.map((car, index) => (
-              <Col lg={3} md={6} key={index} className="mb-4">
-                <Card className="text-center p-3 border-0 shadow h-100">
-                  <div className="mb-2" style={{ fontSize: 'clamp(2rem, 4vw, 2.5rem)' }}>{car.image}</div>
-                  <h5 className="fw-bold" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)' }}>{car.name}</h5>
-                  <h4 className="text-warning fw-bold mt-1" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)' }}>
-                    <FaRupeeSign className="me-1" size={14} />
-                    {car.rate}/km
-                  </h4>
-                  <Button 
-                    variant="outline-warning" 
-                    className="w-100 mt-2"
-                    size="sm"
-                    onClick={() => {
-                      selectCar(car.name);
-                      document.querySelector('.card').scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  >
-                    Select
-                  </Button>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </section>
-
-      {/* Why Choose Us */}
+      {/* WHY CHOOSE US */}
       <section className="py-5 bg-light">
         <Container>
-          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)' }}>
+          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
             Why <span className="text-warning">Choose Us</span>
           </h2>
           <Row>
@@ -1333,6 +1604,56 @@ const Home = () => {
         </Container>
       </section>
 
+      {/* CONTACT SECTION - From Contact Page */}
+      <section className="py-5">
+        <Container>
+          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
+            Contact <span className="text-warning">Us</span>
+          </h2>
+          <Row>
+            <Col lg={4} md={6} className="mb-4">
+              <Card className="border-0 shadow-sm h-100">
+                <Card.Body className="text-center p-4">
+                  <div className="bg-warning rounded-circle d-inline-flex p-3 mb-3">
+                    <FaMapMarkerAlt size={24} className="text-dark" />
+                  </div>
+                  <h5 className="fw-bold mb-3">Visit Us</h5>
+                  <p className="text-secondary mb-1">No.71, 18th Block A Type Thiru,</p>
+                  <p className="text-secondary mb-1">Avadi, Chennai - 600054</p>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col lg={4} md={6} className="mb-4">
+              <Card className="border-0 shadow-sm h-100">
+                <Card.Body className="text-center p-4">
+                  <div className="bg-warning rounded-circle d-inline-flex p-3 mb-3">
+                    <FaPhone size={24} className="text-dark" />
+                  </div>
+                  <h5 className="fw-bold mb-3">Call Us</h5>
+                  <p className="text-secondary mb-1">+91 63810 95854</p>
+                  <p className="text-secondary mb-1">+91 72003 43435</p>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col lg={4} md={6} className="mb-4">
+              <Card className="border-0 shadow-sm h-100">
+                <Card.Body className="text-center p-4">
+                  <div className="bg-warning rounded-circle d-inline-flex p-3 mb-3">
+                    <FaEnvelope size={24} className="text-dark" />
+                  </div>
+                  <h5 className="fw-bold mb-3">Email Us</h5>
+                  <p className="text-secondary mb-1">info@lexusdroptaxi.com</p>
+                  <p className="text-secondary mb-1">nagarajan16052001@gmail.com</p>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+          <div className="text-center mt-4">
+            <Button variant="warning" onClick={() => navigate('/contact')}>Contact Us</Button>
+          </div>
+        </Container>
+      </section>
+
       {/* CTA Section */}
       <section className="py-5 bg-warning">
         <Container className="text-center">
@@ -1347,7 +1668,7 @@ const Home = () => {
             >
               Book Now
             </Button>
-            <a href="tel:+917200343435">
+            <a href="tel:+916381095854">
               <Button variant="outline-dark" size="lg" className="rounded-pill px-5">
                 <FaPhone className="me-2" /> Call Us
               </Button>
@@ -1371,7 +1692,6 @@ const Home = () => {
                 <FaCheckCircle size={40} className="text-success" />
                 <h6 className="mt-2">Booking ID: {bookingDetails.bookingId}</h6>
               </div>
-
               <div className="bg-light p-2 rounded small mb-2">
                 <Row>
                   <Col xs={6}>
@@ -1384,12 +1704,10 @@ const Home = () => {
                   </Col>
                 </Row>
               </div>
-
               <Alert variant="success" className="py-2 small">
                 <FaWhatsapp className="me-1" size={14} />
                 Notification sent to admin
               </Alert>
-              
               <div className="text-center">
                 <Button size="sm" variant="primary" onClick={() => navigate('/my-bookings')}>
                   My Bookings
@@ -1399,6 +1717,35 @@ const Home = () => {
           )}
         </Modal.Body>
       </Modal>
+
+      {/* Add CSS for animations */}
+      <style>{`
+        .car-option {
+          transition: all 0.3s ease;
+        }
+        .car-option:hover {
+          transform: translateY(-3px);
+        }
+        .car-option.selected {
+          border-color: #ffc107;
+          background-color: #fff3cd;
+          box-shadow: 0 6px 12px rgba(255,193,7,0.3);
+        }
+        .route-image {
+          transition: transform 0.5s ease;
+        }
+        .route-image:hover {
+          transform: scale(1.1);
+        }
+        @media (max-width: 576px) {
+          .car-option img {
+            height: 70px !important;
+          }
+          .car-option {
+            padding: 8px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };

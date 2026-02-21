@@ -14,7 +14,7 @@ const Tariff = () => {
       driverBata: 400,
       hillCharges: 300,
       permitCharge: 14,
-      image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=2064&auto=format&fit=crop',
+      image: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg',
       bgColor: '#f8f9fa'
     },
     {
@@ -27,7 +27,7 @@ const Tariff = () => {
       driverBata: 400,
       hillCharges: 300,
       permitCharge: 14,
-      image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2070&auto=format&fit=crop',
+      image: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg',
       bgColor: '#f8f9fa'
     },
     {
@@ -40,7 +40,7 @@ const Tariff = () => {
       driverBata: 500,
       hillCharges: 500,
       permitCharge: 14,
-      image: 'https://images.unsplash.com/photo-1556189250-72ba954cfc2b?q=80&w=2070&auto=format&fit=crop',
+      image: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg',
       bgColor: '#f8f9fa'
     },
     {
@@ -53,7 +53,7 @@ const Tariff = () => {
       driverBata: 500,
       hillCharges: 500,
       permitCharge: 14,
-      image: 'https://images.unsplash.com/photo-1556189250-72ba954cfc2b?q=80&w=2070&auto=format&fit=crop',
+      image: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg',
       bgColor: '#f8f9fa'
     }
   ];
