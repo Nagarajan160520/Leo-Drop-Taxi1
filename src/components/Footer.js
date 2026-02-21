@@ -41,10 +41,10 @@ const Footer = () => {
           <Col lg={4} md={6}>
             <h4 className="text-white mb-4">
               <FaCar className="text-warning me-2" />
-              Leo Drop Taxi
+              Lexus Drop Taxi
             </h4>
             <p className="text-light">
-              At <strong>LEO DROP TAXI</strong>, we believe every journey should be safe, 
+              At <strong>Lexus DROP TAXI</strong>, we believe every journey should be safe, 
               comfortable, and on time. Since 2023, we've been proudly serving Tamilnadu, 
               Kerala, Andhra Pradesh, Karnataka, and Pondicherry.
             </p>
@@ -154,10 +154,10 @@ const Footer = () => {
               <FaEnvelope className="text-warning me-3 mt-1" size={20} />
               <span className="text-light">
                 <a href="mailto:info@leodroptaxi.com" className="text-light text-decoration-none hover-warning d-block">
-                  info@leodroptaxi.com
+                  info@Lexusdroptaxi.com
                 </a>
                 <a href="mailto:support@leodroptaxi.com" className="text-light text-decoration-none hover-warning d-block">
-                  support@leodroptaxi.com
+                  support@Lexusdroptaxi.com
                 </a>
               </span>
             </div>
@@ -169,7 +169,7 @@ const Footer = () => {
         <Row>
           <Col className="text-center">
             <p className="text-light mb-0 small">
-              &copy; {currentYear} Leo Drop Taxi. All rights reserved. | 
+              &copy; {currentYear} Lexus Drop Taxi. All rights reserved. | 
               <span className="text-warning ms-2">15000+ TRIPS COMPLETED</span>
             </p>
           </Col>

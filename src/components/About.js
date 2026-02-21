@@ -48,7 +48,7 @@ const About = () => {
           <Col lg={6}>
             <h2 className="text-warning mb-4">OUR COMPANY</h2>
             <p className="lead mb-4">
-              At <strong>LEO DROP TAXI</strong>, we believe every journey should be safe, 
+              At <strong>Lexus DROP TAXI</strong>, we believe every journey should be safe, 
               comfortable, and on time.
             </p>
             <p className="mb-4">

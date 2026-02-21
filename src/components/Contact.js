@@ -28,7 +28,7 @@ const Contact = () => {
   // Generate WhatsApp message for Client
   const generateClientMessage = (data) => {
     return encodeURIComponent(
-      `📞 *NEW CONTACT FORM SUBMISSION - LEO DROP TAXI* 📞\n\n` +
+      `📞 *NEW CONTACT FORM SUBMISSION - Lexus DROP TAXI* 📞\n\n` +
       `━━━━━━━━━━━━━━━━━━━━━\n` +
       `👤 *Name:* ${data.name}\n` +
       `📧 *Email:* ${data.email}\n` +
@@ -45,7 +45,7 @@ const Contact = () => {
   // Generate WhatsApp message for Driver
   const generateDriverMessage = (data) => {
     return encodeURIComponent(
-      `🚖 *NEW CUSTOMER INQUIRY - LEO DROP TAXI* 🚖\n\n` +
+      `🚖 *NEW CUSTOMER INQUIRY - Lexus DROP TAXI* 🚖\n\n` +
       `━━━━━━━━━━━━━━━━━━━━━\n` +
       `👤 *Customer:* ${data.name}\n` +
       `📱 *Phone:* ${data.phone || 'Not provided'}\n` +
@@ -131,9 +131,9 @@ const Contact = () => {
       icon: <FaEnvelope size={24} />,
       title: 'Email Us',
       details: [
-        'info@leodroptaxi.com',
-        'booking@leodroptaxi.com',
-        'support@leodroptaxi.com'
+        'info@Lexusdroptaxi.com',
+        'booking@Lexusdroptaxi.com',
+        'support@Lexusdroptaxi.com'
       ]
     },
     {

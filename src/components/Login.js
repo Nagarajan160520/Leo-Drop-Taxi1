@@ -45,7 +45,7 @@ const Login = () => {
                     <FaCar size={30} />
                   </div>
                   <h2 className="text-dark">Welcome Back</h2>
-                  <p className="text-secondary">Login to Leo Drop Taxi</p>
+                  <p className="text-secondary">Login to Lexus Drop Taxi</p>
                 </div>
 
                 {error && (

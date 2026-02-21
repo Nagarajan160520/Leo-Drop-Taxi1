@@ -30,7 +30,7 @@ const Navbar = () => {
             }} 
           />
           <span style={{ fontSize: '22px', fontWeight: 'bold', lineHeight: '40px' }}>
-            Leo Drop <span className="text-warning">Taxi</span>
+            Lexus Drop <span className="text-warning">Taxi</span>
           </span>
         </BSNavbar.Brand>
 
@@ -45,10 +45,10 @@ const Navbar = () => {
                Tariff
             </Nav.Link>
             <Nav.Link as={Link} to="/popular-routes" className="text-white mx-2 px-3 py-2">
-              Popular Routes
+               Routes
             </Nav.Link>
             <Nav.Link as={Link} to="/customer-info" className="text-white mx-2 px-3 py-2">
-              <FaInfoCircle className="me-1" /> Customer Info
+              <FaInfoCircle className="me-1" /> Customer 
             </Nav.Link>
             <Nav.Link as={Link} to="/about" className="text-white mx-2 px-3 py-2">About</Nav.Link>
             <Nav.Link as={Link} to="/contact" className="text-white mx-2 px-3 py-2">Contact</Nav.Link>
