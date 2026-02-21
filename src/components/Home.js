@@ -57,17 +57,17 @@ const Home = () => {
   // Background carousel images
   const carouselImages = [
     {
-      url: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2070&auto=format&fit=crop',
+      url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg',
       title: 'Luxury Sedans',
       description: 'Comfortable and stylish sedans for your journey'
     },
     {
-      url: 'https://images.unsplash.com/photo-1556189250-72ba954cfc2b?q=80&w=2070&auto=format&fit=crop',
+      url: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg',
       title: 'Spacious SUVs',
       description: 'Perfect for family trips and group travel'
     },
     {
-      url: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=2064&auto=format&fit=crop',
+      url: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg',
       title: 'Premium INNOVA',
       description: 'Experience luxury with our premium fleet'
     },
@@ -441,7 +441,7 @@ const Home = () => {
       maxWidth: '500px',
       margin: '0 auto',
       width: '100%',
-      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+      backgroundColor: 'rgba(130, 42, 20, 0.95)',
       backdropFilter: 'blur(10px)',
       boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
     },
@@ -925,54 +925,210 @@ const Home = () => {
                     </Row>
 
                     {/* Select Car Type */}
-                    <div className="mb-3">
-                      <label className="fw-bold form-label" style={formStyles.label}>
-                        Select Car Type *
-                      </label>
-                      
-                      <div className="d-flex flex-column gap-1">
-                        {/* SEDAN */}
-                        <div 
-                          className={`border rounded d-flex justify-content-between align-items-center car-select-box ${formData.carType === 'SEDAN' ? 'border-warning bg-warning bg-opacity-10' : ''}`}
-                          style={{ ...formStyles.carSelectBox, cursor: 'pointer' }}
-                          onClick={() => selectCar('SEDAN')}
-                        >
-                          <span className="fw-bold">SEDAN</span>
-                          <span className="text-warning fw-bold">(₹14/km)</span>
-                        </div>
+                    {/* Select Car Type */}
+<div className="mb-3">
+  <label className="fw-bold form-label mb-3" style={{ fontSize: '1.1rem' }}>
+    Select Car Type *
+  </label>
+  
+  {/* Car Selection Grid - 2 Columns with Photos */}
+  <Row className="g-3">
+    {/* SEDAN */}
+    <Col xs={6}>
+      <div 
+        className={`car-option ${formData.carType === 'SEDAN' ? 'selected' : ''}`}
+        style={{
+          border: `2px solid ${formData.carType === 'SEDAN' ? '#ffc107' : '#dee2e6'}`,
+          borderRadius: '12px',
+          padding: '12px',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          backgroundColor: formData.carType === 'SEDAN' ? '#fff3cd' : 'white',
+          height: '100%'
+        }}
+        onClick={() => selectCar('SEDAN')}
+        onMouseEnter={(e) => {
+          if (formData.carType !== 'SEDAN') {
+            e.currentTarget.style.borderColor = '#ffc107';
+            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (formData.carType !== 'SEDAN') {
+            e.currentTarget.style.borderColor = '#dee2e6';
+            e.currentTarget.style.boxShadow = 'none';
+          }
+        }}
+      >
+        <img 
+          src="https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg"
+          alt="SEDAN"
+          style={{
+            width: '100%',
+            height: '90px',
+            objectFit: 'cover',
+            borderRadius: '8px',
+            marginBottom: '8px'
+          }}
+        />
+        <div className="fw-bold text-center">SEDAN</div>
+        <div className="text-warning fw-bold text-center">₹14/km</div>
+      </div>
+    </Col>
 
-                        {/* ETIOS */}
-                        <div 
-                          className={`border rounded d-flex justify-content-between align-items-center car-select-box ${formData.carType === 'ETIOS' ? 'border-warning bg-warning bg-opacity-10' : ''}`}
-                          style={{ ...formStyles.carSelectBox, cursor: 'pointer' }}
-                          onClick={() => selectCar('ETIOS')}
-                        >
-                          <span className="fw-bold">ETIOS</span>
-                          <span className="text-warning fw-bold">(₹15/km)</span>
-                        </div>
+    {/* ETIOS */}
+    <Col xs={6}>
+      <div 
+        className={`car-option ${formData.carType === 'ETIOS' ? 'selected' : ''}`}
+        style={{
+          border: `2px solid ${formData.carType === 'ETIOS' ? '#ffc107' : '#dee2e6'}`,
+          borderRadius: '12px',
+          padding: '12px',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          backgroundColor: formData.carType === 'ETIOS' ? '#fff3cd' : 'white',
+          height: '100%'
+        }}
+        onClick={() => selectCar('ETIOS')}
+        onMouseEnter={(e) => {
+          if (formData.carType !== 'ETIOS') {
+            e.currentTarget.style.borderColor = '#ffc107';
+            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (formData.carType !== 'ETIOS') {
+            e.currentTarget.style.borderColor = '#dee2e6';
+            e.currentTarget.style.boxShadow = 'none';
+          }
+        }}
+      >
+        <img 
+          src="https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg"
+          alt="ETIOS"
+          style={{
+            width: '100%',
+            height: '90px',
+            objectFit: 'cover',
+            borderRadius: '8px',
+            marginBottom: '8px'
+          }}
+        />
+        <div className="fw-bold text-center">ETIOS</div>
+        <div className="text-warning fw-bold text-center">₹15/km</div>
+      </div>
+    </Col>
 
-                        {/* MUV */}
-                        <div 
-                          className={`border rounded d-flex justify-content-between align-items-center car-select-box ${formData.carType === 'MUV' ? 'border-warning bg-warning bg-opacity-10' : ''}`}
-                          style={{ ...formStyles.carSelectBox, cursor: 'pointer' }}
-                          onClick={() => selectCar('MUV')}
-                        >
-                          <span className="fw-bold">MUV</span>
-                          <span className="text-warning fw-bold">(₹19/km)</span>
-                        </div>
+    {/* MUV */}
+    <Col xs={6}>
+      <div 
+        className={`car-option ${formData.carType === 'MUV' ? 'selected' : ''}`}
+        style={{
+          border: `2px solid ${formData.carType === 'MUV' ? '#ffc107' : '#dee2e6'}`,
+          borderRadius: '12px',
+          padding: '12px',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          backgroundColor: formData.carType === 'MUV' ? '#fff3cd' : 'white',
+          height: '100%'
+        }}
+        onClick={() => selectCar('MUV')}
+        onMouseEnter={(e) => {
+          if (formData.carType !== 'MUV') {
+            e.currentTarget.style.borderColor = '#ffc107';
+            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (formData.carType !== 'MUV') {
+            e.currentTarget.style.borderColor = '#dee2e6';
+            e.currentTarget.style.boxShadow = 'none';
+          }
+        }}
+      >
+        <img 
+          src="https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg"
+          alt="MUV"
+          style={{
+            width: '100%',
+            height: '90px',
+            objectFit: 'cover',
+            borderRadius: '8px',
+            marginBottom: '8px'
+          }}
+        />
+        <div className="fw-bold text-center">MUV</div>
+        <div className="text-warning fw-bold text-center">₹19/km</div>
+      </div>
+    </Col>
 
-                        {/* INNOVA */}
-                        <div 
-                          className={`border rounded d-flex justify-content-between align-items-center car-select-box ${formData.carType === 'INNOVA' ? 'border-warning bg-warning bg-opacity-10' : ''}`}
-                          style={{ ...formStyles.carSelectBox, cursor: 'pointer' }}
-                          onClick={() => selectCar('INNOVA')}
-                        >
-                          <span className="fw-bold">INNOVA</span>
-                          <span className="text-warning fw-bold">(₹20/km)</span>
-                        </div>
-                      </div>
-                    </div>
+    {/* INNOVA */}
+    <Col xs={6}>
+      <div 
+        className={`car-option ${formData.carType === 'INNOVA' ? 'selected' : ''}`}
+        style={{
+          border: `2px solid ${formData.carType === 'INNOVA' ? '#ffc107' : '#dee2e6'}`,
+          borderRadius: '12px',
+          padding: '12px',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          backgroundColor: formData.carType === 'INNOVA' ? '#fff3cd' : 'white',
+          height: '100%'
+        }}
+        onClick={() => selectCar('INNOVA')}
+        onMouseEnter={(e) => {
+          if (formData.carType !== 'INNOVA') {
+            e.currentTarget.style.borderColor = '#ffc107';
+            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (formData.carType !== 'INNOVA') {
+            e.currentTarget.style.borderColor = '#dee2e6';
+            e.currentTarget.style.boxShadow = 'none';
+          }
+        }}
+      >
+        <img 
+          src="https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg"
+          alt="INNOVA"
+          style={{
+            width: '100%',
+            height: '90px',
+            objectFit: 'cover',
+            borderRadius: '8px',
+            marginBottom: '8px'
+          }}
+        />
+        <div className="fw-bold text-center">INNOVA</div>
+        <div className="text-warning fw-bold text-center">₹20/km</div>
+      </div>
+    </Col>
+  </Row>
+</div>
 
+{/* Add CSS for animations */}
+<style>{`
+  .car-option {
+    transition: all 0.3s ease;
+  }
+  .car-option:hover {
+    transform: translateY(-3px);
+  }
+  .car-option.selected {
+    border-color: #ffc107;
+    background-color: #e8f001ff;
+    box-shadow: 0 6px 12px rgba(255,193,7,0.3);
+  }
+  @media (max-width: 576px) {
+    .car-option img {
+      height: 70px !important;
+    }
+    .car-option {
+      padding: 8px !important;
+    }
+  }
+`}</style>
                     {/* Fare Estimate */}
                     {fareEstimate && (
                       <div className="bg-light rounded mb-3 fare-box" style={formStyles.fareBox}>
