@@ -1381,7 +1381,7 @@ const Home = () => {
                         />
                       </Col>
                     </Row>
-
+ 
                     {/* Select Car Type */}
                     <div className="mb-3">
                       <label className="fw-bold form-label mb-3" style={{ fontSize: '1.1rem' }}>
