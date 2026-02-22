@@ -28,20 +28,21 @@ import {
   FaMoneyBill,
   FaMountain,
   FaWater,
-  FaTree,
   FaSun,
-  FaCloudSun,
   FaEnvelope,
   FaFacebook,
   FaTwitter,
   FaInstagram,
-  FaYoutube
+  FaYoutube,
+  FaPhoneAlt,
+  FaWhatsappSquare
 } from 'react-icons/fa';
 
 const API_URL = 'https://leo-drop-taxi.onrender.com/api';
 
 // Client WhatsApp number
 const CLIENT_WHATSAPP_NUMBER = '916381095854';
+const CLIENT_PHONE_NUMBER = '916381095854';
 
 const Home = () => {
   const { user } = useAuth();
@@ -814,6 +815,13 @@ const Home = () => {
         .p-5 {
           padding: 1.5rem !important;
         }
+        
+        /* Floating icons for mobile */
+        .floating-icon {
+          width: 45px !important;
+          height: 45px !important;
+          font-size: 20px !important;
+        }
       }
       
       @media (max-width: 480px) {
@@ -853,6 +861,202 @@ const Home = () => {
     <div className="fade-in">
       {/* Inject mobile styles */}
       <style>{formStyles.mobileStyles}</style>
+
+      {/* =========================================== */}
+      {/* FLOATING WHATSAPP AND PHONE ICONS - Like Screenshot */}
+      {/* =========================================== */}
+      
+      {/* Left Side - WhatsApp Icon */}
+      <a 
+        href={`https://wa.me/${CLIENT_WHATSAPP_NUMBER}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="floating-icon whatsapp-icon"
+        style={{
+          position: 'fixed',
+          left: '20px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          backgroundColor: '#25d366',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '30px',
+          boxShadow: '0 4px 15px rgba(37, 211, 102, 0.4)',
+          cursor: 'pointer',
+          zIndex: 1000,
+          transition: 'all 0.3s ease',
+          textDecoration: 'none',
+          animation: 'pulse 2s infinite'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+          e.currentTarget.style.boxShadow = '0 8px 25px rgba(37, 211, 102, 0.6)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+          e.currentTarget.style.boxShadow = '0 4px 15px rgba(37, 211, 102, 0.4)';
+        }}
+      >
+        <FaWhatsapp />
+        
+        {/* Tooltip */}
+        <span style={{
+          position: 'absolute',
+          left: '70px',
+          backgroundColor: '#25d366',
+          color: 'white',
+          padding: '5px 15px',
+          borderRadius: '20px',
+          fontSize: '14px',
+          whiteSpace: 'nowrap',
+          opacity: 0,
+          visibility: 'hidden',
+          transition: 'all 0.3s ease',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
+        }} className="whatsapp-tooltip">
+          WhatsApp Us
+        </span>
+      </a>
+
+      {/* Right Side - Phone Icon */}
+      <a 
+        href={`tel:+${CLIENT_PHONE_NUMBER}`}
+        className="floating-icon phone-icon"
+        style={{
+          position: 'fixed',
+          right: '20px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          backgroundColor: '#ffc107',
+          color: 'black',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '30px',
+          boxShadow: '0 4px 15px rgba(255, 193, 7, 0.4)',
+          cursor: 'pointer',
+          zIndex: 1000,
+          transition: 'all 0.3s ease',
+          textDecoration: 'none',
+          animation: 'pulse 2s infinite 0.5s'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+          e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 193, 7, 0.6)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+          e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 193, 7, 0.4)';
+        }}
+      >
+        <FaPhone />
+        
+        {/* Tooltip */}
+        <span style={{
+          position: 'absolute',
+          right: '70px',
+          backgroundColor: '#ffc107',
+          color: 'black',
+          padding: '5px 15px',
+          borderRadius: '20px',
+          fontSize: '14px',
+          whiteSpace: 'nowrap',
+          opacity: 0,
+          visibility: 'hidden',
+          transition: 'all 0.3s ease',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
+        }} className="phone-tooltip">
+          Call Us Now
+        </span>
+      </a>
+
+      {/* Add CSS for animations and hover effects */}
+      <style>{`
+        /* Pulse animation */
+        @keyframes pulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+          }
+          70% {
+            box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+          }
+        }
+        
+        .phone-icon {
+          animation-name: pulse-phone !important;
+        }
+        
+        @keyframes pulse-phone {
+          0% {
+            box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+          }
+          70% {
+            box-shadow: 0 0 0 15px rgba(255, 193, 7, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+          }
+        }
+        
+        /* Tooltip on hover */
+        .floating-icon:hover .whatsapp-tooltip,
+        .floating-icon:hover .phone-tooltip {
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+          .floating-icon {
+            width: 45px !important;
+            height: 45px !important;
+            font-size: 22px !important;
+          }
+          
+          .floating-icon .whatsapp-tooltip,
+          .floating-icon .phone-tooltip {
+            display: none !important;
+          }
+        }
+        
+        /* Car option styles */
+        .car-option {
+          transition: all 0.3s ease;
+        }
+        .car-option:hover {
+          transform: translateY(-3px);
+        }
+        .car-option.selected {
+          border-color: #ffc107;
+          background-color: #fff3cd;
+          box-shadow: 0 6px 12px rgba(255,193,7,0.3);
+        }
+        .route-image {
+          transition: transform 0.5s ease;
+        }
+        .route-image:hover {
+          transform: scale(1.1);
+        }
+        @media (max-width: 576px) {
+          .car-option img {
+            height: 70px !important;
+          }
+          .car-option {
+            padding: 8px !important;
+          }
+        }
+      `}</style>
 
       {/* Hero Section with Carousel and Form */}
       <section 
@@ -1717,35 +1921,6 @@ const Home = () => {
           )}
         </Modal.Body>
       </Modal>
-
-      {/* Add CSS for animations */}
-      <style>{`
-        .car-option {
-          transition: all 0.3s ease;
-        }
-        .car-option:hover {
-          transform: translateY(-3px);
-        }
-        .car-option.selected {
-          border-color: #ffc107;
-          background-color: #fff3cd;
-          box-shadow: 0 6px 12px rgba(255,193,7,0.3);
-        }
-        .route-image {
-          transition: transform 0.5s ease;
-        }
-        .route-image:hover {
-          transform: scale(1.1);
-        }
-        @media (max-width: 576px) {
-          .car-option img {
-            height: 70px !important;
-          }
-          .car-option {
-            padding: 8px !important;
-          }
-        }
-      `}</style>
     </div>
   );
 };
