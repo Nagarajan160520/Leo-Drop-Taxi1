@@ -48,7 +48,7 @@ const Navbar = () => {
                Routes
             </Nav.Link>
             <Nav.Link as={Link} to="/customer-info" className="text-white mx-2 px-3 py-2">
-              <FaInfoCircle className="me-1" /> Customer 
+              <FaInfoCircle className="me-1" /> Customer Info
             </Nav.Link>
             <Nav.Link as={Link} to="/about" className="text-white mx-2 px-3 py-2">About</Nav.Link>
             <Nav.Link as={Link} to="/contact" className="text-white mx-2 px-3 py-2">Contact</Nav.Link>
