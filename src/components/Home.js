@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col, Button, Card, Badge, Modal, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Container, Row, Col, Button, Card, Modal,Carousel,Alert}from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'; 
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -13,7 +13,6 @@ import {
   FaCheckCircle,
   FaUser,
   FaCalendarAlt,
-  FaHistory,
   FaChevronLeft,
   FaChevronRight,
   FaQuoteLeft,
@@ -22,20 +21,14 @@ import {
   FaUsers,
   FaAward,
   FaHeart,
-  FaHandshake,
+  
   FaInfoCircle,
   FaRoad,
-  FaMoneyBill,
+ 
   FaMountain,
   FaWater,
   FaSun,
-  FaEnvelope,
-  FaFacebook,
-  FaTwitter,
-  FaInstagram,
-  FaYoutube,
-  FaPhoneAlt,
-  FaWhatsappSquare
+  FaEnvelope
 } from 'react-icons/fa';
 
 const API_URL = 'https://leo-drop-taxi.onrender.com/api';
@@ -71,7 +64,7 @@ const Home = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [bookingDetails, setBookingDetails] = useState(null);
   const [fareEstimate, setFareEstimate] = useState(null);
-  const [recentBookings, setRecentBookings] = useState([]);
+  const [ setRecentBookings] = useState([]);
 
   // Counter animation states
   const [counters, setCounters] = useState({
@@ -1580,83 +1573,124 @@ const Home = () => {
       </Container>
 
       {/* TARIFF SECTION - From Tariff Page */}
-      <section className="py-5 bg-light">
-        <Container>
-          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
-            <span className="text-warning">Outstation</span> Tariff
-          </h2>
-          <Row>
-            {tariffCars.map((car, index) => (
-              <Col lg={6} md={6} key={index} className="mb-4">
-                <Card className="border-0 shadow h-100" style={{ borderRadius: '20px', overflow: 'hidden' }}>
-                  <div className="position-relative" style={{ height: '250px' }}>
-                    <img 
-                      src={car.image} 
-                      alt={`${car.name} - ${car.model}`}
+      {/* TARIFF SECTION - From Tariff Page with Photo Carousel */}
+<section className="py-5 bg-light">
+  <Container>
+    <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
+      <span className="text-warning">Outstation</span> Tariff
+    </h2>
+    
+    <Row>
+      {tariffCars.map((car, index) => {
+        // Create carousel images for each car
+        const carCarouselImages = [
+          car.image, // Main image
+          car.image2 || car.image, // Second image (if available)
+          car.image3 || car.image, // Third image (if available)
+          car.image4 || car.image  // Fourth image (if available)
+        ];
+        
+        return (
+          <Col lg={6} md={6} key={index} className="mb-4">
+            <Card className="border-0 shadow h-100" style={{ borderRadius: '20px', overflow: 'hidden' }}>
+              {/* Photo Carousel for each car */}
+              <Carousel 
+                interval={3000}
+                indicators={true}
+                controls={true}
+                pause="hover"
+                style={{ height: '280px' }}
+                className="carousel-container"
+              >
+                {carCarouselImages.map((imgUrl, imgIndex) => (
+                  <Carousel.Item key={imgIndex}>
+                    <img
+                      className="d-block w-100"
+                      src={imgUrl}
+                      alt={`${car.name} - ${car.model} - View ${imgIndex + 1}`}
                       style={{
                         width: '100%',
-                        height: '100%',
+                        height: '280px',
                         objectFit: 'cover',
                         objectPosition: 'center'
                       }}
                     />
-                    <div className="position-absolute bottom-0 start-0 w-100 p-3" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)', color: 'white' }}>
-                      <h4 className="fw-bold mb-0">{car.name}</h4>
-                      <p className="mb-0">{car.model}</p>
-                    </div>
-                  </div>
-                  <Card.Body className="p-4">
-                    <div className="mb-4">
-                      <h6 className="fw-bold mb-3">TARIFF</h6>
-                      <Row className="g-3">
-                        <Col xs={6}>
-                          <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
-                            <h6 className="fw-bold mb-2">ONE WAY</h6>
-                            <h5 className="text-warning fw-bold mb-1">
-                              <FaRupeeSign className="me-1" /> {car.oneWayRate}/KM
-                            </h5>
-                            <small className="text-muted">(Min {car.minKmOneWay} KM)</small>
-                          </div>
-                        </Col>
-                        <Col xs={6}>
-                          <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
-                            <h6 className="fw-bold mb-2">ROUND TRIP</h6>
-                            <h5 className="text-warning fw-bold mb-1">
-                              <FaRupeeSign className="me-1" /> {car.roundTripRate}/KM
-                            </h5>
-                            <small className="text-muted">(Min {car.minKmRoundTrip} KM)</small>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                    <div>
-                      <h6 className="fw-bold mb-3"><FaInfoCircle className="text-warning me-2" />INCLUDE WITH</h6>
-                      <Row>
-                        <Col xs={6}>
-                          <ul className="list-unstyled">
-                            <li className="mb-2">• Driver Bata <strong>₹{car.driverBata}</strong></li>
-                            <li className="mb-2">• Hillstation Charges <strong>₹{car.hillCharges}</strong></li>
-                          </ul>
-                        </Col>
-                        <Col xs={6}>
-                          <ul className="list-unstyled">
-                            <li className="mb-2">• Other State Permit <strong>₹{car.permitCharge}/KM</strong></li>
-                            <li className="mb-2">• Parking</li>
-                          </ul>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-          <div className="text-center mt-4">
-            <Button variant="warning" onClick={() => navigate('/tariff')}>View All Tariffs</Button>
-          </div>
-        </Container>
-      </section>
+                    <Carousel.Caption className="bg-gradient" style={{ bottom: '0', left: '0', right: '0', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', textAlign: 'left' }}>
+                      <h5 className="fw-bold mb-0">{car.name}</h5>
+                      <p className="mb-0 small">{car.model}</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                ))}
+              </Carousel>
 
+              <Card.Body className="p-4">
+                {/* TARIFF Section */}
+                <div className="mb-4">
+                  <h6 className="fw-bold mb-3">TARIFF</h6>
+                  <Row className="g-3">
+                    <Col xs={6}>
+                      <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
+                        <h6 className="fw-bold mb-2">ONE WAY</h6>
+                        <h5 className="text-warning fw-bold mb-1">
+                          <FaRupeeSign className="me-1" /> {car.oneWayRate}/KM
+                        </h5>
+                        <small className="text-muted">(Min {car.minKmOneWay} KM)</small>
+                      </div>
+                    </Col>
+                    <Col xs={6}>
+                      <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
+                        <h6 className="fw-bold mb-2">ROUND TRIP</h6>
+                        <h5 className="text-warning fw-bold mb-1">
+                          <FaRupeeSign className="me-1" /> {car.roundTripRate}/KM
+                        </h5>
+                        <small className="text-muted">(Min {car.minKmRoundTrip} KM)</small>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+
+                {/* INCLUDE WITH Section */}
+                <div>
+                  <h6 className="fw-bold mb-3"><FaInfoCircle className="text-warning me-2" />INCLUDE WITH</h6>
+                  <Row>
+                    <Col xs={6}>
+                      <ul className="list-unstyled">
+                        <li className="mb-2 d-flex align-items-center">
+                          <span className="text-warning me-2 fw-bold">•</span>
+                          Driver Bata <strong className="ms-1">₹{car.driverBata}</strong>
+                        </li>
+                        <li className="mb-2 d-flex align-items-center">
+                          <span className="text-warning me-2 fw-bold">•</span>
+                          Hillstation Charges <strong className="ms-1">₹{car.hillCharges}</strong>
+                        </li>
+                      </ul>
+                    </Col>
+                    <Col xs={6}>
+                      <ul className="list-unstyled">
+                        <li className="mb-2 d-flex align-items-center">
+                          <span className="text-warning me-2 fw-bold">•</span>
+                          Other State Permit <strong className="ms-1">₹{car.permitCharge}/KM</strong>
+                        </li>
+                        <li className="mb-2 d-flex align-items-center">
+                          <span className="text-warning me-2 fw-bold">•</span>
+                          Tolls & Parking
+                        </li>
+                      </ul>
+                    </Col>
+                  </Row>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        );
+      })}
+    </Row>
+    
+    <div className="text-center mt-4">
+      <Button variant="warning" onClick={() => navigate('/tariff')}>View All Tariffs</Button>
+    </div>
+  </Container>
+</section>
       {/* POPULAR ROUTES SECTION - From PopularRoutes Page */}
       <section className="py-5">
         <Container>
