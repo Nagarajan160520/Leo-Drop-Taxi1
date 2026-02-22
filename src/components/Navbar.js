@@ -24,6 +24,7 @@ const Navbar = () => {
             style={{ 
               height: '50px', 
               width: 'auto', 
+              borderRadius: '15px',
               marginRight: '10px',
               objectFit: 'contain'
             }} 
