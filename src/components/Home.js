@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col, Button, Card, Modal,Carousel,Alert}from 'react-bootstrap';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Container, Row, Col, Button, Card, Modal, Carousel, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'; 
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
@@ -21,10 +21,8 @@ import {
   FaUsers,
   FaAward,
   FaHeart,
-  
   FaInfoCircle,
   FaRoad,
- 
   FaMountain,
   FaWater,
   FaSun,
@@ -64,7 +62,8 @@ const Home = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [bookingDetails, setBookingDetails] = useState(null);
   const [fareEstimate, setFareEstimate] = useState(null);
-  const [ setRecentBookings] = useState([]);
+  // recentBookings is used but we'll comment it out for now since it's not being used in the UI
+  // const [recentBookings, setRecentBookings] = useState([]);
 
   // Counter animation states
   const [counters, setCounters] = useState({
@@ -115,7 +114,7 @@ const Home = () => {
     };
   }, [isAutoPlaying, carouselImages.length]);
 
-  // Intersection Observer for stats animation
+  // Intersection Observer for stats animation - FIXED
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -126,13 +125,15 @@ const Home = () => {
       { threshold: 0.3 }
     );
 
-    if (statsRef.current) {
-      observer.observe(statsRef.current);
+    const currentRef = statsRef.current;
+
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (statsRef.current) {
-        observer.unobserve(statsRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -249,19 +250,8 @@ const Home = () => {
     fetchCars();
   }, []);
 
-  // Fetch user's recent bookings
-  useEffect(() => {
-    if (user) {
-      fetchRecentBookings();
-      setFormData(prev => ({
-        ...prev,
-        name: user.name || '',
-        mobile: user.phone || ''
-      }));
-    }
-  }, [user]);
-
-  const fetchRecentBookings = async () => {
+  // Fetch user's recent bookings - FIXED with useCallback
+  const fetchRecentBookings = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) return;
@@ -271,11 +261,23 @@ const Home = () => {
       });
       
       const recent = response.data.data.slice(0, 3);
-      setRecentBookings(recent);
+      // setRecentBookings(recent); // Commented out since we're not using recentBookings
+      console.log('Recent bookings:', recent); // Optional: log for debugging
     } catch (error) {
       console.error('Error fetching recent bookings:', error);
     }
-  };
+  }, []); // Empty dependency array since it doesn't depend on any props/state
+
+  useEffect(() => {
+    if (user) {
+      fetchRecentBookings();
+      setFormData(prev => ({
+        ...prev,
+        name: user.name || '',
+        mobile: user.phone || ''
+      }));
+    }
+  }, [user, fetchRecentBookings]); // Now includes fetchRecentBookings in dependencies
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -466,7 +468,8 @@ const Home = () => {
       localStorage.setItem('localBookings', JSON.stringify(localBookings.slice(0, 10)));
       
       setBookingDetails(bookingData);
-      setRecentBookings(prev => [bookingData, ...prev.slice(0, 2)]);
+      // Commented out since we're not using recentBookings
+      // setRecentBookings(prev => [bookingData, ...prev.slice(0, 2)]);
       
       const clientMessage = generateWhatsAppMessage(bookingData);
       sendWhatsAppToClient(clientMessage);
@@ -509,16 +512,7 @@ const Home = () => {
     { name: 'Rajesh K.', text: 'The driver was polite and knew the best route to avoid traffic.', rating: 5 }
   ];
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-IN', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric'
-    });
-  };
-
-  // Tariff Data
+  // Tariff Data with additional images for carousel
   const tariffCars = [
     {
       name: 'SEDAN',
@@ -530,7 +524,10 @@ const Home = () => {
       driverBata: 400,
       hillCharges: 300,
       permitCharge: 14,
-      image: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg'
+      image: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg',
+      image2: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=2064&auto=format&fit=crop',
+      image3: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg',
+      image4: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg'
     },
     {
       name: 'SEDAN',
@@ -542,7 +539,10 @@ const Home = () => {
       driverBata: 400,
       hillCharges: 300,
       permitCharge: 14,
-      image: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg'
+      image: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg',
+      image2: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2070&auto=format&fit=crop',
+      image3: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg',
+      image4: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg'
     },
     {
       name: 'SUV',
@@ -554,7 +554,10 @@ const Home = () => {
       driverBata: 500,
       hillCharges: 500,
       permitCharge: 14,
-      image: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg'
+      image: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg',
+      image2: 'https://images.unsplash.com/photo-1556189250-72ba954cfc2b?q=80&w=2070&auto=format&fit=crop',
+      image3: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg',
+      image4: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg'
     },
     {
       name: 'INNOVA',
@@ -566,7 +569,10 @@ const Home = () => {
       driverBata: 500,
       hillCharges: 500,
       permitCharge: 14,
-      image: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg'
+      image: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg',
+      image2: 'https://images.unsplash.com/photo-1556189250-72ba954cfc2b?q=80&w=2070&auto=format&fit=crop',
+      image3: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg',
+      image4: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg'
     }
   ];
 
@@ -855,9 +861,7 @@ const Home = () => {
       {/* Inject mobile styles */}
       <style>{formStyles.mobileStyles}</style>
 
-      {/* =========================================== */}
-      {/* FLOATING WHATSAPP AND PHONE ICONS - Like Screenshot */}
-      {/* =========================================== */}
+      {/* FLOATING WHATSAPP AND PHONE ICONS */}
       
       {/* Left Side - WhatsApp Icon */}
       <a 
@@ -1041,12 +1045,66 @@ const Home = () => {
         .route-image:hover {
           transform: scale(1.1);
         }
+        
+        /* Carousel styles */
+        .carousel .carousel-indicators {
+          margin-bottom: 0.5rem;
+        }
+        
+        .carousel .carousel-indicators button {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          margin: 0 4px;
+        }
+        
+        .carousel .carousel-control-prev,
+        .carousel .carousel-control-next {
+          width: 10%;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        
+        .carousel-container:hover .carousel-control-prev,
+        .carousel-container:hover .carousel-control-next {
+          opacity: 1;
+        }
+        
+        .carousel .carousel-control-prev-icon,
+        .carousel .carousel-control-next-icon {
+          background-color: rgba(0,0,0,0.5);
+          border-radius: 50%;
+          padding: 10px;
+        }
+        
+        .carousel .carousel-caption {
+          padding: 10px;
+          background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+          left: 0;
+          right: 0;
+          bottom: 0;
+          text-align: left;
+        }
+        
         @media (max-width: 576px) {
           .car-option img {
             height: 70px !important;
           }
           .car-option {
             padding: 8px !important;
+          }
+          
+          .carousel .carousel-control-prev,
+          .carousel .carousel-control-next {
+            opacity: 0.5;
+          }
+          
+          .carousel .carousel-caption h5 {
+            font-size: 1rem;
+          }
+          
+          .carousel .carousel-caption p {
+            font-size: 0.8rem;
           }
         }
       `}</style>
@@ -1572,126 +1630,126 @@ const Home = () => {
         </Row>
       </Container>
 
-      {/* TARIFF SECTION - From Tariff Page */}
-      {/* TARIFF SECTION - From Tariff Page with Photo Carousel */}
-<section className="py-5 bg-light">
-  <Container>
-    <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
-      <span className="text-warning">Outstation</span> Tariff
-    </h2>
-    
-    <Row>
-      {tariffCars.map((car, index) => {
-        // Create carousel images for each car
-        const carCarouselImages = [
-          car.image, // Main image
-          car.image2 || car.image, // Second image (if available)
-          car.image3 || car.image, // Third image (if available)
-          car.image4 || car.image  // Fourth image (if available)
-        ];
-        
-        return (
-          <Col lg={6} md={6} key={index} className="mb-4">
-            <Card className="border-0 shadow h-100" style={{ borderRadius: '20px', overflow: 'hidden' }}>
-              {/* Photo Carousel for each car */}
-              <Carousel 
-                interval={3000}
-                indicators={true}
-                controls={true}
-                pause="hover"
-                style={{ height: '280px' }}
-                className="carousel-container"
-              >
-                {carCarouselImages.map((imgUrl, imgIndex) => (
-                  <Carousel.Item key={imgIndex}>
-                    <img
-                      className="d-block w-100"
-                      src={imgUrl}
-                      alt={`${car.name} - ${car.model} - View ${imgIndex + 1}`}
-                      style={{
-                        width: '100%',
-                        height: '280px',
-                        objectFit: 'cover',
-                        objectPosition: 'center'
-                      }}
-                    />
-                    <Carousel.Caption className="bg-gradient" style={{ bottom: '0', left: '0', right: '0', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', textAlign: 'left' }}>
-                      <h5 className="fw-bold mb-0">{car.name}</h5>
-                      <p className="mb-0 small">{car.model}</p>
-                    </Carousel.Caption>
-                  </Carousel.Item>
-                ))}
-              </Carousel>
+      {/* TARIFF SECTION - With Photo Carousel */}
+      <section className="py-5 bg-light">
+        <Container>
+          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
+            <span className="text-warning">Outstation</span> Tariff
+          </h2>
+          
+          <Row>
+            {tariffCars.map((car, index) => {
+              // Create carousel images for each car
+              const carCarouselImages = [
+                car.image,
+                car.image2,
+                car.image3,
+                car.image4
+              ];
+              
+              return (
+                <Col lg={6} md={6} key={index} className="mb-4">
+                  <Card className="border-0 shadow h-100" style={{ borderRadius: '20px', overflow: 'hidden' }}>
+                    {/* Photo Carousel for each car */}
+                    <Carousel 
+                      interval={3000}
+                      indicators={true}
+                      controls={true}
+                      pause="hover"
+                      style={{ height: '280px' }}
+                      className="carousel-container"
+                    >
+                      {carCarouselImages.map((imgUrl, imgIndex) => (
+                        <Carousel.Item key={imgIndex}>
+                          <img
+                            className="d-block w-100"
+                            src={imgUrl}
+                            alt={`${car.name} - ${car.model} - View ${imgIndex + 1}`}
+                            style={{
+                              width: '100%',
+                              height: '280px',
+                              objectFit: 'cover',
+                              objectPosition: 'center'
+                            }}
+                          />
+                          <Carousel.Caption style={{ bottom: '0', left: '0', right: '0', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', textAlign: 'left' }}>
+                            <h5 className="fw-bold mb-0">{car.name}</h5>
+                            <p className="mb-0 small">{car.model}</p>
+                          </Carousel.Caption>
+                        </Carousel.Item>
+                      ))}
+                    </Carousel>
 
-              <Card.Body className="p-4">
-                {/* TARIFF Section */}
-                <div className="mb-4">
-                  <h6 className="fw-bold mb-3">TARIFF</h6>
-                  <Row className="g-3">
-                    <Col xs={6}>
-                      <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
-                        <h6 className="fw-bold mb-2">ONE WAY</h6>
-                        <h5 className="text-warning fw-bold mb-1">
-                          <FaRupeeSign className="me-1" /> {car.oneWayRate}/KM
-                        </h5>
-                        <small className="text-muted">(Min {car.minKmOneWay} KM)</small>
+                    <Card.Body className="p-4">
+                      {/* TARIFF Section */}
+                      <div className="mb-4">
+                        <h6 className="fw-bold mb-3">TARIFF</h6>
+                        <Row className="g-3">
+                          <Col xs={6}>
+                            <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
+                              <h6 className="fw-bold mb-2">ONE WAY</h6>
+                              <h5 className="text-warning fw-bold mb-1">
+                                <FaRupeeSign className="me-1" /> {car.oneWayRate}/KM
+                              </h5>
+                              <small className="text-muted">(Min {car.minKmOneWay} KM)</small>
+                            </div>
+                          </Col>
+                          <Col xs={6}>
+                            <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
+                              <h6 className="fw-bold mb-2">ROUND TRIP</h6>
+                              <h5 className="text-warning fw-bold mb-1">
+                                <FaRupeeSign className="me-1" /> {car.roundTripRate}/KM
+                              </h5>
+                              <small className="text-muted">(Min {car.minKmRoundTrip} KM)</small>
+                            </div>
+                          </Col>
+                        </Row>
                       </div>
-                    </Col>
-                    <Col xs={6}>
-                      <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
-                        <h6 className="fw-bold mb-2">ROUND TRIP</h6>
-                        <h5 className="text-warning fw-bold mb-1">
-                          <FaRupeeSign className="me-1" /> {car.roundTripRate}/KM
-                        </h5>
-                        <small className="text-muted">(Min {car.minKmRoundTrip} KM)</small>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
 
-                {/* INCLUDE WITH Section */}
-                <div>
-                  <h6 className="fw-bold mb-3"><FaInfoCircle className="text-warning me-2" />INCLUDE WITH</h6>
-                  <Row>
-                    <Col xs={6}>
-                      <ul className="list-unstyled">
-                        <li className="mb-2 d-flex align-items-center">
-                          <span className="text-warning me-2 fw-bold">•</span>
-                          Driver Bata <strong className="ms-1">₹{car.driverBata}</strong>
-                        </li>
-                        <li className="mb-2 d-flex align-items-center">
-                          <span className="text-warning me-2 fw-bold">•</span>
-                          Hillstation Charges <strong className="ms-1">₹{car.hillCharges}</strong>
-                        </li>
-                      </ul>
-                    </Col>
-                    <Col xs={6}>
-                      <ul className="list-unstyled">
-                        <li className="mb-2 d-flex align-items-center">
-                          <span className="text-warning me-2 fw-bold">•</span>
-                          Other State Permit <strong className="ms-1">₹{car.permitCharge}/KM</strong>
-                        </li>
-                        <li className="mb-2 d-flex align-items-center">
-                          <span className="text-warning me-2 fw-bold">•</span>
-                          Tolls & Parking
-                        </li>
-                      </ul>
-                    </Col>
-                  </Row>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        );
-      })}
-    </Row>
-    
-    <div className="text-center mt-4">
-      <Button variant="warning" onClick={() => navigate('/tariff')}>View All Tariffs</Button>
-    </div>
-  </Container>
-</section>
-      {/* POPULAR ROUTES SECTION - From PopularRoutes Page */}
+                      {/* INCLUDE WITH Section */}
+                      <div>
+                        <h6 className="fw-bold mb-3"><FaInfoCircle className="text-warning me-2" />INCLUDE WITH</h6>
+                        <Row>
+                          <Col xs={6}>
+                            <ul className="list-unstyled">
+                              <li className="mb-2 d-flex align-items-center">
+                                <span className="text-warning me-2 fw-bold">•</span>
+                                Driver Bata <strong className="ms-1">₹{car.driverBata}</strong>
+                              </li>
+                              <li className="mb-2 d-flex align-items-center">
+                                <span className="text-warning me-2 fw-bold">•</span>
+                                Hillstation Charges <strong className="ms-1">₹{car.hillCharges}</strong>
+                              </li>
+                            </ul>
+                          </Col>
+                          <Col xs={6}>
+                            <ul className="list-unstyled">
+                              <li className="mb-2 d-flex align-items-center">
+                                <span className="text-warning me-2 fw-bold">•</span>
+                                Other State Permit <strong className="ms-1">₹{car.permitCharge}/KM</strong>
+                              </li>
+                              <li className="mb-2 d-flex align-items-center">
+                                <span className="text-warning me-2 fw-bold">•</span>
+                                Tolls & Parking
+                              </li>
+                            </ul>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+            })}
+          </Row>
+          
+          <div className="text-center mt-4">
+            <Button variant="warning" onClick={() => navigate('/tariff')}>View All Tariffs</Button>
+          </div>
+        </Container>
+      </section>
+
+      {/* POPULAR ROUTES SECTION */}
       <section className="py-5">
         <Container>
           <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
@@ -1743,7 +1801,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* ABOUT SECTION - From About Page */}
+      {/* ABOUT SECTION */}
       <section className="py-5 bg-light">
         <Container>
           <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
@@ -1842,7 +1900,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* CONTACT SECTION - From Contact Page */}
+      {/* CONTACT SECTION */}
       <section className="py-5">
         <Container>
           <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
