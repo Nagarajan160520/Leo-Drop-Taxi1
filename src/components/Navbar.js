@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Navbar as BSNavbar, Nav, Container, Button } from 'react-bootstrap';
-import { FaUser, FaSignOutAlt, FaSignInAlt, FaUserPlus, FaPhone, FaInfoCircle } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaPhone, FaInfoCircle } from 'react-icons/fa';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -14,23 +14,22 @@ const Navbar = () => {
   };
 
   return (
-    <BSNavbar bg="black" variant="dark" expand="lg" className="shadow-lg" sticky="top" style={{ minHeight: '70px' }}>
+    <BSNavbar bg="black" variant="white" expand="lg" className="shadow-lg" sticky="top" style={{ minHeight: '70px' }}>
       <Container>
         <BSNavbar.Brand as={Link} to="/" className="d-flex align-items-center">
-          {/* Logo Image - Correct Size & Alignment */}
+          {/* Logo from public folder */}
           <img 
-            src="https://i.pinimg.com/1200x/e9/4c/89/e94c89799198b1ecc9721e5f42814f59.jpg" 
-            alt="Leo Drop Taxi" 
+            src="/images/logo.png"
+            alt="Leo Drop Taxi"
             style={{ 
-              height: '40px', 
-              width: '40px', 
+              height: '50px', 
+              width: 'auto', 
               marginRight: '10px',
-              objectFit: 'cover',
-              borderRadius: '5px'
+              objectFit: 'contain'
             }} 
           />
           <span style={{ fontSize: '22px', fontWeight: 'bold', lineHeight: '40px' }}>
-            Lexus Drop <span className="text-warning">Taxi</span>
+            
           </span>
         </BSNavbar.Brand>
 
@@ -41,12 +40,8 @@ const Navbar = () => {
         <BSNavbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto" style={{ alignItems: 'center' }}>
             <Nav.Link as={Link} to="/" className="text-white mx-2 px-3 py-2">Home</Nav.Link>
-            <Nav.Link as={Link} to="/tariff" className="text-white mx-2 px-3 py-2">
-               Tariff
-            </Nav.Link>
-            <Nav.Link as={Link} to="/popular-routes" className="text-white mx-2 px-3 py-2">
-               Routes
-            </Nav.Link>
+            <Nav.Link as={Link} to="/tariff" className="text-white mx-2 px-3 py-2">Tariff</Nav.Link>
+            <Nav.Link as={Link} to="/popular-routes" className="text-white mx-2 px-3 py-2">Routes</Nav.Link>
             <Nav.Link as={Link} to="/customer-info" className="text-white mx-2 px-3 py-2">
               <FaInfoCircle className="me-1" /> Customer Info
             </Nav.Link>
@@ -69,20 +64,7 @@ const Navbar = () => {
                   <FaSignOutAlt className="me-1" size={12} /> Logout
                 </Button>
               </div>
-            ) : (
-              <div className="d-flex align-items-center">
-                <Nav.Link as={Link} to="/login" className="me-2">
-                  <Button variant="outline-light" className="rounded-pill px-3 py-1" size="sm">
-                    <FaSignInAlt className="me-1" size={12} /> Login
-                  </Button>
-                </Nav.Link>
-                <Nav.Link as={Link} to="/register">
-                  <Button variant="warning" className="rounded-pill px-3 py-1" size="sm">
-                    <FaUserPlus className="me-1" size={12} /> Register
-                  </Button>
-                </Nav.Link>
-              </div>
-            )}
+            ) : null /* Login and Register buttons completely removed */}
           </Nav>
         </BSNavbar.Collapse>
       </Container>
