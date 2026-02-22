@@ -1383,185 +1383,257 @@ const Home = () => {
                     </Row>
  
                     {/* Select Car Type */}
-                    <div className="mb-3">
-                      <label className="fw-bold form-label mb-3" style={{ fontSize: '1.1rem' }}>
-                        Select Car Type *
-                      </label>
-                      
-                      <Row className="g-3">
-                        {/* SEDAN */}
-                        <Col xs={6}>
-                          <div 
-                            className={`car-option ${formData.carType === 'SEDAN' ? 'selected' : ''}`}
-                            style={{
-                              border: `2px solid ${formData.carType === 'SEDAN' ? '#ffc107' : '#dee2e6'}`,
-                              borderRadius: '12px',
-                              padding: '12px',
-                              cursor: 'pointer',
-                              transition: 'all 0.3s ease',
-                              backgroundColor: formData.carType === 'SEDAN' ? '#fff3cd' : 'white',
-                              height: '100%'
-                            }}
-                            onClick={() => selectCar('SEDAN')}
-                            onMouseEnter={(e) => {
-                              if (formData.carType !== 'SEDAN') {
-                                e.currentTarget.style.borderColor = '#ffc107';
-                                e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
-                              }
-                            }}
-                            onMouseLeave={(e) => {
-                              if (formData.carType !== 'SEDAN') {
-                                e.currentTarget.style.borderColor = '#dee2e6';
-                                e.currentTarget.style.boxShadow = 'none';
-                              }
-                            }}
-                          >
-                            <img 
-                              src="https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg"
-                              alt="SEDAN"
-                              style={{
-                                width: '100%',
-                                height: '90px',
-                                objectFit: 'cover',
-                                borderRadius: '8px',
-                                marginBottom: '8px'
-                              }}
-                            />
-                            <div className="fw-bold text-center">SEDAN</div>
-                            <div className="text-warning fw-bold text-center">₹14/km</div>
-                          </div>
-                        </Col>
+<div className="mb-3">
+  <label className="fw-bold form-label mb-3" style={{ fontSize: '1.1rem' }}>
+    Select Car Type *
+  </label>
+  
+  <Row className="g-3">
+    {/* SEDAN */}
+    <Col xs={6} md={6} lg={6}>
+      <div 
+        className={`car-option ${formData.carType === 'SEDAN' ? 'selected' : ''}`}
+        style={{
+          border: `2px solid ${formData.carType === 'SEDAN' ? '#ffc107' : '#dee2e6'}`,
+          borderRadius: '12px',
+          padding: '12px',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          backgroundColor: formData.carType === 'SEDAN' ? '#fff3cd' : 'white',
+          height: '100%'
+        }}
+        onClick={() => selectCar('SEDAN')}
+        onMouseEnter={(e) => {
+          if (formData.carType !== 'SEDAN') {
+            e.currentTarget.style.borderColor = '#ffc107';
+            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (formData.carType !== 'SEDAN') {
+            e.currentTarget.style.borderColor = '#dee2e6';
+            e.currentTarget.style.boxShadow = 'none';
+          }
+        }}
+      >
+        <img 
+          src="https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg"
+          alt="SEDAN"
+          style={{
+            width: '100%',
+            height: '90px',
+            objectFit: 'cover',
+            borderRadius: '8px',
+            marginBottom: '8px'
+          }}
+          className="car-image"
+        />
+        <div className="fw-bold text-center car-name">SEDAN</div>
+        <div className="text-warning fw-bold text-center car-price">₹14/km</div>
+      </div>
+    </Col>
 
-                        {/* ETIOS */}
-                        <Col xs={6}>
-                          <div 
-                            className={`car-option ${formData.carType === 'ETIOS' ? 'selected' : ''}`}
-                            style={{
-                              border: `2px solid ${formData.carType === 'ETIOS' ? '#ffc107' : '#dee2e6'}`,
-                              borderRadius: '12px',
-                              padding: '12px',
-                              cursor: 'pointer',
-                              transition: 'all 0.3s ease',
-                              backgroundColor: formData.carType === 'ETIOS' ? '#fff3cd' : 'white',
-                              height: '100%'
-                            }}
-                            onClick={() => selectCar('ETIOS')}
-                            onMouseEnter={(e) => {
-                              if (formData.carType !== 'ETIOS') {
-                                e.currentTarget.style.borderColor = '#ffc107';
-                                e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
-                              }
-                            }}
-                            onMouseLeave={(e) => {
-                              if (formData.carType !== 'ETIOS') {
-                                e.currentTarget.style.borderColor = '#dee2e6';
-                                e.currentTarget.style.boxShadow = 'none';
-                              }
-                            }}
-                          >
-                            <img 
-                              src="https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg"
-                              alt="ETIOS"
-                              style={{
-                                width: '100%',
-                                height: '90px',
-                                objectFit: 'cover',
-                                borderRadius: '8px',
-                                marginBottom: '8px'
-                              }}
-                            />
-                            <div className="fw-bold text-center">ETIOS</div>
-                            <div className="text-warning fw-bold text-center">₹15/km</div>
-                          </div>
-                        </Col>
+    {/* ETIOS */}
+    <Col xs={6} md={6} lg={6}>
+      <div 
+        className={`car-option ${formData.carType === 'ETIOS' ? 'selected' : ''}`}
+        style={{
+          border: `2px solid ${formData.carType === 'ETIOS' ? '#ffc107' : '#dee2e6'}`,
+          borderRadius: '12px',
+          padding: '12px',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          backgroundColor: formData.carType === 'ETIOS' ? '#fff3cd' : 'white',
+          height: '100%'
+        }}
+        onClick={() => selectCar('ETIOS')}
+        onMouseEnter={(e) => {
+          if (formData.carType !== 'ETIOS') {
+            e.currentTarget.style.borderColor = '#ffc107';
+            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (formData.carType !== 'ETIOS') {
+            e.currentTarget.style.borderColor = '#dee2e6';
+            e.currentTarget.style.boxShadow = 'none';
+          }
+        }}
+      >
+        <img 
+          src="https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg"
+          alt="ETIOS"
+          style={{
+            width: '100%',
+            height: '90px',
+            objectFit: 'cover',
+            borderRadius: '8px',
+            marginBottom: '8px'
+          }}
+          className="car-image"
+        />
+        <div className="fw-bold text-center car-name">ETIOS</div>
+        <div className="text-warning fw-bold text-center car-price">₹15/km</div>
+      </div>
+    </Col>
 
-                        {/* MUV */}
-                        <Col xs={6}>
-                          <div 
-                            className={`car-option ${formData.carType === 'MUV' ? 'selected' : ''}`}
-                            style={{
-                              border: `2px solid ${formData.carType === 'MUV' ? '#ffc107' : '#dee2e6'}`,
-                              borderRadius: '12px',
-                              padding: '12px',
-                              cursor: 'pointer',
-                              transition: 'all 0.3s ease',
-                              backgroundColor: formData.carType === 'MUV' ? '#fff3cd' : 'white',
-                              height: '100%'
-                            }}
-                            onClick={() => selectCar('MUV')}
-                            onMouseEnter={(e) => {
-                              if (formData.carType !== 'MUV') {
-                                e.currentTarget.style.borderColor = '#ffc107';
-                                e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
-                              }
-                            }}
-                            onMouseLeave={(e) => {
-                              if (formData.carType !== 'MUV') {
-                                e.currentTarget.style.borderColor = '#dee2e6';
-                                e.currentTarget.style.boxShadow = 'none';
-                              }
-                            }}
-                          >
-                            <img 
-                              src="https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg"
-                              alt="MUV"
-                              style={{
-                                width: '100%',
-                                height: '90px',
-                                objectFit: 'cover',
-                                borderRadius: '8px',
-                                marginBottom: '8px'
-                              }}
-                            />
-                            <div className="fw-bold text-center">MUV</div>
-                            <div className="text-warning fw-bold text-center">₹19/km</div>
-                          </div>
-                        </Col>
+    {/* MUV */}
+    <Col xs={6} md={6} lg={6}>
+      <div 
+        className={`car-option ${formData.carType === 'MUV' ? 'selected' : ''}`}
+        style={{
+          border: `2px solid ${formData.carType === 'MUV' ? '#ffc107' : '#dee2e6'}`,
+          borderRadius: '12px',
+          padding: '12px',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          backgroundColor: formData.carType === 'MUV' ? '#fff3cd' : 'white',
+          height: '100%'
+        }}
+        onClick={() => selectCar('MUV')}
+        onMouseEnter={(e) => {
+          if (formData.carType !== 'MUV') {
+            e.currentTarget.style.borderColor = '#ffc107';
+            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (formData.carType !== 'MUV') {
+            e.currentTarget.style.borderColor = '#dee2e6';
+            e.currentTarget.style.boxShadow = 'none';
+          }
+        }}
+      >
+        <img 
+          src="https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg"
+          alt="MUV"
+          style={{
+            width: '100%',
+            height: '90px',
+            objectFit: 'cover',
+            borderRadius: '8px',
+            marginBottom: '8px'
+          }}
+          className="car-image"
+        />
+        <div className="fw-bold text-center car-name">MUV</div>
+        <div className="text-warning fw-bold text-center car-price">₹19/km</div>
+      </div>
+    </Col>
 
-                        {/* INNOVA */}
-                        <Col xs={6}>
-                          <div 
-                            className={`car-option ${formData.carType === 'INNOVA' ? 'selected' : ''}`}
-                            style={{
-                              border: `2px solid ${formData.carType === 'INNOVA' ? '#ffc107' : '#dee2e6'}`,
-                              borderRadius: '12px',
-                              padding: '12px',
-                              cursor: 'pointer',
-                              transition: 'all 0.3s ease',
-                              backgroundColor: formData.carType === 'INNOVA' ? '#fff3cd' : 'white',
-                              height: '100%'
-                            }}
-                            onClick={() => selectCar('INNOVA')}
-                            onMouseEnter={(e) => {
-                              if (formData.carType !== 'INNOVA') {
-                                e.currentTarget.style.borderColor = '#ffc107';
-                                e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
-                              }
-                            }}
-                            onMouseLeave={(e) => {
-                              if (formData.carType !== 'INNOVA') {
-                                e.currentTarget.style.borderColor = '#dee2e6';
-                                e.currentTarget.style.boxShadow = 'none';
-                              }
-                            }}
-                          >
-                            <img 
-                              src="https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg"
-                              alt="INNOVA"
-                              style={{
-                                width: '100%',
-                                height: '90px',
-                                objectFit: 'cover',
-                                borderRadius: '8px',
-                                marginBottom: '8px'
-                              }}
-                            />
-                            <div className="fw-bold text-center">INNOVA</div>
-                            <div className="text-warning fw-bold text-center">₹20/km</div>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
+    {/* INNOVA */}
+    <Col xs={6} md={6} lg={6}>
+      <div 
+        className={`car-option ${formData.carType === 'INNOVA' ? 'selected' : ''}`}
+        style={{
+          border: `2px solid ${formData.carType === 'INNOVA' ? '#ffc107' : '#dee2e6'}`,
+          borderRadius: '12px',
+          padding: '12px',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          backgroundColor: formData.carType === 'INNOVA' ? '#fff3cd' : 'white',
+          height: '100%'
+        }}
+        onClick={() => selectCar('INNOVA')}
+        onMouseEnter={(e) => {
+          if (formData.carType !== 'INNOVA') {
+            e.currentTarget.style.borderColor = '#ffc107';
+            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (formData.carType !== 'INNOVA') {
+            e.currentTarget.style.borderColor = '#dee2e6';
+            e.currentTarget.style.boxShadow = 'none';
+          }
+        }}
+      >
+        <img 
+          src="https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg"
+          alt="INNOVA"
+          style={{
+            width: '100%',
+            height: '90px',
+            objectFit: 'cover',
+            borderRadius: '8px',
+            marginBottom: '8px'
+          }}
+          className="car-image"
+        />
+        <div className="fw-bold text-center car-name">INNOVA</div>
+        <div className="text-warning fw-bold text-center car-price">₹20/km</div>
+      </div>
+    </Col>
+  </Row>
+</div>
+
+{/* Add this CSS to your styles */}
+<style>{`
+  /* Ensure 2 columns on all screen sizes */
+  @media (max-width: 768px) {
+    .car-option {
+      padding: 8px !important;
+    }
+    
+    .car-image {
+      height: 70px !important;
+    }
+    
+    .car-name {
+      font-size: 0.9rem !important;
+    }
+    
+    .car-price {
+      font-size: 0.85rem !important;
+    }
+    
+    /* Force 2 columns even on very small screens */
+    .row > .col-6 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .car-image {
+      height: 60px !important;
+    }
+    
+    .car-name {
+      font-size: 0.85rem !important;
+    }
+    
+    .car-price {
+      font-size: 0.8rem !important;
+    }
+    
+    .car-option {
+      padding: 6px !important;
+    }
+  }
+  
+  /* Ensure proper spacing */
+  .g-3 {
+    --bs-gutter-x: 1rem;
+    --bs-gutter-y: 1rem;
+  }
+  
+  /* Hover effects */
+  .car-option {
+    transition: all 0.3s ease;
+  }
+  
+  .car-option:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  }
+  
+  .car-option.selected {
+    border-color: #ffc107;
+    background-color: #fff3cd;
+    box-shadow: 0 6px 12px rgba(255,193,7,0.3);
+  }
+`}</style>
 
                     {/* Fare Estimate */}
                     {fareEstimate && (
