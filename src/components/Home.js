@@ -1102,117 +1102,180 @@ const Home = () => {
       {/* Inject mobile styles */}
       <style>{formStyles.mobileStyles}</style>
 
-      {/* FLOATING WHATSAPP AND PHONE ICONS */}
-      
-      {/* Left Side - WhatsApp Icon */}
-      <a 
-        href={`https://wa.me/${CLIENT_WHATSAPP_NUMBER}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="floating-icon whatsapp-icon"
-        style={{
-          position: 'fixed',
-          left: '20px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          width: '60px',
-          height: '60px',
-          borderRadius: '50%',
-          backgroundColor: '#25d366',
-          color: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '30px',
-          boxShadow: '0 4px 15px rgba(37, 211, 102, 0.4)',
-          cursor: 'pointer',
-          zIndex: 1000,
-          transition: 'all 0.3s ease',
-          textDecoration: 'none',
-          animation: 'pulse 2s infinite'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
-          e.currentTarget.style.boxShadow = '0 8px 25px rgba(37, 211, 102, 0.6)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
-          e.currentTarget.style.boxShadow = '0 4px 15px rgba(37, 211, 102, 0.4)';
-        }}
-      >
-        <FaWhatsapp />
-        
-        <span style={{
-          position: 'absolute',
-          left: '70px',
-          backgroundColor: '#25d366',
-          color: 'white',
-          padding: '5px 15px',
-          borderRadius: '20px',
-          fontSize: '14px',
-          whiteSpace: 'nowrap',
-          opacity: 0,
-          visibility: 'hidden',
-          transition: 'all 0.3s ease',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
-        }} className="whatsapp-tooltip">
-          WhatsApp Us
-        </span>
-      </a>
+     {/* FLOATING WHATSAPP AND PHONE ICONS - MOBILE OPTIMIZED */}
 
-      {/* Right Side - Phone Icon */}
-      <a 
-        href={`tel:+${CLIENT_PHONE_NUMBER}`}
-        className="floating-icon phone-icon"
-        style={{
-          position: 'fixed',
-          right: '20px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          width: '60px',
-          height: '60px',
-          borderRadius: '50%',
-          backgroundColor: '#ffc107',
-          color: 'black',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '30px',
-          boxShadow: '0 4px 15px rgba(255, 193, 7, 0.4)',
-          cursor: 'pointer',
-          zIndex: 1000,
-          transition: 'all 0.3s ease',
-          textDecoration: 'none',
-          animation: 'pulse 2s infinite 0.5s'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
-          e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 193, 7, 0.6)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
-          e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 193, 7, 0.4)';
-        }}
-      >
-        <FaPhone />
-        
-        <span style={{
-          position: 'absolute',
-          right: '70px',
-          backgroundColor: '#ffc107',
-          color: 'black',
-          padding: '5px 15px',
-          borderRadius: '20px',
-          fontSize: '14px',
-          whiteSpace: 'nowrap',
-          opacity: 0,
-          visibility: 'hidden',
-          transition: 'all 0.3s ease',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
-        }} className="phone-tooltip">
-          Call Us Now
-        </span>
-      </a>
+{/* Left Side - WhatsApp Icon */}
+<a 
+  href={`https://wa.me/${CLIENT_WHATSAPP_NUMBER}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="floating-icon whatsapp-icon"
+  style={{
+    position: 'fixed',
+    left: '20px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    width: '60px',
+    height: '60px',
+    borderRadius: '50%',
+    backgroundColor: '#25d366',
+    color: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '30px',
+    boxShadow: '0 4px 15px rgba(37, 211, 102, 0.4)',
+    cursor: 'pointer',
+    zIndex: 1000,
+    transition: 'all 0.3s ease',
+    textDecoration: 'none',
+    animation: 'pulse 2s infinite'
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+    e.currentTarget.style.boxShadow = '0 8px 25px rgba(37, 211, 102, 0.6)';
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+    e.currentTarget.style.boxShadow = '0 4px 15px rgba(37, 211, 102, 0.4)';
+  }}
+>
+  <FaWhatsapp />
+  
+  {/* Tooltip */}
+  <span style={{
+    position: 'absolute',
+    left: '70px',
+    backgroundColor: '#25d366',
+    color: 'white',
+    padding: '5px 15px',
+    borderRadius: '20px',
+    fontSize: '14px',
+    whiteSpace: 'nowrap',
+    opacity: 0,
+    visibility: 'hidden',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
+  }} className="whatsapp-tooltip">
+    WhatsApp Us
+  </span>
+</a>
+
+{/* Right Side - Phone Icon */}
+<a 
+  href={`tel:+${CLIENT_PHONE_NUMBER}`}
+  className="floating-icon phone-icon"
+  style={{
+    position: 'fixed',
+    right: '20px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    width: '60px',
+    height: '60px',
+    borderRadius: '50%',
+    backgroundColor: '#ffc107',
+    color: 'black',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '30px',
+    boxShadow: '0 4px 15px rgba(255, 193, 7, 0.4)',
+    cursor: 'pointer',
+    zIndex: 1000,
+    transition: 'all 0.3s ease',
+    textDecoration: 'none',
+    animation: 'pulse 2s infinite 0.5s'
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+    e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 193, 7, 0.6)';
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+    e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 193, 7, 0.4)';
+  }}
+>
+  <FaPhone />
+  
+  {/* Tooltip */}
+  <span style={{
+    position: 'absolute',
+    right: '70px',
+    backgroundColor: '#ffc107',
+    color: 'black',
+    padding: '5px 15px',
+    borderRadius: '20px',
+    fontSize: '14px',
+    whiteSpace: 'nowrap',
+    opacity: 0,
+    visibility: 'hidden',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
+  }} className="phone-tooltip">
+    Call Us Now
+  </span>
+</a>
+
+{/* Add this CSS to your existing <style> section */}
+<style>{`
+  /* Mobile Optimizations for Floating Icons */
+  @media (max-width: 768px) {
+    .floating-icon {
+      width: 65px !important;
+      height: 65px !important;
+      font-size: 35px !important;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3) !important;
+    }
+    
+    .floating-icon.whatsapp-icon {
+      left: 15px !important;
+    }
+    
+    .floating-icon.phone-icon {
+      right: 15px !important;
+    }
+    
+    /* Hide tooltips on mobile */
+    .floating-icon .whatsapp-tooltip,
+    .floating-icon .phone-tooltip {
+      display: none !important;
+    }
+    
+    /* Add stronger pulse on mobile */
+    .floating-icon {
+      animation: mobile-pulse 2s infinite !important;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .floating-icon {
+      width: 65px !important;
+      height: 65px !important;
+      font-size: 32px !important;
+    }
+  }
+  
+  /* Mobile-specific pulse animation */
+  @keyframes mobile-pulse {
+    0%, 100% {
+      transform: translateY(-50%) scale(1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    50% {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+  }
+  
+  /* Tablet optimization */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .floating-icon {
+      width: 65px !important;
+      height: 65px !important;
+      font-size: 32px !important;
+    }
+  }
+`}</style>
 
       {/* Hero Section */}
       <section 
