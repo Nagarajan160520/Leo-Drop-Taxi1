@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Container, Row, Col, Button, Card, Modal, Carousel, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Button, Card, Modal, Carousel } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'; 
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
@@ -59,8 +59,7 @@ const Home = () => {
 
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const [bookingDetails, setBookingDetails] = useState(null);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [fareEstimate, setFareEstimate] = useState(null);
 
   // Counter animation states
@@ -459,13 +458,13 @@ const Home = () => {
       localBookings.unshift(bookingData);
       localStorage.setItem('localBookings', JSON.stringify(localBookings.slice(0, 10)));
       
-      setBookingDetails(bookingData);
-      
       const clientMessage = generateWhatsAppMessage(bookingData);
       sendWhatsAppToClient(clientMessage);
       
-      setShowConfirmation(true);
+      // Show success popup
+      setShowSuccessPopup(true);
       
+      // Reset form
       setFormData({
         tripType: 'one-way',
         pickupLocation: '',
@@ -486,6 +485,13 @@ const Home = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Function to handle popup close and redirect to home
+  const handlePopupClose = () => {
+    setShowSuccessPopup(false);
+    // Scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const stats = [
@@ -661,6 +667,29 @@ const Home = () => {
   };
 
   // ============================================
+  // CUSTOM NUMBER STYLES - Exactly like the image
+  // ============================================
+  const numberStyles = {
+    fontFamily: "'Arial Black', 'Impact', sans-serif",
+    fontWeight: '900',
+    fontSize: 'inherit',
+    display: 'inline-block',
+    textShadow: '2px 2px 0 #000, 4px 4px 0 rgba(255,215,0,0.3)',
+    letterSpacing: '1px',
+    transform: 'skew(-5deg)',
+    background: 'linear-gradient(145deg, #FFFFFF, #FFD700)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+    filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.3))'
+  };
+
+  // Function to render numbers with custom style
+  const renderNumber = (num) => {
+    return <span style={numberStyles}>{num}</span>;
+  };
+
+  // ============================================
   // FORM STYLES
   // ============================================
   
@@ -697,14 +726,18 @@ const Home = () => {
       color: '#FFFFFF',
       textShadow: '2px 2px 4px rgba(0,0,0,0.6), 0 0 20px rgba(255,215,0,0.4)',
       fontWeight: 'bold',
-      letterSpacing: '1px'
+      letterSpacing: '1px',
+      fontFamily: "'Arial Black', 'Impact', sans-serif"
     },
     label: {
       fontSize: '0.95rem',
       marginBottom: '0.3rem',
       color: '#FFFFFF',
       fontWeight: '600',
-      textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+      textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+      fontFamily: "'Arial', 'Helvetica', sans-serif",
+      letterSpacing: '0.5px',
+      textTransform: 'uppercase'
     },
     input: {
       fontSize: '0.95rem',
@@ -714,7 +747,10 @@ const Home = () => {
       color: '#333333',
       borderRadius: '10px',
       boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-      transition: 'all 0.3s ease'
+      transition: 'all 0.3s ease',
+      fontFamily: "'Courier New', monospace",
+      fontWeight: 'bold',
+      letterSpacing: '1px'
     },
     tripTypeBox: {
       padding: '0.6rem',
@@ -724,7 +760,10 @@ const Home = () => {
       color: '#333333',
       borderRadius: '10px',
       transition: 'all 0.3s ease',
-      boxShadow: '0 4px 10px rgba(0,0,0,0.2)'
+      boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+      fontFamily: "'Impact', 'Arial Black', sans-serif",
+      letterSpacing: '1px',
+      textTransform: 'uppercase'
     },
     button: {
       fontSize: '1.1rem',
@@ -737,7 +776,8 @@ const Home = () => {
       boxShadow: '0 8px 25px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.6) inset',
       transition: 'all 0.3s ease',
       textTransform: 'uppercase',
-      letterSpacing: '1.5px'
+      letterSpacing: '2px',
+      fontFamily: "'Arial Black', 'Impact', sans-serif"
     },
     fareBox: {
       padding: '0.8rem',
@@ -746,7 +786,9 @@ const Home = () => {
       border: '1px solid rgba(255, 215, 0, 0.5)',
       borderRadius: '10px',
       color: '#333333',
-      boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+      boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+      fontFamily: "'Courier New', monospace",
+      fontWeight: 'bold'
     },
     mobileStyles: `
       /* Desktop and Tablet Default */
@@ -869,9 +911,22 @@ const Home = () => {
         }
         
         .floating-icon {
-          width: 45px !important;
-          height: 45px !important;
-          font-size: 20px !important;
+          width: 65px !important;
+          height: 65px !important;
+          font-size: 35px !important;
+        }
+        
+        .floating-icon.whatsapp-icon {
+          left: 15px !important;
+        }
+        
+        .floating-icon.phone-icon {
+          right: 15px !important;
+        }
+        
+        .floating-icon .whatsapp-tooltip,
+        .floating-icon .phone-tooltip {
+          display: none !important;
         }
       }
       
@@ -901,8 +956,14 @@ const Home = () => {
         }
         
         .col-6 {
-          flex: 0 0 100%;
-          max-width: 100%;
+          flex: 0 0 50%;
+          max-width: 50%;
+        }
+        
+        .floating-icon {
+          width: 65px !important;
+          height: 65px !important;
+          font-size: 32px !important;
         }
       }
       
@@ -1094,6 +1155,18 @@ const Home = () => {
         --bs-gutter-x: 1rem;
         --bs-gutter-y: 1rem;
       }
+      
+      /* Mobile-specific pulse animation */
+      @keyframes mobile-pulse {
+        0%, 100% {
+          transform: translateY(-50%) scale(1);
+          box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        50% {
+          transform: translateY(-50%) scale(1.1);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+      }
     `
   };
 
@@ -1102,180 +1175,119 @@ const Home = () => {
       {/* Inject mobile styles */}
       <style>{formStyles.mobileStyles}</style>
 
-     {/* FLOATING WHATSAPP AND PHONE ICONS - MOBILE OPTIMIZED */}
+      {/* FLOATING WHATSAPP AND PHONE ICONS - MOBILE OPTIMIZED */}
+      
+      {/* Left Side - WhatsApp Icon */}
+      <a 
+        href={`https://wa.me/${CLIENT_WHATSAPP_NUMBER}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="floating-icon whatsapp-icon"
+        style={{
+          position: 'fixed',
+          left: '20px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          backgroundColor: '#25d366',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '30px',
+          boxShadow: '0 4px 15px rgba(37, 211, 102, 0.4)',
+          cursor: 'pointer',
+          zIndex: 1000,
+          transition: 'all 0.3s ease',
+          textDecoration: 'none',
+          animation: 'pulse 2s infinite'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+          e.currentTarget.style.boxShadow = '0 8px 25px rgba(37, 211, 102, 0.6)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+          e.currentTarget.style.boxShadow = '0 4px 15px rgba(37, 211, 102, 0.4)';
+        }}
+      >
+        <FaWhatsapp />
+        
+        {/* Tooltip */}
+        <span style={{
+          position: 'absolute',
+          left: '70px',
+          backgroundColor: '#25d366',
+          color: 'white',
+          padding: '5px 15px',
+          borderRadius: '20px',
+          fontSize: '14px',
+          whiteSpace: 'nowrap',
+          opacity: 0,
+          visibility: 'hidden',
+          transition: 'all 0.3s ease',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
+        }} className="whatsapp-tooltip">
+          WhatsApp Us
+        </span>
+      </a>
 
-{/* Left Side - WhatsApp Icon */}
-<a 
-  href={`https://wa.me/${CLIENT_WHATSAPP_NUMBER}`}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="floating-icon whatsapp-icon"
-  style={{
-    position: 'fixed',
-    left: '20px',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    width: '60px',
-    height: '60px',
-    borderRadius: '50%',
-    backgroundColor: '#25d366',
-    color: 'white',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '30px',
-    boxShadow: '0 4px 15px rgba(37, 211, 102, 0.4)',
-    cursor: 'pointer',
-    zIndex: 1000,
-    transition: 'all 0.3s ease',
-    textDecoration: 'none',
-    animation: 'pulse 2s infinite'
-  }}
-  onMouseEnter={(e) => {
-    e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
-    e.currentTarget.style.boxShadow = '0 8px 25px rgba(37, 211, 102, 0.6)';
-  }}
-  onMouseLeave={(e) => {
-    e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
-    e.currentTarget.style.boxShadow = '0 4px 15px rgba(37, 211, 102, 0.4)';
-  }}
->
-  <FaWhatsapp />
-  
-  {/* Tooltip */}
-  <span style={{
-    position: 'absolute',
-    left: '70px',
-    backgroundColor: '#25d366',
-    color: 'white',
-    padding: '5px 15px',
-    borderRadius: '20px',
-    fontSize: '14px',
-    whiteSpace: 'nowrap',
-    opacity: 0,
-    visibility: 'hidden',
-    transition: 'all 0.3s ease',
-    boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
-  }} className="whatsapp-tooltip">
-    WhatsApp Us
-  </span>
-</a>
-
-{/* Right Side - Phone Icon */}
-<a 
-  href={`tel:+${CLIENT_PHONE_NUMBER}`}
-  className="floating-icon phone-icon"
-  style={{
-    position: 'fixed',
-    right: '20px',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    width: '60px',
-    height: '60px',
-    borderRadius: '50%',
-    backgroundColor: '#ffc107',
-    color: 'black',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '30px',
-    boxShadow: '0 4px 15px rgba(255, 193, 7, 0.4)',
-    cursor: 'pointer',
-    zIndex: 1000,
-    transition: 'all 0.3s ease',
-    textDecoration: 'none',
-    animation: 'pulse 2s infinite 0.5s'
-  }}
-  onMouseEnter={(e) => {
-    e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
-    e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 193, 7, 0.6)';
-  }}
-  onMouseLeave={(e) => {
-    e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
-    e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 193, 7, 0.4)';
-  }}
->
-  <FaPhone />
-  
-  {/* Tooltip */}
-  <span style={{
-    position: 'absolute',
-    right: '70px',
-    backgroundColor: '#ffc107',
-    color: 'black',
-    padding: '5px 15px',
-    borderRadius: '20px',
-    fontSize: '14px',
-    whiteSpace: 'nowrap',
-    opacity: 0,
-    visibility: 'hidden',
-    transition: 'all 0.3s ease',
-    boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
-  }} className="phone-tooltip">
-    Call Us Now
-  </span>
-</a>
-
-{/* Add this CSS to your existing <style> section */}
-<style>{`
-  /* Mobile Optimizations for Floating Icons */
-  @media (max-width: 768px) {
-    .floating-icon {
-      width: 65px !important;
-      height: 65px !important;
-      font-size: 35px !important;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3) !important;
-    }
-    
-    .floating-icon.whatsapp-icon {
-      left: 15px !important;
-    }
-    
-    .floating-icon.phone-icon {
-      right: 15px !important;
-    }
-    
-    /* Hide tooltips on mobile */
-    .floating-icon .whatsapp-tooltip,
-    .floating-icon .phone-tooltip {
-      display: none !important;
-    }
-    
-    /* Add stronger pulse on mobile */
-    .floating-icon {
-      animation: mobile-pulse 2s infinite !important;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .floating-icon {
-      width: 65px !important;
-      height: 65px !important;
-      font-size: 32px !important;
-    }
-  }
-  
-  /* Mobile-specific pulse animation */
-  @keyframes mobile-pulse {
-    0%, 100% {
-      transform: translateY(-50%) scale(1);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    }
-    50% {
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-  }
-  
-  /* Tablet optimization */
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .floating-icon {
-      width: 65px !important;
-      height: 65px !important;
-      font-size: 32px !important;
-    }
-  }
-`}</style>
+      {/* Right Side - Phone Icon */}
+      <a 
+        href={`tel:+${CLIENT_PHONE_NUMBER}`}
+        className="floating-icon phone-icon"
+        style={{
+          position: 'fixed',
+          right: '20px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          backgroundColor: '#ffc107',
+          color: 'black',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '30px',
+          boxShadow: '0 4px 15px rgba(255, 193, 7, 0.4)',
+          cursor: 'pointer',
+          zIndex: 1000,
+          transition: 'all 0.3s ease',
+          textDecoration: 'none',
+          animation: 'pulse 2s infinite 0.5s'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+          e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 193, 7, 0.6)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+          e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 193, 7, 0.4)';
+        }}
+      >
+        <FaPhone />
+        
+        {/* Tooltip */}
+        <span style={{
+          position: 'absolute',
+          right: '70px',
+          backgroundColor: '#ffc107',
+          color: 'black',
+          padding: '5px 15px',
+          borderRadius: '20px',
+          fontSize: '14px',
+          whiteSpace: 'nowrap',
+          opacity: 0,
+          visibility: 'hidden',
+          transition: 'all 0.3s ease',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
+        }} className="phone-tooltip">
+          Call Us Now
+        </span>
+      </a>
 
       {/* Hero Section */}
       <section 
@@ -1294,17 +1306,22 @@ const Home = () => {
                 className="display-3 fw-bold mb-4 text-white" 
                 style={{ 
                   fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+                  fontFamily: "'Arial Black', 'Impact', sans-serif",
+                  letterSpacing: '2px'
                 }}
               >
                 Anywhere You Go, <br />
-                <span className="text-warning">We're There</span>
+                <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>We're There</span>
               </h1>
               <p 
                 className="lead mb-5 text-white-50" 
                 style={{ 
                   fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+                  fontFamily: "'Arial', 'Helvetica', sans-serif",
+                  letterSpacing: '1px',
+                  lineHeight: '1.6'
                 }}
               >
                 Safe, comfortable, and on-time taxi service across Tamilnadu, 
@@ -1346,8 +1363,8 @@ const Home = () => {
                         textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
                       }}
                     >
-                      <h3 className="fw-bold mb-2">{image.title}</h3>
-                      <p className="mb-0">{image.description}</p>
+                      <h3 className="fw-bold mb-2" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>{image.title}</h3>
+                      <p className="mb-0" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>{image.description}</p>
                     </div>
                   </div>
                 ))}
@@ -1414,8 +1431,8 @@ const Home = () => {
                 
                 <Card.Body className="form-card-body" style={formStyles.cardBody}>
                   <h3 className="text-center fw-bold mb-4 form-title" style={formStyles.title}>
-                    <span style={{ color: '#FFFFFF' }}>Leo-Drop</span>{' '}
-                    <span style={{ color: '#FFD700' }}>Taxi</span>
+                    <span style={{ color: '#FFFFFF', fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Lexus-Drop</span>{' '}
+                    <span style={{ color: '#FFD700', fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Taxi</span>
                   </h3>
 
                   <form onSubmit={handleSubmit}>
@@ -1430,16 +1447,17 @@ const Home = () => {
                             cursor: 'pointer',
                             backgroundColor: formData.tripType === 'one-way' ? '#ffe69b' : 'rgba(255, 255, 255, 0.98)',
                             borderColor: formData.tripType === 'one-way' ? '#FFD700' : 'rgba(255, 215, 0, 0.5)',
-                            boxShadow: formData.tripType === 'one-way' ? '0 0 20px rgba(255,215,0,0.4)' : '0 4px 10px rgba(0,0,0,0.2)'
+                            boxShadow: formData.tripType === 'one-way' ? '0 0 20px rgba(255,215,0,0.4)' : '0 4px 10px rgba(0,0,0,0.2)',
+                            fontFamily: "'Impact', 'Arial Black', sans-serif"
                           }}
                           onClick={() => {
                             setFormData({...formData, tripType: 'one-way'});
                             if (formData.carType) selectCar(formData.carType);
                           }}
                         >
-                          <strong>ONE WAY</strong>
+                          <strong style={{ fontSize: '1.1rem', letterSpacing: '1px' }}>ONE WAY</strong>
                           <br />
-                          <small className="text-muted">(Min 130KM)</small>
+                          <small className="text-muted" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>(Min 130KM)</small>
                         </div>
                         <div 
                           className={`flex-fill border rounded text-center trip-type-box ${formData.tripType === 'round-trip' ? 'border-warning bg-warning bg-opacity-10' : ''}`}
@@ -1448,14 +1466,15 @@ const Home = () => {
                             cursor: 'pointer',
                             backgroundColor: formData.tripType === 'round-trip' ? '#ffe69b' : 'rgba(255, 255, 255, 0.98)',
                             borderColor: formData.tripType === 'round-trip' ? '#FFD700' : 'rgba(255, 215, 0, 0.5)',
-                            boxShadow: formData.tripType === 'round-trip' ? '0 0 20px rgba(255,215,0,0.4)' : '0 4px 10px rgba(0,0,0,0.2)'
+                            boxShadow: formData.tripType === 'round-trip' ? '0 0 20px rgba(255,215,0,0.4)' : '0 4px 10px rgba(0,0,0,0.2)',
+                            fontFamily: "'Impact', 'Arial Black', sans-serif"
                           }}
                           onClick={() => {
                             setFormData({...formData, tripType: 'round-trip'});
                             if (formData.carType) selectCar(formData.carType);
                           }}
                         >
-                          <strong>ROUND TRIP</strong>
+                          <strong style={{ fontSize: '1.1rem', letterSpacing: '1px' }}>ROUND TRIP</strong>
                         </div>
                       </div>
                     </div>
@@ -1573,7 +1592,7 @@ const Home = () => {
                     {/* SELECT CAR TYPE - TURNS FULL GOLD WHEN SELECTED */}
                     {/* ============================================ */}
                     <div className="mb-3">
-                      <label className="fw-bold form-label mb-3" style={{ fontSize: '1.1rem', color: '#FFFFFF' }}>
+                      <label className="fw-bold form-label mb-3" style={{ ...formStyles.label, fontSize: '1.1rem' }}>
                         Select Car Type *
                       </label>
                       
@@ -1581,7 +1600,7 @@ const Home = () => {
                         {/* SEDAN - Full gold when selected */}
                         <Col xs={6}>
                           <div 
-                            className="car-option"
+                            className={`car-option ${formData.carType === 'SEDAN' ? 'selected' : ''}`}
                             style={{
                               border: `2px solid ${formData.carType === 'SEDAN' ? '#FFD700' : '#dee2e6'}`,
                               borderRadius: '12px',
@@ -1622,11 +1641,20 @@ const Home = () => {
                               }}
                               className="car-image"
                             />
-                            <div className="fw-bold text-center car-name" style={{ color: formData.carType === 'SEDAN' ? '#8B0000' : '#333333' }}>
+                            <div className="fw-bold text-center car-name" style={{ 
+                              color: formData.carType === 'SEDAN' ? '#8B0000' : '#333333',
+                              fontFamily: "'Impact', 'Arial Black', sans-serif",
+                              fontSize: '1.1rem',
+                              letterSpacing: '1px'
+                            }}>
                               SEDAN
                             </div>
-                            <div className="fw-bold text-center car-price" style={{ color: formData.carType === 'SEDAN' ? '#8B0000' : '#8B0000' }}>
-                              ₹14/km
+                            <div className="fw-bold text-center car-price" style={{ 
+                              color: formData.carType === 'SEDAN' ? '#8B0000' : '#8B0000',
+                              fontFamily: "'Courier New', monospace",
+                              fontSize: '1rem'
+                            }}>
+                              ₹{renderNumber(14)}/km
                             </div>
                           </div>
                         </Col>
@@ -1634,7 +1662,7 @@ const Home = () => {
                         {/* ETIOS - Full gold when selected */}
                         <Col xs={6}>
                           <div 
-                            className="car-option"
+                            className={`car-option ${formData.carType === 'ETIOS' ? 'selected' : ''}`}
                             style={{
                               border: `2px solid ${formData.carType === 'ETIOS' ? '#FFD700' : '#dee2e6'}`,
                               borderRadius: '12px',
@@ -1675,11 +1703,20 @@ const Home = () => {
                               }}
                               className="car-image"
                             />
-                            <div className="fw-bold text-center car-name" style={{ color: formData.carType === 'ETIOS' ? '#8B0000' : '#333333' }}>
+                            <div className="fw-bold text-center car-name" style={{ 
+                              color: formData.carType === 'ETIOS' ? '#8B0000' : '#333333',
+                              fontFamily: "'Impact', 'Arial Black', sans-serif",
+                              fontSize: '1.1rem',
+                              letterSpacing: '1px'
+                            }}>
                               ETIOS
                             </div>
-                            <div className="fw-bold text-center car-price" style={{ color: formData.carType === 'ETIOS' ? '#8B0000' : '#8B0000' }}>
-                              ₹15/km
+                            <div className="fw-bold text-center car-price" style={{ 
+                              color: formData.carType === 'ETIOS' ? '#8B0000' : '#8B0000',
+                              fontFamily: "'Courier New', monospace",
+                              fontSize: '1rem'
+                            }}>
+                              ₹{renderNumber(15)}/km
                             </div>
                           </div>
                         </Col>
@@ -1687,7 +1724,7 @@ const Home = () => {
                         {/* MUV - Full gold when selected */}
                         <Col xs={6}>
                           <div 
-                            className="car-option"
+                            className={`car-option ${formData.carType === 'MUV' ? 'selected' : ''}`}
                             style={{
                               border: `2px solid ${formData.carType === 'MUV' ? '#FFD700' : '#dee2e6'}`,
                               borderRadius: '12px',
@@ -1728,11 +1765,20 @@ const Home = () => {
                               }}
                               className="car-image"
                             />
-                            <div className="fw-bold text-center car-name" style={{ color: formData.carType === 'MUV' ? '#8B0000' : '#333333' }}>
+                            <div className="fw-bold text-center car-name" style={{ 
+                              color: formData.carType === 'MUV' ? '#8B0000' : '#333333',
+                              fontFamily: "'Impact', 'Arial Black', sans-serif",
+                              fontSize: '1.1rem',
+                              letterSpacing: '1px'
+                            }}>
                               MUV
                             </div>
-                            <div className="fw-bold text-center car-price" style={{ color: formData.carType === 'MUV' ? '#8B0000' : '#8B0000' }}>
-                              ₹19/km
+                            <div className="fw-bold text-center car-price" style={{ 
+                              color: formData.carType === 'MUV' ? '#8B0000' : '#8B0000',
+                              fontFamily: "'Courier New', monospace",
+                              fontSize: '1rem'
+                            }}>
+                              ₹{renderNumber(19)}/km
                             </div>
                           </div>
                         </Col>
@@ -1740,7 +1786,7 @@ const Home = () => {
                         {/* INNOVA - Full gold when selected */}
                         <Col xs={6}>
                           <div 
-                            className="car-option"
+                            className={`car-option ${formData.carType === 'INNOVA' ? 'selected' : ''}`}
                             style={{
                               border: `2px solid ${formData.carType === 'INNOVA' ? '#FFD700' : '#dee2e6'}`,
                               borderRadius: '12px',
@@ -1781,11 +1827,20 @@ const Home = () => {
                               }}
                               className="car-image"
                             />
-                            <div className="fw-bold text-center car-name" style={{ color: formData.carType === 'INNOVA' ? '#8B0000' : '#333333' }}>
+                            <div className="fw-bold text-center car-name" style={{ 
+                              color: formData.carType === 'INNOVA' ? '#8B0000' : '#333333',
+                              fontFamily: "'Impact', 'Arial Black', sans-serif",
+                              fontSize: '1.1rem',
+                              letterSpacing: '1px'
+                            }}>
                               INNOVA
                             </div>
-                            <div className="fw-bold text-center car-price" style={{ color: formData.carType === 'INNOVA' ? '#8B0000' : '#8B0000' }}>
-                              ₹20/km
+                            <div className="fw-bold text-center car-price" style={{ 
+                              color: formData.carType === 'INNOVA' ? '#8B0000' : '#8B0000',
+                              fontFamily: "'Courier New', monospace",
+                              fontSize: '1rem'
+                            }}>
+                              ₹{renderNumber(20)}/km
                             </div>
                           </div>
                         </Col>
@@ -1796,19 +1851,19 @@ const Home = () => {
                     {fareEstimate && (
                       <div className="bg-light rounded mb-3 fare-box" style={formStyles.fareBox}>
                         <div className="d-flex justify-content-between mb-1">
-                          <span>Base Fare (Min {fareEstimate.minDistance}km):</span>
-                          <span className="fw-bold" style={{ color: '#8B0000' }}>₹{fareEstimate.baseFare}</span>
+                          <span style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", fontWeight: 'bold' }}>Base Fare (Min {renderNumber(fareEstimate.minDistance)}km):</span>
+                          <span className="fw-bold" style={{ color: '#8B0000', fontFamily: "'Courier New', monospace" }}>₹{renderNumber(fareEstimate.baseFare)}</span>
                         </div>
                         <div className="d-flex justify-content-between mb-1">
-                          <span>Driver Bata:</span>
-                          <span className="fw-bold" style={{ color: '#8B0000' }}>₹{fareEstimate.driverBata}</span>
+                          <span style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", fontWeight: 'bold' }}>Driver Bata:</span>
+                          <span className="fw-bold" style={{ color: '#8B0000', fontFamily: "'Courier New', monospace" }}>₹{renderNumber(fareEstimate.driverBata)}</span>
                         </div>
                         <hr className="my-1" />
                         <div className="d-flex justify-content-between">
-                          <span className="fw-bold">Estimated Total:</span>
-                          <span className="fw-bold" style={{ color: '#8B0000' }}>₹{fareEstimate.total}</span>
+                          <span className="fw-bold" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Estimated Total:</span>
+                          <span className="fw-bold" style={{ color: '#8B0000', fontFamily: "'Courier New', monospace", fontSize: '1.1rem' }}>₹{renderNumber(fareEstimate.total)}</span>
                         </div>
-                        <small className="text-muted d-block mt-1">
+                        <small className="text-muted d-block mt-1" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
                           *Toll, permit & hill charges extra
                         </small>
                       </div>
@@ -1840,7 +1895,7 @@ const Home = () => {
                     </Button>
                     
                     {/* WhatsApp Info */}
-                    <p className="text-center mt-2 mb-0 small" style={{ color: '#FFFFFF' }}>
+                    <p className="text-center mt-2 mb-0 small" style={{ color: '#FFFFFF', fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
                       <FaWhatsapp className="me-1" style={{ color: '#25d366' }} size={12} />
                       Notification sent to admin
                     </p>
@@ -1852,21 +1907,73 @@ const Home = () => {
         </Container>
       </section>
 
+      {/* SUCCESS POPUP - Your Booking Confirmed */}
+      <Modal 
+        show={showSuccessPopup} 
+        onHide={handlePopupClose}
+        centered
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Body className="text-center p-5">
+          <div className="mb-4">
+            <FaCheckCircle size={80} className="text-success" />
+          </div>
+          <h2 className="fw-bold mb-3" style={{ 
+            color: '#28a745',
+            fontFamily: "'Arial Black', 'Impact', sans-serif",
+            fontSize: '2rem'
+          }}>
+            Your Booking Confirmed!
+          </h2>
+          <p className="mb-4" style={{ 
+            fontSize: '1.1rem',
+            fontFamily: "'Arial', 'Helvetica', sans-serif",
+            color: '#666'
+          }}>
+            Thank you for choosing Leo Drop Taxi. Your booking has been successfully confirmed.
+          </p>
+          <Button 
+            variant="success" 
+            size="lg"
+            onClick={handlePopupClose}
+            className="px-5 rounded-pill"
+            style={{
+              fontFamily: "'Arial Black', 'Impact', sans-serif",
+              fontSize: '1.2rem'
+            }}
+          >
+            OK
+          </Button>
+        </Modal.Body>
+      </Modal>
+
       {/* Stats Section */}
       <Container className="my-5" ref={statsRef}>
-        <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
-          Our <span className="text-warning">Achievements</span>
+        <h2 className="text-center mb-5" style={{ 
+          fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+          fontFamily: "'Arial Black', 'Impact', sans-serif",
+          letterSpacing: '2px'
+        }}>
+          Our <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Achievements</span>
         </h2>
         <Row>
           {stats.map((stat, index) => (
             <Col md={3} sm={6} key={index} className="mb-4">
               <Card className="text-center p-4 border-0 shadow-sm h-100">
                 <div className="display-1 mb-3" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>{stat.icon}</div>
-                <h2 className="text-warning fw-bold" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.2rem)' }}>
-                  {stat.isDecimal ? stat.value.toFixed(1) : Math.round(stat.value).toLocaleString()}
-                  {stat.suffix}
+                <h2 className="text-warning fw-bold" style={{ 
+                  fontSize: 'clamp(1.5rem, 4vw, 2.2rem)',
+                  fontFamily: "'Courier New', monospace"
+                }}>
+                  {stat.isDecimal ? renderNumber(stat.value.toFixed(1)) : renderNumber(Math.round(stat.value).toLocaleString())}
+                  {renderNumber(stat.suffix)}
                 </h2>
-                <p className="text-secondary" style={{ fontSize: 'clamp(0.8rem, 2vw, 0.9rem)' }}>{stat.label}</p>
+                <p className="text-secondary" style={{ 
+                  fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
+                  fontFamily: "'Arial', 'Helvetica', sans-serif",
+                  fontWeight: 'bold'
+                }}>{stat.label}</p>
               </Card>
             </Col>
           ))}
@@ -1876,8 +1983,12 @@ const Home = () => {
       {/* TARIFF SECTION */}
       <section className="py-5 bg-light">
         <Container>
-          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
-            <span className="text-warning">Outstation</span> Tariff
+          <h2 className="text-center mb-5" style={{ 
+            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+            fontFamily: "'Arial Black', 'Impact', sans-serif",
+            letterSpacing: '2px'
+          }}>
+            <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Outstation</span> Tariff
           </h2>
           
           <Row>
@@ -1914,8 +2025,8 @@ const Home = () => {
                             }}
                           />
                           <Carousel.Caption style={{ bottom: '0', left: '0', right: '0', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', textAlign: 'left' }}>
-                            <h5 className="fw-bold mb-0">{car.name}</h5>
-                            <p className="mb-0 small">{car.model}</p>
+                            <h5 className="fw-bold mb-0" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>{car.name}</h5>
+                            <p className="mb-0 small" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>{car.model}</p>
                           </Carousel.Caption>
                         </Carousel.Item>
                       ))}
@@ -1923,51 +2034,51 @@ const Home = () => {
 
                     <Card.Body className="p-4">
                       <div className="mb-4">
-                        <h6 className="fw-bold mb-3">TARIFF</h6>
+                        <h6 className="fw-bold mb-3" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif", fontSize: '1.1rem' }}>TARIFF</h6>
                         <Row className="g-3">
                           <Col xs={6}>
                             <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
-                              <h6 className="fw-bold mb-2">ONE WAY</h6>
-                              <h5 className="text-warning fw-bold mb-1">
-                                <FaRupeeSign className="me-1" /> {car.oneWayRate}/KM
+                              <h6 className="fw-bold mb-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>ONE WAY</h6>
+                              <h5 className="text-warning fw-bold mb-1" style={{ fontFamily: "'Courier New', monospace" }}>
+                                <FaRupeeSign className="me-1" /> {renderNumber(car.oneWayRate)}/KM
                               </h5>
-                              <small className="text-muted">(Min {car.minKmOneWay} KM)</small>
+                              <small className="text-muted" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>(Min {renderNumber(car.minKmOneWay)} KM)</small>
                             </div>
                           </Col>
                           <Col xs={6}>
                             <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
-                              <h6 className="fw-bold mb-2">ROUND TRIP</h6>
-                              <h5 className="text-warning fw-bold mb-1">
-                                <FaRupeeSign className="me-1" /> {car.roundTripRate}/KM
+                              <h6 className="fw-bold mb-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>ROUND TRIP</h6>
+                              <h5 className="text-warning fw-bold mb-1" style={{ fontFamily: "'Courier New', monospace" }}>
+                                <FaRupeeSign className="me-1" /> {renderNumber(car.roundTripRate)}/KM
                               </h5>
-                              <small className="text-muted">(Min {car.minKmRoundTrip} KM)</small>
+                              <small className="text-muted" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>(Min {renderNumber(car.minKmRoundTrip)} KM)</small>
                             </div>
                           </Col>
                         </Row>
                       </div>
 
                       <div>
-                        <h6 className="fw-bold mb-3"><FaInfoCircle className="text-warning me-2" />INCLUDE WITH</h6>
+                        <h6 className="fw-bold mb-3" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}><FaInfoCircle className="text-warning me-2" />INCLUDE WITH</h6>
                         <Row>
                           <Col xs={6}>
                             <ul className="list-unstyled">
-                              <li className="mb-2 d-flex align-items-center">
+                              <li className="mb-2 d-flex align-items-center" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Driver Bata <strong className="ms-1">₹{car.driverBata}</strong>
+                                Driver Bata <strong className="ms-1" style={{ fontFamily: "'Courier New', monospace" }}>₹{renderNumber(car.driverBata)}</strong>
                               </li>
-                              <li className="mb-2 d-flex align-items-center">
+                              <li className="mb-2 d-flex align-items-center" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Hillstation Charges <strong className="ms-1">₹{car.hillCharges}</strong>
+                                Hillstation Charges <strong className="ms-1" style={{ fontFamily: "'Courier New', monospace" }}>₹{renderNumber(car.hillCharges)}</strong>
                               </li>
                             </ul>
                           </Col>
                           <Col xs={6}>
                             <ul className="list-unstyled">
-                              <li className="mb-2 d-flex align-items-center">
+                              <li className="mb-2 d-flex align-items-center" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Other State Permit <strong className="ms-1">₹{car.permitCharge}/KM</strong>
+                                Other State Permit <strong className="ms-1" style={{ fontFamily: "'Courier New', monospace" }}>₹{renderNumber(car.permitCharge)}/KM</strong>
                               </li>
-                              <li className="mb-2 d-flex align-items-center">
+                              <li className="mb-2 d-flex align-items-center" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
                                 <span className="text-warning me-2 fw-bold">•</span>
                                 Tolls & Parking
                               </li>
@@ -1983,7 +2094,7 @@ const Home = () => {
           </Row>
           
           <div className="text-center mt-4">
-            <Button variant="warning" onClick={() => navigate('/tariff')}>View All Tariffs</Button>
+            <Button variant="warning" onClick={() => navigate('/tariff')} style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>View All Tariffs</Button>
           </div>
         </Container>
       </section>
@@ -1991,8 +2102,12 @@ const Home = () => {
       {/* POPULAR ROUTES SECTION */}
       <section className="py-5">
         <Container>
-          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
-            <span className="text-warning">Popular</span> Routes
+          <h2 className="text-center mb-5" style={{ 
+            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+            fontFamily: "'Arial Black', 'Impact', sans-serif",
+            letterSpacing: '2px'
+          }}>
+            <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Popular</span> Routes
           </h2>
           <Row>
             {popularRoutes.map((route, index) => (
@@ -2006,8 +2121,8 @@ const Home = () => {
                       className="route-image"
                     />
                     <div className="position-absolute bottom-0 start-0 w-100 p-3" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: 'white' }}>
-                      <h5 className="fw-bold mb-1">{route.from} to {route.to}</h5>
-                      <p className="mb-0 small">{route.description}</p>
+                      <h5 className="fw-bold mb-1" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>{route.from} to {route.to}</h5>
+                      <p className="mb-0 small" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>{route.description}</p>
                     </div>
                   </div>
                   <Card.Body className="p-4">
@@ -2016,16 +2131,16 @@ const Home = () => {
                         <span className="fs-5">{route.icon}</span>
                       </div>
                       <div>
-                        <h6 className="fw-bold mb-1">{route.from} → {route.to}</h6>
-                        <small className="text-secondary">Distance: {route.distance}</small>
+                        <h6 className="fw-bold mb-1" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>{route.from} → {route.to}</h6>
+                        <small className="text-secondary" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>Distance: {route.distance}</small>
                       </div>
                     </div>
-                    <div className="small mb-3">
-                      <span className="fw-bold me-2">SEDAN:</span> ₹{route.cars[0].oneWay}/km | 
-                      <span className="fw-bold ms-2 me-2">SUV:</span> ₹{route.cars[2].oneWay}/km
+                    <div className="small mb-3" style={{ fontFamily: "'Courier New', monospace" }}>
+                      <span className="fw-bold me-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>SEDAN:</span> ₹{renderNumber(route.cars[0].oneWay)}/km | 
+                      <span className="fw-bold ms-2 me-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>SUV:</span> ₹{renderNumber(route.cars[2].oneWay)}/km
                     </div>
                     <div className="mt-3">
-                      <Button variant="outline-warning" size="sm" className="w-100" onClick={() => navigate('/popular-routes')}>
+                      <Button variant="outline-warning" size="sm" className="w-100" onClick={() => navigate('/popular-routes')} style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>
                         View Details
                       </Button>
                     </div>
@@ -2035,7 +2150,7 @@ const Home = () => {
             ))}
           </Row>
           <div className="text-center mt-4">
-            <Button variant="warning" onClick={() => navigate('/popular-routes')}>View All Routes</Button>
+            <Button variant="warning" onClick={() => navigate('/popular-routes')} style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>View All Routes</Button>
           </div>
         </Container>
       </section>
@@ -2043,8 +2158,12 @@ const Home = () => {
       {/* ABOUT SECTION */}
       <section className="py-5 bg-light">
         <Container>
-          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
-            About <span className="text-warning">Us</span>
+          <h2 className="text-center mb-5" style={{ 
+            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+            fontFamily: "'Arial Black', 'Impact', sans-serif",
+            letterSpacing: '2px'
+          }}>
+            About <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Us</span>
           </h2>
           <Row className="align-items-center">
             <Col lg={6} className="mb-4 mb-lg-0">
@@ -2055,11 +2174,11 @@ const Home = () => {
               />
             </Col>
             <Col lg={6}>
-              <h3 className="text-warning mb-4">OUR COMPANY</h3>
-              <p className="lead mb-4">
-                At <strong>Lexus DROP TAXI</strong>, we believe every journey should be safe, comfortable, and on time.
+              <h3 className="text-warning mb-4" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>OUR COMPANY</h3>
+              <p className="lead mb-4" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", lineHeight: '1.6' }}>
+                At <strong style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>Lexus DROP TAXI</strong>, we believe every journey should be safe, comfortable, and on time.
               </p>
-              <p className="mb-4">
+              <p className="mb-4" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", lineHeight: '1.6' }}>
                 Since 2023, we've been proudly serving Tamilnadu, Kerala, Andhra Pradesh, Karnataka, and Pondicherry with reliable taxi services.
               </p>
               <Row className="g-3">
@@ -2067,14 +2186,14 @@ const Home = () => {
                   <Col xs={6} key={idx}>
                     <Card className="border-0 shadow-sm p-3 text-center">
                       <div className="text-warning h3 mb-2">{stat.icon}</div>
-                      <h5 className="fw-bold mb-1">{stat.value}</h5>
-                      <small className="text-secondary">{stat.label}</small>
+                      <h5 className="fw-bold mb-1" style={{ fontFamily: "'Courier New', monospace" }}>{stat.value}</h5>
+                      <small className="text-secondary" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", fontWeight: 'bold' }}>{stat.label}</small>
                     </Card>
                   </Col>
                 ))}
               </Row>
               <div className="mt-4">
-                <Button variant="warning" onClick={() => navigate('/about')}>Read More</Button>
+                <Button variant="warning" onClick={() => navigate('/about')} style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Read More</Button>
               </div>
             </Col>
           </Row>
@@ -2084,8 +2203,12 @@ const Home = () => {
       {/* CUSTOMER REVIEWS */}
       <section className="py-5">
         <Container>
-          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
-            Customer <span className="text-warning">Reviews</span>
+          <h2 className="text-center mb-5" style={{ 
+            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+            fontFamily: "'Arial Black', 'Impact', sans-serif",
+            letterSpacing: '2px'
+          }}>
+            Customer <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Reviews</span>
           </h2>
           <Row>
             {testimonials.map((testimonial, index) => (
@@ -2096,10 +2219,10 @@ const Home = () => {
                       <FaQuoteLeft className="me-1" size={16} />
                       <FaQuoteRight className="ms-1" size={16} />
                     </div>
-                    <p className="mb-3 small">"{testimonial.text}"</p>
+                    <p className="mb-3 small" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", lineHeight: '1.6' }}>"{testimonial.text}"</p>
                     <div className="d-flex justify-content-between align-items-center">
-                      <strong className="small">{testimonial.name}</strong>
-                      <div className="text-warning">
+                      <strong className="small" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>{testimonial.name}</strong>
+                      <div className="text-warning" style={{ fontFamily: "'Courier New', monospace" }}>
                         {'★'.repeat(testimonial.rating)}
                         {'☆'.repeat(5 - testimonial.rating)}
                       </div>
@@ -2115,8 +2238,12 @@ const Home = () => {
       {/* WHY CHOOSE US */}
       <section className="py-5 bg-light">
         <Container>
-          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
-            Why <span className="text-warning">Choose Us</span>
+          <h2 className="text-center mb-5" style={{ 
+            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+            fontFamily: "'Arial Black', 'Impact', sans-serif",
+            letterSpacing: '2px'
+          }}>
+            Why <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Choose Us</span>
           </h2>
           <Row>
             {[
@@ -2130,8 +2257,8 @@ const Home = () => {
               <Col md={4} sm={6} key={index} className="mb-4">
                 <Card className="border-0 shadow-sm p-4 text-center h-100">
                   <div className="display-3 mb-3">{item.icon}</div>
-                  <h5 className="fw-bold mb-2">{item.title}</h5>
-                  <p className="text-secondary small mb-0">{item.desc}</p>
+                  <h5 className="fw-bold mb-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>{item.title}</h5>
+                  <p className="text-secondary small mb-0" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>{item.desc}</p>
                 </Card>
               </Col>
             ))}
@@ -2142,8 +2269,12 @@ const Home = () => {
       {/* CONTACT SECTION */}
       <section className="py-5">
         <Container>
-          <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
-            Contact <span className="text-warning">Us</span>
+          <h2 className="text-center mb-5" style={{ 
+            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+            fontFamily: "'Arial Black', 'Impact', sans-serif",
+            letterSpacing: '2px'
+          }}>
+            Contact <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Us</span>
           </h2>
           <Row>
             <Col lg={4} md={6} className="mb-4">
@@ -2152,9 +2283,9 @@ const Home = () => {
                   <div className="bg-warning rounded-circle d-inline-flex p-3 mb-3">
                     <FaMapMarkerAlt size={24} className="text-dark" />
                   </div>
-                  <h5 className="fw-bold mb-3">Visit Us</h5>
-                  <p className="text-secondary mb-1">No.71, 18th Block A Type Thiru,</p>
-                  <p className="text-secondary mb-1">Avadi, Chennai - 600054</p>
+                  <h5 className="fw-bold mb-3" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>Visit Us</h5>
+                  <p className="text-secondary mb-1" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>No.71, 18th Block A Type Thiru,</p>
+                  <p className="text-secondary mb-1" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>Avadi, Chennai - 600054</p>
                 </Card.Body>
               </Card>
             </Col>
@@ -2164,9 +2295,9 @@ const Home = () => {
                   <div className="bg-warning rounded-circle d-inline-flex p-3 mb-3">
                     <FaPhone size={24} className="text-dark" />
                   </div>
-                  <h5 className="fw-bold mb-3">Call Us</h5>
-                  <p className="text-secondary mb-1">+91 63810 95854</p>
-                  <p className="text-secondary mb-1">+91 72003 43435</p>
+                  <h5 className="fw-bold mb-3" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>Call Us</h5>
+                  <p className="text-secondary mb-1" style={{ fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>+91 {renderNumber(63810)} {renderNumber(95854)}</p>
+                  <p className="text-secondary mb-1" style={{ fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>+91 {renderNumber(72003)} {renderNumber(43435)}</p>
                 </Card.Body>
               </Card>
             </Col>
@@ -2176,15 +2307,15 @@ const Home = () => {
                   <div className="bg-warning rounded-circle d-inline-flex p-3 mb-3">
                     <FaEnvelope size={24} className="text-dark" />
                   </div>
-                  <h5 className="fw-bold mb-3">Email Us</h5>
-                  <p className="text-secondary mb-1">info@lexusdroptaxi.com</p>
-                  <p className="text-secondary mb-1">nagarajan16052001@gmail.com</p>
+                  <h5 className="fw-bold mb-3" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>Email Us</h5>
+                  <p className="text-secondary mb-1" style={{ fontFamily: "'Courier New', monospace" }}>info@lexusdroptaxi.com</p>
+                  <p className="text-secondary mb-1" style={{ fontFamily: "'Courier New', monospace" }}>nagarajan16052001@gmail.com</p>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
           <div className="text-center mt-4">
-            <Button variant="warning" onClick={() => navigate('/contact')}>Contact Us</Button>
+            <Button variant="warning" onClick={() => navigate('/contact')} style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Contact Us</Button>
           </div>
         </Container>
       </section>
@@ -2192,66 +2323,30 @@ const Home = () => {
       {/* CTA Section */}
       <section className="py-5 bg-warning">
         <Container className="text-center">
-          <h2 className="fw-bold mb-3" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)' }}>Ready to travel?</h2>
-          <p className="lead mb-4">Book your cab now and get 10% off on first ride!</p>
+          <h2 className="fw-bold mb-3" style={{ 
+            fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+            fontFamily: "'Arial Black', 'Impact', sans-serif",
+            letterSpacing: '2px'
+          }}>Ready to travel?</h2>
+          <p className="lead mb-4" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>Book your cab now and get {renderNumber(10)}% off on first ride!</p>
           <div className="d-flex justify-content-center gap-3 flex-wrap">
             <Button 
               variant="dark" 
               size="lg"
               className="rounded-pill px-5"
               onClick={() => document.querySelector('.card').scrollIntoView({ behavior: 'smooth' })}
+              style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}
             >
               Book Now
             </Button>
             <a href="tel:+916381095854">
-              <Button variant="outline-dark" size="lg" className="rounded-pill px-5">
+              <Button variant="outline-dark" size="lg" className="rounded-pill px-5" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>
                 <FaPhone className="me-2" /> Call Us
               </Button>
             </a>
           </div>
         </Container>
       </section>
-
-      {/* Confirmation Modal */}
-      <Modal show={showConfirmation} onHide={() => setShowConfirmation(false)} size="md" centered>
-        <Modal.Header closeButton className="bg-success text-white py-2">
-          <Modal.Title className="fs-5">
-            <FaCheckCircle className="me-2" size={18} />
-            Booking Confirmed!
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="p-3">
-          {bookingDetails && (
-            <div>
-              <div className="text-center mb-3">
-                <FaCheckCircle size={40} className="text-success" />
-                <h6 className="mt-2">Booking ID: {bookingDetails.bookingId}</h6>
-              </div>
-              <div className="bg-light p-2 rounded small mb-2">
-                <Row>
-                  <Col xs={6}>
-                    <p className="mb-1"><strong>Name:</strong> {bookingDetails.name}</p>
-                    <p className="mb-1"><strong>Car:</strong> {bookingDetails.carType}</p>
-                  </Col>
-                  <Col xs={6}>
-                    <p className="mb-1"><strong>From:</strong> {bookingDetails.pickupLocation}</p>
-                    <p className="mb-1"><strong>Total:</strong> ₹{bookingDetails.fareEstimate.total}</p>
-                  </Col>
-                </Row>
-              </div>
-              <Alert variant="success" className="py-2 small">
-                <FaWhatsapp className="me-1" size={14} />
-                Notification sent to admin
-              </Alert>
-              <div className="text-center">
-                <Button size="sm" variant="primary" onClick={() => navigate('/my-bookings')}>
-                  My Bookings
-                </Button>
-              </div>
-            </div>
-          )}
-        </Modal.Body>
-      </Modal>
     </div>
   );
 };
