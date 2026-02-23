@@ -661,7 +661,7 @@ const Home = () => {
   };
 
   // ============================================
-  // FULL RED METALLIC WITH SHINING ANIMATION
+  // FORM STYLES
   // ============================================
   
   const formStyles = {
@@ -670,16 +670,12 @@ const Home = () => {
       maxWidth: '500px',
       margin: '0 auto',
       width: '100%',
-      // Deep red metallic base
       backgroundColor: '#8B0000',
       backgroundImage: `
         radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
         radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 40% 80%, rgba(255, 100, 100, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 90% 20%, rgba(255, 100, 100, 0.2) 0%, transparent 50%),
         linear-gradient(145deg, #8B0000 0%, #B22222 30%, #CD5C5C 50%, #B22222 70%, #8B0000 100%)
       `,
-      backgroundBlendMode: 'overlay, overlay, screen, screen, normal',
       boxShadow: `
         0 30px 60px rgba(139, 0, 0, 0.6),
         0 0 0 2px rgba(255, 215, 0, 0.3) inset,
@@ -717,7 +713,7 @@ const Home = () => {
       border: '1px solid rgba(255, 215, 0, 0.5)',
       color: '#333333',
       borderRadius: '10px',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.2), inset 0 1px 3px rgba(0,0,0,0.1)',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
       transition: 'all 0.3s ease'
     },
     tripTypeBox: {
@@ -910,10 +906,6 @@ const Home = () => {
         }
       }
       
-      /* ============================================ */
-      /* SHINING ANIMATIONS - RED METALLIC GLOW */
-      /* ============================================ */
-      
       /* Sparkle animation */
       @keyframes sparkle {
         0%, 100% { 
@@ -927,7 +919,7 @@ const Home = () => {
         }
       }
       
-      /* Main shine animation - moves across the form */
+      /* Main shine animation */
       @keyframes shineMove {
         0% {
           transform: translateX(-100%) rotate(25deg);
@@ -940,7 +932,7 @@ const Home = () => {
         }
       }
       
-      /* Pulsing red glow */
+      /* Red pulse animation */
       @keyframes redPulse {
         0%, 100% {
           box-shadow: 0 30px 60px rgba(139, 0, 0, 0.6), 0 0 0 2px rgba(255, 215, 0, 0.3) inset, 0 0 30px rgba(255, 215, 0, 0.2) inset;
@@ -950,29 +942,20 @@ const Home = () => {
         }
       }
       
-      /* Floating particles */
-      @keyframes floatParticle {
+      /* Button shine animation */
+      @keyframes buttonShine {
         0% {
-          transform: translateY(0) translateX(0);
-          opacity: 0;
-        }
-        25% {
-          opacity: 0.8;
-        }
-        50% {
-          transform: translateY(-20px) translateX(10px);
-          opacity: 1;
-        }
-        75% {
-          opacity: 0.6;
+          transform: rotate(45deg) translateX(-100%);
         }
         100% {
-          transform: translateY(-40px) translateX(20px);
-          opacity: 0;
+          transform: rotate(45deg) translateX(100%);
         }
       }
       
-      /* MAIN SHINE OVERLAY - Moving light effect */
+      .form-card {
+        animation: redPulse 4s infinite ease-in-out;
+      }
+      
       .form-card::before {
         content: '';
         position: absolute;
@@ -999,44 +982,17 @@ const Home = () => {
         opacity: 0.6;
       }
       
-      /* Red pulse animation on the form */
-      .form-card {
-        animation: redPulse 4s infinite ease-in-out;
-      }
-      
-      /* Gold glowing border on hover */
       .form-card:hover {
         animation: none;
         box-shadow: 0 35px 70px rgba(139, 0, 0, 0.8), 0 0 0 4px rgba(255, 215, 0, 0.7) inset, 0 0 60px rgba(255, 215, 0, 0.5) inset !important;
-        transition: all 0.3s ease;
       }
       
-      .form-card:hover::before {
-        opacity: 0.8;
-        animation-duration: 4s;
-      }
-      
-      /* Floating gold particles */
-      .gold-particle {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: #FFD700;
-        border-radius: 50%;
-        box-shadow: 0 0 15px #FFD700;
-        animation: floatParticle 8s infinite;
-        pointer-events: none;
-        z-index: 8;
-      }
-      
-      /* Input focus effect */
       .form-input:focus {
         border-color: #FFD700 !important;
         box-shadow: 0 0 0 0.3rem rgba(255, 215, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.4) !important;
         transform: translateY(-2px);
       }
       
-      /* Button shine animation */
       .submit-button {
         position: relative;
         overflow: hidden;
@@ -1074,41 +1030,10 @@ const Home = () => {
         pointer-events: none;
       }
       
-      @keyframes buttonShine {
-        0% {
-          transform: rotate(45deg) translateX(-100%);
-        }
-        100% {
-          transform: rotate(45deg) translateX(100%);
-        }
-      }
-      
-      /* Trip type box hover */
       .trip-type-box:hover {
         transform: translateY(-3px);
         box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 0 1px #FFD700 inset !important;
         border-color: #FFD700 !important;
-      }
-      
-      /* Car option styles */
-      .car-option {
-        transition: all 0.3s ease;
-        background-color: rgba(255, 255, 255, 0.98) !important;
-        position: relative;
-        overflow: hidden;
-        border-radius: 12px;
-      }
-      
-      .car-option:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 30px rgba(0,0,0,0.3), 0 0 0 2px #FFD700 inset !important;
-        border-color: #FFD700 !important;
-      }
-      
-      .car-option.selected {
-        border-color: #FFD700 !important;
-        background: linear-gradient(145deg, #fff3cd, #ffe69b) !important;
-        box-shadow: 0 12px 30px rgba(139, 0, 0, 0.4), 0 0 0 2px #FFD700 inset !important;
       }
       
       .route-image {
@@ -1119,7 +1044,6 @@ const Home = () => {
         transform: scale(1.1);
       }
       
-      /* Carousel styles */
       .carousel .carousel-indicators {
         margin-bottom: 0.5rem;
       }
@@ -1152,24 +1076,7 @@ const Home = () => {
         text-align: left;
       }
       
-      /* Force 2 columns on all screen sizes */
       @media (max-width: 768px) {
-        .car-option {
-          padding: 8px !important;
-        }
-        
-        .car-image {
-          height: 70px !important;
-        }
-        
-        .car-name {
-          font-size: 0.9rem !important;
-        }
-        
-        .car-price {
-          font-size: 0.85rem !important;
-        }
-        
         .row > .col-6 {
           flex: 0 0 50%;
           max-width: 50%;
@@ -1177,20 +1084,9 @@ const Home = () => {
       }
       
       @media (max-width: 480px) {
-        .car-image {
-          height: 60px !important;
-        }
-        
-        .car-name {
-          font-size: 0.85rem !important;
-        }
-        
-        .car-price {
-          font-size: 0.8rem !important;
-        }
-        
-        .car-option {
-          padding: 6px !important;
+        .row > .col-6 {
+          flex: 0 0 50%;
+          max-width: 50%;
         }
       }
       
@@ -1199,29 +1095,6 @@ const Home = () => {
         --bs-gutter-y: 1rem;
       }
     `
-  };
-
-  // Generate floating gold particles
-  const generateGoldParticles = () => {
-    const particles = [];
-    for (let i = 0; i < 15; i++) {
-      const style = {
-        position: 'absolute',
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        width: `${Math.random() * 6 + 2}px`,
-        height: `${Math.random() * 6 + 2}px`,
-        background: '#FFD700',
-        borderRadius: '50%',
-        boxShadow: `0 0 ${Math.random() * 20 + 10}px #FFD700`,
-        animation: `floatParticle ${Math.random() * 5 + 5}s infinite`,
-        animationDelay: `${Math.random() * 3}s`,
-        zIndex: 6,
-        pointerEvents: 'none'
-      };
-      particles.push(<div key={`particle-${i}`} className="gold-particle" style={style}></div>);
-    }
-    return particles;
   };
 
   return (
@@ -1473,9 +1346,8 @@ const Home = () => {
                   overflow: 'hidden'
                 }}
               >
-                {/* Sparkles and particles */}
+                {/* Sparkles */}
                 {generateSparkles()}
-                {generateGoldParticles()}
                 
                 <Card.Body className="form-card-body" style={formStyles.cardBody}>
                   <h3 className="text-center fw-bold mb-4 form-title" style={formStyles.title}>
@@ -1634,38 +1506,43 @@ const Home = () => {
                       </Col>
                     </Row>
  
-                    {/* Select Car Type */}
+                    {/* ============================================ */}
+                    {/* SELECT CAR TYPE - TURNS FULL GOLD WHEN SELECTED */}
+                    {/* ============================================ */}
                     <div className="mb-3">
                       <label className="fw-bold form-label mb-3" style={{ fontSize: '1.1rem', color: '#FFFFFF' }}>
                         Select Car Type *
                       </label>
                       
                       <Row className="g-3">
-                        {/* SEDAN */}
+                        {/* SEDAN - Full gold when selected */}
                         <Col xs={6}>
                           <div 
-                            className={`car-option ${formData.carType === 'SEDAN' ? 'selected' : ''}`}
+                            className="car-option"
                             style={{
                               border: `2px solid ${formData.carType === 'SEDAN' ? '#FFD700' : '#dee2e6'}`,
                               borderRadius: '12px',
                               padding: '12px',
                               cursor: 'pointer',
                               transition: 'all 0.3s ease',
-                              backgroundColor: formData.carType === 'SEDAN' ? '#fff3cd' : 'white',
+                              backgroundColor: formData.carType === 'SEDAN' ? '#FFD700' : 'white',
                               height: '100%',
-                              boxShadow: formData.carType === 'SEDAN' ? '0 12px 30px rgba(139,0,0,0.4)' : '0 4px 12px rgba(0,0,0,0.1)'
+                              boxShadow: formData.carType === 'SEDAN' ? '0 12px 30px rgba(255,215,0,0.6), 0 0 20px rgba(255,215,0,0.4) inset' : '0 4px 12px rgba(0,0,0,0.1)',
+                              transform: formData.carType === 'SEDAN' ? 'translateY(-3px)' : 'none'
                             }}
                             onClick={() => selectCar('SEDAN')}
                             onMouseEnter={(e) => {
                               if (formData.carType !== 'SEDAN') {
                                 e.currentTarget.style.borderColor = '#FFD700';
                                 e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,215,0,0.3)';
+                                e.currentTarget.style.transform = 'translateY(-2px)';
                               }
                             }}
                             onMouseLeave={(e) => {
                               if (formData.carType !== 'SEDAN') {
                                 e.currentTarget.style.borderColor = '#dee2e6';
                                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                                e.currentTarget.style.transform = 'none';
                               }
                             }}
                           >
@@ -1677,40 +1554,48 @@ const Home = () => {
                                 height: '90px',
                                 objectFit: 'cover',
                                 borderRadius: '8px',
-                                marginBottom: '8px'
+                                marginBottom: '8px',
+                                border: formData.carType === 'SEDAN' ? '2px solid #B8860B' : 'none'
                               }}
                               className="car-image"
                             />
-                            <div className="fw-bold text-center car-name">SEDAN</div>
-                            <div className="fw-bold text-center car-price" style={{ color: '#8B0000' }}>₹14/km</div>
+                            <div className="fw-bold text-center car-name" style={{ color: formData.carType === 'SEDAN' ? '#8B0000' : '#333333' }}>
+                              SEDAN
+                            </div>
+                            <div className="fw-bold text-center car-price" style={{ color: formData.carType === 'SEDAN' ? '#8B0000' : '#8B0000' }}>
+                              ₹14/km
+                            </div>
                           </div>
                         </Col>
 
-                        {/* ETIOS */}
+                        {/* ETIOS - Full gold when selected */}
                         <Col xs={6}>
                           <div 
-                            className={`car-option ${formData.carType === 'ETIOS' ? 'selected' : ''}`}
+                            className="car-option"
                             style={{
                               border: `2px solid ${formData.carType === 'ETIOS' ? '#FFD700' : '#dee2e6'}`,
                               borderRadius: '12px',
                               padding: '12px',
                               cursor: 'pointer',
                               transition: 'all 0.3s ease',
-                              backgroundColor: formData.carType === 'ETIOS' ? '#fff3cd' : 'white',
+                              backgroundColor: formData.carType === 'ETIOS' ? '#FFD700' : 'white',
                               height: '100%',
-                              boxShadow: formData.carType === 'ETIOS' ? '0 12px 30px rgba(139,0,0,0.4)' : '0 4px 12px rgba(0,0,0,0.1)'
+                              boxShadow: formData.carType === 'ETIOS' ? '0 12px 30px rgba(255,215,0,0.6), 0 0 20px rgba(255,215,0,0.4) inset' : '0 4px 12px rgba(0,0,0,0.1)',
+                              transform: formData.carType === 'ETIOS' ? 'translateY(-3px)' : 'none'
                             }}
                             onClick={() => selectCar('ETIOS')}
                             onMouseEnter={(e) => {
                               if (formData.carType !== 'ETIOS') {
                                 e.currentTarget.style.borderColor = '#FFD700';
                                 e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,215,0,0.3)';
+                                e.currentTarget.style.transform = 'translateY(-2px)';
                               }
                             }}
                             onMouseLeave={(e) => {
                               if (formData.carType !== 'ETIOS') {
                                 e.currentTarget.style.borderColor = '#dee2e6';
                                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                                e.currentTarget.style.transform = 'none';
                               }
                             }}
                           >
@@ -1722,40 +1607,48 @@ const Home = () => {
                                 height: '90px',
                                 objectFit: 'cover',
                                 borderRadius: '8px',
-                                marginBottom: '8px'
+                                marginBottom: '8px',
+                                border: formData.carType === 'ETIOS' ? '2px solid #B8860B' : 'none'
                               }}
                               className="car-image"
                             />
-                            <div className="fw-bold text-center car-name">ETIOS</div>
-                            <div className="fw-bold text-center car-price" style={{ color: '#8B0000' }}>₹15/km</div>
+                            <div className="fw-bold text-center car-name" style={{ color: formData.carType === 'ETIOS' ? '#8B0000' : '#333333' }}>
+                              ETIOS
+                            </div>
+                            <div className="fw-bold text-center car-price" style={{ color: formData.carType === 'ETIOS' ? '#8B0000' : '#8B0000' }}>
+                              ₹15/km
+                            </div>
                           </div>
                         </Col>
 
-                        {/* MUV */}
+                        {/* MUV - Full gold when selected */}
                         <Col xs={6}>
                           <div 
-                            className={`car-option ${formData.carType === 'MUV' ? 'selected' : ''}`}
+                            className="car-option"
                             style={{
                               border: `2px solid ${formData.carType === 'MUV' ? '#FFD700' : '#dee2e6'}`,
                               borderRadius: '12px',
                               padding: '12px',
                               cursor: 'pointer',
                               transition: 'all 0.3s ease',
-                              backgroundColor: formData.carType === 'MUV' ? '#fff3cd' : 'white',
+                              backgroundColor: formData.carType === 'MUV' ? '#FFD700' : 'white',
                               height: '100%',
-                              boxShadow: formData.carType === 'MUV' ? '0 12px 30px rgba(139,0,0,0.4)' : '0 4px 12px rgba(0,0,0,0.1)'
+                              boxShadow: formData.carType === 'MUV' ? '0 12px 30px rgba(255,215,0,0.6), 0 0 20px rgba(255,215,0,0.4) inset' : '0 4px 12px rgba(0,0,0,0.1)',
+                              transform: formData.carType === 'MUV' ? 'translateY(-3px)' : 'none'
                             }}
                             onClick={() => selectCar('MUV')}
                             onMouseEnter={(e) => {
                               if (formData.carType !== 'MUV') {
                                 e.currentTarget.style.borderColor = '#FFD700';
                                 e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,215,0,0.3)';
+                                e.currentTarget.style.transform = 'translateY(-2px)';
                               }
                             }}
                             onMouseLeave={(e) => {
                               if (formData.carType !== 'MUV') {
                                 e.currentTarget.style.borderColor = '#dee2e6';
                                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                                e.currentTarget.style.transform = 'none';
                               }
                             }}
                           >
@@ -1767,40 +1660,48 @@ const Home = () => {
                                 height: '90px',
                                 objectFit: 'cover',
                                 borderRadius: '8px',
-                                marginBottom: '8px'
+                                marginBottom: '8px',
+                                border: formData.carType === 'MUV' ? '2px solid #B8860B' : 'none'
                               }}
                               className="car-image"
                             />
-                            <div className="fw-bold text-center car-name">MUV</div>
-                            <div className="fw-bold text-center car-price" style={{ color: '#8B0000' }}>₹19/km</div>
+                            <div className="fw-bold text-center car-name" style={{ color: formData.carType === 'MUV' ? '#8B0000' : '#333333' }}>
+                              MUV
+                            </div>
+                            <div className="fw-bold text-center car-price" style={{ color: formData.carType === 'MUV' ? '#8B0000' : '#8B0000' }}>
+                              ₹19/km
+                            </div>
                           </div>
                         </Col>
 
-                        {/* INNOVA */}
+                        {/* INNOVA - Full gold when selected */}
                         <Col xs={6}>
                           <div 
-                            className={`car-option ${formData.carType === 'INNOVA' ? 'selected' : ''}`}
+                            className="car-option"
                             style={{
                               border: `2px solid ${formData.carType === 'INNOVA' ? '#FFD700' : '#dee2e6'}`,
                               borderRadius: '12px',
                               padding: '12px',
                               cursor: 'pointer',
                               transition: 'all 0.3s ease',
-                              backgroundColor: formData.carType === 'INNOVA' ? '#fff3cd' : 'white',
+                              backgroundColor: formData.carType === 'INNOVA' ? '#FFD700' : 'white',
                               height: '100%',
-                              boxShadow: formData.carType === 'INNOVA' ? '0 12px 30px rgba(139,0,0,0.4)' : '0 4px 12px rgba(0,0,0,0.1)'
+                              boxShadow: formData.carType === 'INNOVA' ? '0 12px 30px rgba(255,215,0,0.6), 0 0 20px rgba(255,215,0,0.4) inset' : '0 4px 12px rgba(0,0,0,0.1)',
+                              transform: formData.carType === 'INNOVA' ? 'translateY(-3px)' : 'none'
                             }}
                             onClick={() => selectCar('INNOVA')}
                             onMouseEnter={(e) => {
                               if (formData.carType !== 'INNOVA') {
                                 e.currentTarget.style.borderColor = '#FFD700';
                                 e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,215,0,0.3)';
+                                e.currentTarget.style.transform = 'translateY(-2px)';
                               }
                             }}
                             onMouseLeave={(e) => {
                               if (formData.carType !== 'INNOVA') {
                                 e.currentTarget.style.borderColor = '#dee2e6';
                                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                                e.currentTarget.style.transform = 'none';
                               }
                             }}
                           >
@@ -1812,12 +1713,17 @@ const Home = () => {
                                 height: '90px',
                                 objectFit: 'cover',
                                 borderRadius: '8px',
-                                marginBottom: '8px'
+                                marginBottom: '8px',
+                                border: formData.carType === 'INNOVA' ? '2px solid #B8860B' : 'none'
                               }}
                               className="car-image"
                             />
-                            <div className="fw-bold text-center car-name">INNOVA</div>
-                            <div className="fw-bold text-center car-price" style={{ color: '#8B0000' }}>₹20/km</div>
+                            <div className="fw-bold text-center car-name" style={{ color: formData.carType === 'INNOVA' ? '#8B0000' : '#333333' }}>
+                              INNOVA
+                            </div>
+                            <div className="fw-bold text-center car-price" style={{ color: formData.carType === 'INNOVA' ? '#8B0000' : '#8B0000' }}>
+                              ₹20/km
+                            </div>
                           </div>
                         </Col>
                       </Row>
@@ -1845,7 +1751,7 @@ const Home = () => {
                       </div>
                     )}
 
-                    {/* Book Your Cab Button - Gold Button */}
+                    {/* Book Your Cab Button */}
                     <Button
                       type="submit"
                       disabled={loading}
