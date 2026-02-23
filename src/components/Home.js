@@ -62,8 +62,6 @@ const Home = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [bookingDetails, setBookingDetails] = useState(null);
   const [fareEstimate, setFareEstimate] = useState(null);
-  // recentBookings is used but we'll comment it out for now since it's not being used in the UI
-  // const [recentBookings, setRecentBookings] = useState([]);
 
   // Counter animation states
   const [counters, setCounters] = useState({
@@ -114,7 +112,7 @@ const Home = () => {
     };
   }, [isAutoPlaying, carouselImages.length]);
 
-  // Intersection Observer for stats animation - FIXED
+  // Intersection Observer for stats animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -141,15 +139,13 @@ const Home = () => {
   // Counter animation when stats become visible
   useEffect(() => {
     if (statsVisible) {
-      // Target values
       const targets = {
         trips: 15000,
-        rating: 48, // 4.8 * 10 for decimal handling
+        rating: 48,
         awards: 10,
         customers: 5000
       };
 
-      // Animation duration in ms
       const duration = 2000;
       const steps = 60;
       const interval = duration / steps;
@@ -169,7 +165,6 @@ const Home = () => {
             customers: Math.min(Math.round(targets.customers * progress), targets.customers)
           });
         } else {
-          // Ensure final values are set
           setCounters({
             trips: targets.trips,
             rating: targets.rating / 10,
@@ -201,14 +196,12 @@ const Home = () => {
     setTimeout(() => setIsAutoPlaying(true), 5000);
   };
 
-  // Go to specific slide
   const goToSlide = (index) => {
     setCurrentSlide(index);
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 5000);
   };
 
-  // Get current time
   const getCurrentTime = () => {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, '0');
@@ -250,7 +243,7 @@ const Home = () => {
     fetchCars();
   }, []);
 
-  // Fetch user's recent bookings - FIXED with useCallback
+  // Fetch user's recent bookings
   const fetchRecentBookings = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
@@ -261,12 +254,11 @@ const Home = () => {
       });
       
       const recent = response.data.data.slice(0, 3);
-      // setRecentBookings(recent); // Commented out since we're not using recentBookings
-      console.log('Recent bookings:', recent); // Optional: log for debugging
+      console.log('Recent bookings:', recent);
     } catch (error) {
       console.error('Error fetching recent bookings:', error);
     }
-  }, []); // Empty dependency array since it doesn't depend on any props/state
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -277,7 +269,7 @@ const Home = () => {
         mobile: user.phone || ''
       }));
     }
-  }, [user, fetchRecentBookings]); // Now includes fetchRecentBookings in dependencies
+  }, [user, fetchRecentBookings]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -468,8 +460,6 @@ const Home = () => {
       localStorage.setItem('localBookings', JSON.stringify(localBookings.slice(0, 10)));
       
       setBookingDetails(bookingData);
-      // Commented out since we're not using recentBookings
-      // setRecentBookings(prev => [bookingData, ...prev.slice(0, 2)]);
       
       const clientMessage = generateWhatsAppMessage(bookingData);
       sendWhatsAppToClient(clientMessage);
@@ -512,7 +502,7 @@ const Home = () => {
     { name: 'Rajesh K.', text: 'The driver was polite and knew the best route to avoid traffic.', rating: 5 }
   ];
 
-  // Tariff Data with additional images for carousel
+  // Tariff Data
   const tariffCars = [
     {
       name: 'SEDAN',
@@ -644,47 +634,123 @@ const Home = () => {
     { icon: <FaHeart />, value: '100+', label: 'Fleet Size' }
   ];
 
-  // Form styles
+  // ============================================
+  // GENERATE SPARKLES FOR METALLIC EFFECT
+  // ============================================
+  const generateSparkles = () => {
+    const sparkles = [];
+    for (let i = 0; i < 50; i++) {
+      const size = Math.random() * 4 + 1;
+      const style = {
+        position: 'absolute',
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        width: `${size}px`,
+        height: `${size}px`,
+        backgroundColor: `rgba(255, 255, 255, ${Math.random() * 0.9 + 0.3})`,
+        borderRadius: '50%',
+        boxShadow: `0 0 ${Math.random() * 15 + 5}px rgba(255, 215, 0, 0.8)`,
+        animation: `sparkle ${Math.random() * 3 + 2}s infinite ease-in-out`,
+        animationDelay: `${Math.random() * 2}s`,
+        zIndex: 10,
+        pointerEvents: 'none'
+      };
+      sparkles.push(<div key={`sparkle-${i}`} className="sparkle" style={style}></div>);
+    }
+    return sparkles;
+  };
+
+  // ============================================
+  // FULL RED METALLIC WITH SHINING ANIMATION
+  // ============================================
+  
   const formStyles = {
     card: {
-      borderRadius: '15px',
+      borderRadius: '20px',
       maxWidth: '500px',
       margin: '0 auto',
       width: '100%',
-      backgroundColor: 'rgba(130, 42, 20, 0.95)',
-      backdropFilter: 'blur(10px)',
-      boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+      // Deep red metallic base
+      backgroundColor: '#8B0000',
+      backgroundImage: `
+        radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 40% 80%, rgba(255, 100, 100, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 90% 20%, rgba(255, 100, 100, 0.2) 0%, transparent 50%),
+        linear-gradient(145deg, #8B0000 0%, #B22222 30%, #CD5C5C 50%, #B22222 70%, #8B0000 100%)
+      `,
+      backgroundBlendMode: 'overlay, overlay, screen, screen, normal',
+      boxShadow: `
+        0 30px 60px rgba(139, 0, 0, 0.6),
+        0 0 0 2px rgba(255, 215, 0, 0.3) inset,
+        0 0 30px rgba(255, 215, 0, 0.2) inset
+      `,
+      border: '1px solid rgba(255, 215, 0, 0.4)',
+      position: 'relative',
+      overflow: 'hidden',
+      transition: 'all 0.5s ease'
     },
     cardBody: {
-      padding: '1.5rem'
+      padding: '1.8rem',
+      position: 'relative',
+      zIndex: 20
     },
     title: {
-      fontSize: '1.5rem',
-      marginBottom: '1rem'
+      fontSize: '1.6rem',
+      marginBottom: '1.2rem',
+      color: '#FFFFFF',
+      textShadow: '2px 2px 4px rgba(0,0,0,0.6), 0 0 20px rgba(255,215,0,0.4)',
+      fontWeight: 'bold',
+      letterSpacing: '1px'
     },
     label: {
-      fontSize: '0.9rem',
-      marginBottom: '0.25rem'
+      fontSize: '0.95rem',
+      marginBottom: '0.3rem',
+      color: '#FFFFFF',
+      fontWeight: '600',
+      textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
     },
     input: {
       fontSize: '0.95rem',
-      padding: '0.5rem 0.75rem'
+      padding: '0.6rem 0.8rem',
+      backgroundColor: 'rgba(255, 255, 255, 0.98)',
+      border: '1px solid rgba(255, 215, 0, 0.5)',
+      color: '#333333',
+      borderRadius: '10px',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.2), inset 0 1px 3px rgba(0,0,0,0.1)',
+      transition: 'all 0.3s ease'
     },
     tripTypeBox: {
-      padding: '0.5rem',
-      fontSize: '0.9rem'
-    },
-    carSelectBox: {
-      padding: '0.5rem 0.75rem',
-      fontSize: '0.95rem'
+      padding: '0.6rem',
+      fontSize: '0.95rem',
+      backgroundColor: 'rgba(255, 255, 255, 0.98)',
+      border: '1px solid rgba(255, 215, 0, 0.5)',
+      color: '#333333',
+      borderRadius: '10px',
+      transition: 'all 0.3s ease',
+      boxShadow: '0 4px 10px rgba(0,0,0,0.2)'
     },
     button: {
-      fontSize: '1rem',
-      padding: '0.6rem 1rem'
+      fontSize: '1.1rem',
+      padding: '0.8rem 1rem',
+      backgroundColor: '#FFD700',
+      border: 'none',
+      color: '#8B0000',
+      fontWeight: 'bold',
+      borderRadius: '10px',
+      boxShadow: '0 8px 25px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.6) inset',
+      transition: 'all 0.3s ease',
+      textTransform: 'uppercase',
+      letterSpacing: '1.5px'
     },
     fareBox: {
-      padding: '0.75rem',
-      fontSize: '0.9rem'
+      padding: '0.8rem',
+      fontSize: '0.95rem',
+      backgroundColor: 'rgba(255, 255, 255, 0.98)',
+      border: '1px solid rgba(255, 215, 0, 0.5)',
+      borderRadius: '10px',
+      color: '#333333',
+      boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
     },
     mobileStyles: `
       /* Desktop and Tablet Default */
@@ -732,10 +798,6 @@ const Home = () => {
         .carousel-arrow {
           display: none !important;
         }
-        
-        .carousel-swipe-hint {
-          display: block !important;
-        }
       }
       
       @media (max-width: 768px) {
@@ -761,40 +823,35 @@ const Home = () => {
         }
         
         .form-card-body {
-          padding: 1rem !important;
+          padding: 1.2rem !important;
         }
         
         .form-title {
-          font-size: 1.3rem !important;
+          font-size: 1.4rem !important;
         }
         
         .form-label {
-          font-size: 0.85rem !important;
+          font-size: 0.9rem !important;
         }
         
         .form-input {
-          font-size: 0.9rem !important;
-          padding: 0.4rem 0.6rem !important;
+          font-size: 0.95rem !important;
+          padding: 0.5rem 0.7rem !important;
         }
         
         .trip-type-box {
-          padding: 0.4rem !important;
-          font-size: 0.85rem !important;
-        }
-        
-        .car-select-box {
-          padding: 0.4rem 0.6rem !important;
+          padding: 0.5rem !important;
           font-size: 0.9rem !important;
         }
         
         .fare-box {
-          padding: 0.6rem !important;
-          font-size: 0.85rem !important;
+          padding: 0.7rem !important;
+          font-size: 0.9rem !important;
         }
         
         .submit-button {
-          font-size: 0.95rem !important;
-          padding: 0.5rem !important;
+          font-size: 1rem !important;
+          padding: 0.6rem !important;
         }
         
         .row {
@@ -815,7 +872,6 @@ const Home = () => {
           padding: 1.5rem !important;
         }
         
-        /* Floating icons for mobile */
         .floating-icon {
           width: 45px !important;
           height: 45px !important;
@@ -837,11 +893,11 @@ const Home = () => {
         }
         
         .form-card-body {
-          padding: 0.75rem !important;
+          padding: 1rem !important;
         }
         
         .form-title {
-          font-size: 1.2rem !important;
+          font-size: 1.3rem !important;
         }
         
         .d-flex.gap-3 {
@@ -853,7 +909,319 @@ const Home = () => {
           max-width: 100%;
         }
       }
+      
+      /* ============================================ */
+      /* SHINING ANIMATIONS - RED METALLIC GLOW */
+      /* ============================================ */
+      
+      /* Sparkle animation */
+      @keyframes sparkle {
+        0%, 100% { 
+          opacity: 0.2; 
+          transform: scale(1); 
+        }
+        50% { 
+          opacity: 1; 
+          transform: scale(1.8); 
+          box-shadow: 0 0 25px rgba(255, 215, 0, 1);
+        }
+      }
+      
+      /* Main shine animation - moves across the form */
+      @keyframes shineMove {
+        0% {
+          transform: translateX(-100%) rotate(25deg);
+        }
+        20% {
+          transform: translateX(100%) rotate(25deg);
+        }
+        100% {
+          transform: translateX(200%) rotate(25deg);
+        }
+      }
+      
+      /* Pulsing red glow */
+      @keyframes redPulse {
+        0%, 100% {
+          box-shadow: 0 30px 60px rgba(139, 0, 0, 0.6), 0 0 0 2px rgba(255, 215, 0, 0.3) inset, 0 0 30px rgba(255, 215, 0, 0.2) inset;
+        }
+        50% {
+          box-shadow: 0 35px 70px rgba(139, 0, 0, 0.8), 0 0 0 3px rgba(255, 215, 0, 0.5) inset, 0 0 50px rgba(255, 215, 0, 0.4) inset;
+        }
+      }
+      
+      /* Floating particles */
+      @keyframes floatParticle {
+        0% {
+          transform: translateY(0) translateX(0);
+          opacity: 0;
+        }
+        25% {
+          opacity: 0.8;
+        }
+        50% {
+          transform: translateY(-20px) translateX(10px);
+          opacity: 1;
+        }
+        75% {
+          opacity: 0.6;
+        }
+        100% {
+          transform: translateY(-40px) translateX(20px);
+          opacity: 0;
+        }
+      }
+      
+      /* MAIN SHINE OVERLAY - Moving light effect */
+      .form-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          115deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.2) 35%,
+          rgba(255, 215, 0, 0.3) 40%,
+          rgba(255, 215, 0, 0.5) 45%,
+          rgba(255, 215, 0, 0.7) 50%,
+          rgba(255, 215, 0, 0.5) 55%,
+          rgba(255, 215, 0, 0.3) 60%,
+          rgba(255, 255, 255, 0.2) 65%,
+          transparent 70%
+        );
+        transform: rotate(25deg);
+        animation: shineMove 6s infinite;
+        pointer-events: none;
+        z-index: 5;
+        opacity: 0.6;
+      }
+      
+      /* Red pulse animation on the form */
+      .form-card {
+        animation: redPulse 4s infinite ease-in-out;
+      }
+      
+      /* Gold glowing border on hover */
+      .form-card:hover {
+        animation: none;
+        box-shadow: 0 35px 70px rgba(139, 0, 0, 0.8), 0 0 0 4px rgba(255, 215, 0, 0.7) inset, 0 0 60px rgba(255, 215, 0, 0.5) inset !important;
+        transition: all 0.3s ease;
+      }
+      
+      .form-card:hover::before {
+        opacity: 0.8;
+        animation-duration: 4s;
+      }
+      
+      /* Floating gold particles */
+      .gold-particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #FFD700;
+        border-radius: 50%;
+        box-shadow: 0 0 15px #FFD700;
+        animation: floatParticle 8s infinite;
+        pointer-events: none;
+        z-index: 8;
+      }
+      
+      /* Input focus effect */
+      .form-input:focus {
+        border-color: #FFD700 !important;
+        box-shadow: 0 0 0 0.3rem rgba(255, 215, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.4) !important;
+        transform: translateY(-2px);
+      }
+      
+      /* Button shine animation */
+      .submit-button {
+        position: relative;
+        overflow: hidden;
+        animation: buttonPulse 3s infinite;
+      }
+      
+      @keyframes buttonPulse {
+        0%, 100% {
+          box-shadow: 0 8px 25px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.6) inset;
+        }
+        50% {
+          box-shadow: 0 12px 30px rgba(0,0,0,0.5), 0 0 0 2px rgba(255,255,255,0.8) inset, 0 0 30px rgba(255,215,0,0.6);
+        }
+      }
+      
+      .submit-button::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          transparent 35%,
+          rgba(255, 255, 255, 0.4) 40%,
+          rgba(255, 255, 255, 0.8) 45%,
+          rgba(255, 255, 255, 1) 50%,
+          rgba(255, 255, 255, 0.8) 55%,
+          rgba(255, 255, 255, 0.4) 60%,
+          transparent 65%
+        );
+        transform: rotate(45deg);
+        animation: buttonShine 3s infinite;
+        pointer-events: none;
+      }
+      
+      @keyframes buttonShine {
+        0% {
+          transform: rotate(45deg) translateX(-100%);
+        }
+        100% {
+          transform: rotate(45deg) translateX(100%);
+        }
+      }
+      
+      /* Trip type box hover */
+      .trip-type-box:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 0 1px #FFD700 inset !important;
+        border-color: #FFD700 !important;
+      }
+      
+      /* Car option styles */
+      .car-option {
+        transition: all 0.3s ease;
+        background-color: rgba(255, 255, 255, 0.98) !important;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+      }
+      
+      .car-option:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.3), 0 0 0 2px #FFD700 inset !important;
+        border-color: #FFD700 !important;
+      }
+      
+      .car-option.selected {
+        border-color: #FFD700 !important;
+        background: linear-gradient(145deg, #fff3cd, #ffe69b) !important;
+        box-shadow: 0 12px 30px rgba(139, 0, 0, 0.4), 0 0 0 2px #FFD700 inset !important;
+      }
+      
+      .route-image {
+        transition: transform 0.5s ease;
+      }
+      
+      .route-image:hover {
+        transform: scale(1.1);
+      }
+      
+      /* Carousel styles */
+      .carousel .carousel-indicators {
+        margin-bottom: 0.5rem;
+      }
+      
+      .carousel .carousel-indicators button {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin: 0 4px;
+      }
+      
+      .carousel .carousel-control-prev,
+      .carousel .carousel-control-next {
+        width: 10%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      .carousel-container:hover .carousel-control-prev,
+      .carousel-container:hover .carousel-control-next {
+        opacity: 1;
+      }
+      
+      .carousel .carousel-caption {
+        padding: 10px;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        text-align: left;
+      }
+      
+      /* Force 2 columns on all screen sizes */
+      @media (max-width: 768px) {
+        .car-option {
+          padding: 8px !important;
+        }
+        
+        .car-image {
+          height: 70px !important;
+        }
+        
+        .car-name {
+          font-size: 0.9rem !important;
+        }
+        
+        .car-price {
+          font-size: 0.85rem !important;
+        }
+        
+        .row > .col-6 {
+          flex: 0 0 50%;
+          max-width: 50%;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .car-image {
+          height: 60px !important;
+        }
+        
+        .car-name {
+          font-size: 0.85rem !important;
+        }
+        
+        .car-price {
+          font-size: 0.8rem !important;
+        }
+        
+        .car-option {
+          padding: 6px !important;
+        }
+      }
+      
+      .g-3 {
+        --bs-gutter-x: 1rem;
+        --bs-gutter-y: 1rem;
+      }
     `
+  };
+
+  // Generate floating gold particles
+  const generateGoldParticles = () => {
+    const particles = [];
+    for (let i = 0; i < 15; i++) {
+      const style = {
+        position: 'absolute',
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        width: `${Math.random() * 6 + 2}px`,
+        height: `${Math.random() * 6 + 2}px`,
+        background: '#FFD700',
+        borderRadius: '50%',
+        boxShadow: `0 0 ${Math.random() * 20 + 10}px #FFD700`,
+        animation: `floatParticle ${Math.random() * 5 + 5}s infinite`,
+        animationDelay: `${Math.random() * 3}s`,
+        zIndex: 6,
+        pointerEvents: 'none'
+      };
+      particles.push(<div key={`particle-${i}`} className="gold-particle" style={style}></div>);
+    }
+    return particles;
   };
 
   return (
@@ -901,7 +1269,6 @@ const Home = () => {
       >
         <FaWhatsapp />
         
-        {/* Tooltip */}
         <span style={{
           position: 'absolute',
           left: '70px',
@@ -956,7 +1323,6 @@ const Home = () => {
       >
         <FaPhone />
         
-        {/* Tooltip */}
         <span style={{
           position: 'absolute',
           right: '70px',
@@ -975,141 +1341,7 @@ const Home = () => {
         </span>
       </a>
 
-      {/* Add CSS for animations and hover effects */}
-      <style>{`
-        /* Pulse animation */
-        @keyframes pulse {
-          0% {
-            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-          }
-          70% {
-            box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
-          }
-          100% {
-            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-          }
-        }
-        
-        .phone-icon {
-          animation-name: pulse-phone !important;
-        }
-        
-        @keyframes pulse-phone {
-          0% {
-            box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
-          }
-          70% {
-            box-shadow: 0 0 0 15px rgba(255, 193, 7, 0);
-          }
-          100% {
-            box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
-          }
-        }
-        
-        /* Tooltip on hover */
-        .floating-icon:hover .whatsapp-tooltip,
-        .floating-icon:hover .phone-tooltip {
-          opacity: 1 !important;
-          visibility: visible !important;
-        }
-        
-        /* Mobile adjustments */
-        @media (max-width: 768px) {
-          .floating-icon {
-            width: 45px !important;
-            height: 45px !important;
-            font-size: 22px !important;
-          }
-          
-          .floating-icon .whatsapp-tooltip,
-          .floating-icon .phone-tooltip {
-            display: none !important;
-          }
-        }
-        
-        /* Car option styles */
-        .car-option {
-          transition: all 0.3s ease;
-        }
-        .car-option:hover {
-          transform: translateY(-3px);
-        }
-        .car-option.selected {
-          border-color: #ffc107;
-          background-color: #fff3cd;
-          box-shadow: 0 6px 12px rgba(255,193,7,0.3);
-        }
-        .route-image {
-          transition: transform 0.5s ease;
-        }
-        .route-image:hover {
-          transform: scale(1.1);
-        }
-        
-        /* Carousel styles */
-        .carousel .carousel-indicators {
-          margin-bottom: 0.5rem;
-        }
-        
-        .carousel .carousel-indicators button {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          margin: 0 4px;
-        }
-        
-        .carousel .carousel-control-prev,
-        .carousel .carousel-control-next {
-          width: 10%;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-        
-        .carousel-container:hover .carousel-control-prev,
-        .carousel-container:hover .carousel-control-next {
-          opacity: 1;
-        }
-        
-        .carousel .carousel-control-prev-icon,
-        .carousel .carousel-control-next-icon {
-          background-color: rgba(0,0,0,0.5);
-          border-radius: 50%;
-          padding: 10px;
-        }
-        
-        .carousel .carousel-caption {
-          padding: 10px;
-          background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-          left: 0;
-          right: 0;
-          bottom: 0;
-          text-align: left;
-        }
-        
-        @media (max-width: 576px) {
-          .car-option img {
-            height: 70px !important;
-          }
-          .car-option {
-            padding: 8px !important;
-          }
-          
-          .carousel .carousel-control-prev,
-          .carousel .carousel-control-next {
-            opacity: 0.5;
-          }
-          
-          .carousel .carousel-caption h5 {
-            font-size: 1rem;
-          }
-          
-          .carousel .carousel-caption p {
-            font-size: 0.8rem;
-          }
-        }
-      `}</style>
-
-      {/* Hero Section with Carousel and Form */}
+      {/* Hero Section */}
       <section 
         className="position-relative"
         style={{ 
@@ -1231,26 +1463,40 @@ const Home = () => {
               </div>
             </Col>
 
-            {/* Right Column - Booking Form */}
+            {/* Right Column - SHINING RED METALLIC FORM */}
             <Col lg={6} className="hero-col-form">
               <Card 
                 className="border-0 shadow-lg form-card" 
-                style={formStyles.card}
+                style={{
+                  ...formStyles.card,
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
               >
+                {/* Sparkles and particles */}
+                {generateSparkles()}
+                {generateGoldParticles()}
+                
                 <Card.Body className="form-card-body" style={formStyles.cardBody}>
                   <h3 className="text-center fw-bold mb-4 form-title" style={formStyles.title}>
-                    <span style={{ color: '#000' }}>Lexus-Drop</span>{' '}
-                    <span style={{ color: '#ffc107' }}>Taxi</span>
+                    <span style={{ color: '#FFFFFF' }}>Leo-Drop</span>{' '}
+                    <span style={{ color: '#FFD700' }}>Taxi</span>
                   </h3>
 
                   <form onSubmit={handleSubmit}>
                     {/* Trip Type */}
                     <div className="mb-3">
                       <label className="fw-bold form-label" style={formStyles.label}>Trip Type</label>
-                      <div className="d-flex gap-3" style={{ gap: '0.5rem' }}>
+                      <div className="d-flex gap-3">
                         <div 
                           className={`flex-fill border rounded text-center trip-type-box ${formData.tripType === 'one-way' ? 'border-warning bg-warning bg-opacity-10' : ''}`}
-                          style={{ ...formStyles.tripTypeBox, cursor: 'pointer' }}
+                          style={{ 
+                            ...formStyles.tripTypeBox, 
+                            cursor: 'pointer',
+                            backgroundColor: formData.tripType === 'one-way' ? '#ffe69b' : 'rgba(255, 255, 255, 0.98)',
+                            borderColor: formData.tripType === 'one-way' ? '#FFD700' : 'rgba(255, 215, 0, 0.5)',
+                            boxShadow: formData.tripType === 'one-way' ? '0 0 20px rgba(255,215,0,0.4)' : '0 4px 10px rgba(0,0,0,0.2)'
+                          }}
                           onClick={() => {
                             setFormData({...formData, tripType: 'one-way'});
                             if (formData.carType) selectCar(formData.carType);
@@ -1262,7 +1508,13 @@ const Home = () => {
                         </div>
                         <div 
                           className={`flex-fill border rounded text-center trip-type-box ${formData.tripType === 'round-trip' ? 'border-warning bg-warning bg-opacity-10' : ''}`}
-                          style={{ ...formStyles.tripTypeBox, cursor: 'pointer' }}
+                          style={{ 
+                            ...formStyles.tripTypeBox, 
+                            cursor: 'pointer',
+                            backgroundColor: formData.tripType === 'round-trip' ? '#ffe69b' : 'rgba(255, 255, 255, 0.98)',
+                            borderColor: formData.tripType === 'round-trip' ? '#FFD700' : 'rgba(255, 215, 0, 0.5)',
+                            boxShadow: formData.tripType === 'round-trip' ? '0 0 20px rgba(255,215,0,0.4)' : '0 4px 10px rgba(0,0,0,0.2)'
+                          }}
                           onClick={() => {
                             setFormData({...formData, tripType: 'round-trip'});
                             if (formData.carType) selectCar(formData.carType);
@@ -1276,7 +1528,7 @@ const Home = () => {
                     {/* Pickup Location */}
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
-                        <FaMapMarkerAlt className="me-1 text-warning" size={12} />
+                        <FaMapMarkerAlt className="me-1" style={{ color: '#FFD700' }} size={12} />
                         Pickup Location *
                       </label>
                       <input
@@ -1294,7 +1546,7 @@ const Home = () => {
                     {/* Drop Location */}
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
-                        <FaMapMarkerAlt className="me-1 text-warning" size={12} />
+                        <FaMapMarkerAlt className="me-1" style={{ color: '#FFD700' }} size={12} />
                         Drop Location *
                       </label>
                       <input
@@ -1312,7 +1564,7 @@ const Home = () => {
                     {/* Name */}
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
-                        <FaUser className="me-1 text-warning" size={12} />
+                        <FaUser className="me-1" style={{ color: '#FFD700' }} size={12} />
                         Name *
                       </label>
                       <input
@@ -1330,7 +1582,7 @@ const Home = () => {
                     {/* Mobile */}
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
-                        <FaPhone className="me-1 text-warning" size={12} />
+                        <FaPhone className="me-1" style={{ color: '#FFD700' }} size={12} />
                         Mobile *
                       </label>
                       <input
@@ -1351,7 +1603,7 @@ const Home = () => {
                     <Row className="mb-2">
                       <Col xs={6}>
                         <label className="fw-bold form-label" style={formStyles.label}>
-                          <FaCalendarAlt className="me-1 text-warning" size={12} />
+                          <FaCalendarAlt className="me-1" style={{ color: '#FFD700' }} size={12} />
                           Date *
                         </label>
                         <input
@@ -1367,7 +1619,7 @@ const Home = () => {
                       </Col>
                       <Col xs={6}>
                         <label className="fw-bold form-label" style={formStyles.label}>
-                          <FaClock className="me-1 text-warning" size={12} />
+                          <FaClock className="me-1" style={{ color: '#FFD700' }} size={12} />
                           Time *
                         </label>
                         <input
@@ -1383,273 +1635,209 @@ const Home = () => {
                     </Row>
  
                     {/* Select Car Type */}
-<div className="mb-3">
-  <label className="fw-bold form-label mb-3" style={{ fontSize: '1.1rem' }}>
-    Select Car Type *
-  </label>
-  
-  <Row className="g-3">
-    {/* SEDAN */}
-    <Col xs={6} md={6} lg={6}>
-      <div 
-        className={`car-option ${formData.carType === 'SEDAN' ? 'selected' : ''}`}
-        style={{
-          border: `2px solid ${formData.carType === 'SEDAN' ? '#ffc107' : '#dee2e6'}`,
-          borderRadius: '12px',
-          padding: '12px',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          backgroundColor: formData.carType === 'SEDAN' ? '#fff3cd' : 'white',
-          height: '100%'
-        }}
-        onClick={() => selectCar('SEDAN')}
-        onMouseEnter={(e) => {
-          if (formData.carType !== 'SEDAN') {
-            e.currentTarget.style.borderColor = '#ffc107';
-            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (formData.carType !== 'SEDAN') {
-            e.currentTarget.style.borderColor = '#dee2e6';
-            e.currentTarget.style.boxShadow = 'none';
-          }
-        }}
-      >
-        <img 
-          src="https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg"
-          alt="SEDAN"
-          style={{
-            width: '100%',
-            height: '90px',
-            objectFit: 'cover',
-            borderRadius: '8px',
-            marginBottom: '8px'
-          }}
-          className="car-image"
-        />
-        <div className="fw-bold text-center car-name">SEDAN</div>
-        <div className="text-warning fw-bold text-center car-price">₹14/km</div>
-      </div>
-    </Col>
+                    <div className="mb-3">
+                      <label className="fw-bold form-label mb-3" style={{ fontSize: '1.1rem', color: '#FFFFFF' }}>
+                        Select Car Type *
+                      </label>
+                      
+                      <Row className="g-3">
+                        {/* SEDAN */}
+                        <Col xs={6}>
+                          <div 
+                            className={`car-option ${formData.carType === 'SEDAN' ? 'selected' : ''}`}
+                            style={{
+                              border: `2px solid ${formData.carType === 'SEDAN' ? '#FFD700' : '#dee2e6'}`,
+                              borderRadius: '12px',
+                              padding: '12px',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              backgroundColor: formData.carType === 'SEDAN' ? '#fff3cd' : 'white',
+                              height: '100%',
+                              boxShadow: formData.carType === 'SEDAN' ? '0 12px 30px rgba(139,0,0,0.4)' : '0 4px 12px rgba(0,0,0,0.1)'
+                            }}
+                            onClick={() => selectCar('SEDAN')}
+                            onMouseEnter={(e) => {
+                              if (formData.carType !== 'SEDAN') {
+                                e.currentTarget.style.borderColor = '#FFD700';
+                                e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,215,0,0.3)';
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (formData.carType !== 'SEDAN') {
+                                e.currentTarget.style.borderColor = '#dee2e6';
+                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                              }
+                            }}
+                          >
+                            <img 
+                              src="https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg"
+                              alt="SEDAN"
+                              style={{
+                                width: '100%',
+                                height: '90px',
+                                objectFit: 'cover',
+                                borderRadius: '8px',
+                                marginBottom: '8px'
+                              }}
+                              className="car-image"
+                            />
+                            <div className="fw-bold text-center car-name">SEDAN</div>
+                            <div className="fw-bold text-center car-price" style={{ color: '#8B0000' }}>₹14/km</div>
+                          </div>
+                        </Col>
 
-    {/* ETIOS */}
-    <Col xs={6} md={6} lg={6}>
-      <div 
-        className={`car-option ${formData.carType === 'ETIOS' ? 'selected' : ''}`}
-        style={{
-          border: `2px solid ${formData.carType === 'ETIOS' ? '#ffc107' : '#dee2e6'}`,
-          borderRadius: '12px',
-          padding: '12px',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          backgroundColor: formData.carType === 'ETIOS' ? '#fff3cd' : 'white',
-          height: '100%'
-        }}
-        onClick={() => selectCar('ETIOS')}
-        onMouseEnter={(e) => {
-          if (formData.carType !== 'ETIOS') {
-            e.currentTarget.style.borderColor = '#ffc107';
-            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (formData.carType !== 'ETIOS') {
-            e.currentTarget.style.borderColor = '#dee2e6';
-            e.currentTarget.style.boxShadow = 'none';
-          }
-        }}
-      >
-        <img 
-          src="https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg"
-          alt="ETIOS"
-          style={{
-            width: '100%',
-            height: '90px',
-            objectFit: 'cover',
-            borderRadius: '8px',
-            marginBottom: '8px'
-          }}
-          className="car-image"
-        />
-        <div className="fw-bold text-center car-name">ETIOS</div>
-        <div className="text-warning fw-bold text-center car-price">₹15/km</div>
-      </div>
-    </Col>
+                        {/* ETIOS */}
+                        <Col xs={6}>
+                          <div 
+                            className={`car-option ${formData.carType === 'ETIOS' ? 'selected' : ''}`}
+                            style={{
+                              border: `2px solid ${formData.carType === 'ETIOS' ? '#FFD700' : '#dee2e6'}`,
+                              borderRadius: '12px',
+                              padding: '12px',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              backgroundColor: formData.carType === 'ETIOS' ? '#fff3cd' : 'white',
+                              height: '100%',
+                              boxShadow: formData.carType === 'ETIOS' ? '0 12px 30px rgba(139,0,0,0.4)' : '0 4px 12px rgba(0,0,0,0.1)'
+                            }}
+                            onClick={() => selectCar('ETIOS')}
+                            onMouseEnter={(e) => {
+                              if (formData.carType !== 'ETIOS') {
+                                e.currentTarget.style.borderColor = '#FFD700';
+                                e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,215,0,0.3)';
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (formData.carType !== 'ETIOS') {
+                                e.currentTarget.style.borderColor = '#dee2e6';
+                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                              }
+                            }}
+                          >
+                            <img 
+                              src="https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg"
+                              alt="ETIOS"
+                              style={{
+                                width: '100%',
+                                height: '90px',
+                                objectFit: 'cover',
+                                borderRadius: '8px',
+                                marginBottom: '8px'
+                              }}
+                              className="car-image"
+                            />
+                            <div className="fw-bold text-center car-name">ETIOS</div>
+                            <div className="fw-bold text-center car-price" style={{ color: '#8B0000' }}>₹15/km</div>
+                          </div>
+                        </Col>
 
-    {/* MUV */}
-    <Col xs={6} md={6} lg={6}>
-      <div 
-        className={`car-option ${formData.carType === 'MUV' ? 'selected' : ''}`}
-        style={{
-          border: `2px solid ${formData.carType === 'MUV' ? '#ffc107' : '#dee2e6'}`,
-          borderRadius: '12px',
-          padding: '12px',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          backgroundColor: formData.carType === 'MUV' ? '#fff3cd' : 'white',
-          height: '100%'
-        }}
-        onClick={() => selectCar('MUV')}
-        onMouseEnter={(e) => {
-          if (formData.carType !== 'MUV') {
-            e.currentTarget.style.borderColor = '#ffc107';
-            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (formData.carType !== 'MUV') {
-            e.currentTarget.style.borderColor = '#dee2e6';
-            e.currentTarget.style.boxShadow = 'none';
-          }
-        }}
-      >
-        <img 
-          src="https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg"
-          alt="MUV"
-          style={{
-            width: '100%',
-            height: '90px',
-            objectFit: 'cover',
-            borderRadius: '8px',
-            marginBottom: '8px'
-          }}
-          className="car-image"
-        />
-        <div className="fw-bold text-center car-name">MUV</div>
-        <div className="text-warning fw-bold text-center car-price">₹19/km</div>
-      </div>
-    </Col>
+                        {/* MUV */}
+                        <Col xs={6}>
+                          <div 
+                            className={`car-option ${formData.carType === 'MUV' ? 'selected' : ''}`}
+                            style={{
+                              border: `2px solid ${formData.carType === 'MUV' ? '#FFD700' : '#dee2e6'}`,
+                              borderRadius: '12px',
+                              padding: '12px',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              backgroundColor: formData.carType === 'MUV' ? '#fff3cd' : 'white',
+                              height: '100%',
+                              boxShadow: formData.carType === 'MUV' ? '0 12px 30px rgba(139,0,0,0.4)' : '0 4px 12px rgba(0,0,0,0.1)'
+                            }}
+                            onClick={() => selectCar('MUV')}
+                            onMouseEnter={(e) => {
+                              if (formData.carType !== 'MUV') {
+                                e.currentTarget.style.borderColor = '#FFD700';
+                                e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,215,0,0.3)';
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (formData.carType !== 'MUV') {
+                                e.currentTarget.style.borderColor = '#dee2e6';
+                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                              }
+                            }}
+                          >
+                            <img 
+                              src="https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg"
+                              alt="MUV"
+                              style={{
+                                width: '100%',
+                                height: '90px',
+                                objectFit: 'cover',
+                                borderRadius: '8px',
+                                marginBottom: '8px'
+                              }}
+                              className="car-image"
+                            />
+                            <div className="fw-bold text-center car-name">MUV</div>
+                            <div className="fw-bold text-center car-price" style={{ color: '#8B0000' }}>₹19/km</div>
+                          </div>
+                        </Col>
 
-    {/* INNOVA */}
-    <Col xs={6} md={6} lg={6}>
-      <div 
-        className={`car-option ${formData.carType === 'INNOVA' ? 'selected' : ''}`}
-        style={{
-          border: `2px solid ${formData.carType === 'INNOVA' ? '#ffc107' : '#dee2e6'}`,
-          borderRadius: '12px',
-          padding: '12px',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          backgroundColor: formData.carType === 'INNOVA' ? '#fff3cd' : 'white',
-          height: '100%'
-        }}
-        onClick={() => selectCar('INNOVA')}
-        onMouseEnter={(e) => {
-          if (formData.carType !== 'INNOVA') {
-            e.currentTarget.style.borderColor = '#ffc107';
-            e.currentTarget.style.boxShadow = '0 4px 8px rgba(255,193,7,0.2)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (formData.carType !== 'INNOVA') {
-            e.currentTarget.style.borderColor = '#dee2e6';
-            e.currentTarget.style.boxShadow = 'none';
-          }
-        }}
-      >
-        <img 
-          src="https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg"
-          alt="INNOVA"
-          style={{
-            width: '100%',
-            height: '90px',
-            objectFit: 'cover',
-            borderRadius: '8px',
-            marginBottom: '8px'
-          }}
-          className="car-image"
-        />
-        <div className="fw-bold text-center car-name">INNOVA</div>
-        <div className="text-warning fw-bold text-center car-price">₹20/km</div>
-      </div>
-    </Col>
-  </Row>
-</div>
-
-{/* Add this CSS to your styles */}
-<style>{`
-  /* Ensure 2 columns on all screen sizes */
-  @media (max-width: 768px) {
-    .car-option {
-      padding: 8px !important;
-    }
-    
-    .car-image {
-      height: 70px !important;
-    }
-    
-    .car-name {
-      font-size: 0.9rem !important;
-    }
-    
-    .car-price {
-      font-size: 0.85rem !important;
-    }
-    
-    /* Force 2 columns even on very small screens */
-    .row > .col-6 {
-      flex: 0 0 50%;
-      max-width: 50%;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .car-image {
-      height: 60px !important;
-    }
-    
-    .car-name {
-      font-size: 0.85rem !important;
-    }
-    
-    .car-price {
-      font-size: 0.8rem !important;
-    }
-    
-    .car-option {
-      padding: 6px !important;
-    }
-  }
-  
-  /* Ensure proper spacing */
-  .g-3 {
-    --bs-gutter-x: 1rem;
-    --bs-gutter-y: 1rem;
-  }
-  
-  /* Hover effects */
-  .car-option {
-    transition: all 0.3s ease;
-  }
-  
-  .car-option:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-  }
-  
-  .car-option.selected {
-    border-color: #ffc107;
-    background-color: #fff3cd;
-    box-shadow: 0 6px 12px rgba(255,193,7,0.3);
-  }
-`}</style>
+                        {/* INNOVA */}
+                        <Col xs={6}>
+                          <div 
+                            className={`car-option ${formData.carType === 'INNOVA' ? 'selected' : ''}`}
+                            style={{
+                              border: `2px solid ${formData.carType === 'INNOVA' ? '#FFD700' : '#dee2e6'}`,
+                              borderRadius: '12px',
+                              padding: '12px',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              backgroundColor: formData.carType === 'INNOVA' ? '#fff3cd' : 'white',
+                              height: '100%',
+                              boxShadow: formData.carType === 'INNOVA' ? '0 12px 30px rgba(139,0,0,0.4)' : '0 4px 12px rgba(0,0,0,0.1)'
+                            }}
+                            onClick={() => selectCar('INNOVA')}
+                            onMouseEnter={(e) => {
+                              if (formData.carType !== 'INNOVA') {
+                                e.currentTarget.style.borderColor = '#FFD700';
+                                e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,215,0,0.3)';
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (formData.carType !== 'INNOVA') {
+                                e.currentTarget.style.borderColor = '#dee2e6';
+                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                              }
+                            }}
+                          >
+                            <img 
+                              src="https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg"
+                              alt="INNOVA"
+                              style={{
+                                width: '100%',
+                                height: '90px',
+                                objectFit: 'cover',
+                                borderRadius: '8px',
+                                marginBottom: '8px'
+                              }}
+                              className="car-image"
+                            />
+                            <div className="fw-bold text-center car-name">INNOVA</div>
+                            <div className="fw-bold text-center car-price" style={{ color: '#8B0000' }}>₹20/km</div>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
 
                     {/* Fare Estimate */}
                     {fareEstimate && (
                       <div className="bg-light rounded mb-3 fare-box" style={formStyles.fareBox}>
                         <div className="d-flex justify-content-between mb-1">
                           <span>Base Fare (Min {fareEstimate.minDistance}km):</span>
-                          <span className="fw-bold">₹{fareEstimate.baseFare}</span>
+                          <span className="fw-bold" style={{ color: '#8B0000' }}>₹{fareEstimate.baseFare}</span>
                         </div>
                         <div className="d-flex justify-content-between mb-1">
                           <span>Driver Bata:</span>
-                          <span className="fw-bold">₹{fareEstimate.driverBata}</span>
+                          <span className="fw-bold" style={{ color: '#8B0000' }}>₹{fareEstimate.driverBata}</span>
                         </div>
                         <hr className="my-1" />
                         <div className="d-flex justify-content-between">
                           <span className="fw-bold">Estimated Total:</span>
-                          <span className="fw-bold text-warning">₹{fareEstimate.total}</span>
+                          <span className="fw-bold" style={{ color: '#8B0000' }}>₹{fareEstimate.total}</span>
                         </div>
                         <small className="text-muted d-block mt-1">
                           *Toll, permit & hill charges extra
@@ -1657,20 +1845,34 @@ const Home = () => {
                       </div>
                     )}
 
-                    {/* Book Your Cab Button */}
+                    {/* Book Your Cab Button - Gold Button */}
                     <Button
                       type="submit"
-                      variant="warning"
                       disabled={loading}
                       className="w-100 fw-bold submit-button"
-                      style={formStyles.button}
+                      style={{
+                        ...formStyles.button,
+                        backgroundColor: '#FFD700',
+                        color: '#8B0000',
+                        border: '1px solid #8B0000'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#FFE55C';
+                        e.currentTarget.style.transform = 'translateY(-3px)';
+                        e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.8) inset, 0 0 30px rgba(255,215,0,0.6)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = '#FFD700';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.6) inset';
+                      }}
                     >
                       {loading ? 'Booking...' : 'Book Your Cab'}
                     </Button>
                     
                     {/* WhatsApp Info */}
-                    <p className="text-center text-muted mt-2 mb-0 small">
-                      <FaWhatsapp className="text-success me-1" size={12} />
+                    <p className="text-center mt-2 mb-0 small" style={{ color: '#FFFFFF' }}>
+                      <FaWhatsapp className="me-1" style={{ color: '#25d366' }} size={12} />
                       Notification sent to admin
                     </p>
                   </form>
@@ -1681,7 +1883,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Stats Section - With Animated Counters */}
+      {/* Stats Section */}
       <Container className="my-5" ref={statsRef}>
         <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
           Our <span className="text-warning">Achievements</span>
@@ -1702,7 +1904,7 @@ const Home = () => {
         </Row>
       </Container>
 
-      {/* TARIFF SECTION - With Photo Carousel */}
+      {/* TARIFF SECTION */}
       <section className="py-5 bg-light">
         <Container>
           <h2 className="text-center mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
@@ -1711,7 +1913,6 @@ const Home = () => {
           
           <Row>
             {tariffCars.map((car, index) => {
-              // Create carousel images for each car
               const carCarouselImages = [
                 car.image,
                 car.image2,
@@ -1722,7 +1923,6 @@ const Home = () => {
               return (
                 <Col lg={6} md={6} key={index} className="mb-4">
                   <Card className="border-0 shadow h-100" style={{ borderRadius: '20px', overflow: 'hidden' }}>
-                    {/* Photo Carousel for each car */}
                     <Carousel 
                       interval={3000}
                       indicators={true}
@@ -1753,7 +1953,6 @@ const Home = () => {
                     </Carousel>
 
                     <Card.Body className="p-4">
-                      {/* TARIFF Section */}
                       <div className="mb-4">
                         <h6 className="fw-bold mb-3">TARIFF</h6>
                         <Row className="g-3">
@@ -1778,7 +1977,6 @@ const Home = () => {
                         </Row>
                       </div>
 
-                      {/* INCLUDE WITH Section */}
                       <div>
                         <h6 className="fw-bold mb-3"><FaInfoCircle className="text-warning me-2" />INCLUDE WITH</h6>
                         <Row>
@@ -1828,7 +2026,7 @@ const Home = () => {
             <span className="text-warning">Popular</span> Routes
           </h2>
           <Row>
-            {popularRoutes.slice(0, 4).map((route, index) => (
+            {popularRoutes.map((route, index) => (
               <Col lg={6} key={index} className="mb-4">
                 <Card className="border-0 shadow h-100" style={{ borderRadius: '15px', overflow: 'hidden' }}>
                   <div className="position-relative" style={{ height: '200px', overflow: 'hidden' }}>
