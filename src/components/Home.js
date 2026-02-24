@@ -699,11 +699,11 @@ const Home = () => {
       maxWidth: '500px',
       margin: '0 auto',
       width: '100%',
-      backgroundColor: '#8B0000',
+      backgroundColor: '#1a679aff',
       backgroundImage: `
         radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
         radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
-        linear-gradient(145deg, #8B0000 0%, #B22222 30%, #CD5C5C 50%, #B22222 70%, #8B0000 100%)
+        linear-gradient(145deg, #1a679aff 0%, #1a679aff 30%, #1a679aff 50%, #1a679aff 70%, #27c9f6ff 100%)
       `,
       boxShadow: `
         0 30px 60px rgba(139, 0, 0, 0.6),
