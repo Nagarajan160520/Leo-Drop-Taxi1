@@ -699,11 +699,11 @@ const Home = () => {
       maxWidth: '500px',
       margin: '0 auto',
       width: '100%',
-      backgroundColor: '#1a679aff',
+      backgroundColor: '#3b9cf7e6',
       backgroundImage: `
-        radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
-        linear-gradient(145deg, #1a679aff 0%, #1a679aff 30%, #1a679aff 50%, #1a679aff 70%, #27c9f6ff 100%)
+        radial-gradient(circle at 20% 30%, rgba(35, 157, 227, 0.93) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(53, 195, 238, 0.86) 0%, transparent 40%),
+        linear-gradient(145deg, #3b9cf7e6 0%, #3b9cf7e6 30%, #3b9cf7e6 50%, #3b9cf7e6 70%, #3b9cf7e6 100%)
       `,
       boxShadow: `
         0 30px 60px rgba(139, 0, 0, 0.6),
