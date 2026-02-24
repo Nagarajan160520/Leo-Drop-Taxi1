@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Container, Row, Col, Button, Card, Modal, Carousel } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'; 
 import { useAuth } from '../context/AuthContext';
@@ -34,6 +34,27 @@ const API_URL = 'https://leo-drop-taxi.onrender.com/api';
 // Client WhatsApp number
 const CLIENT_WHATSAPP_NUMBER = '916381095854';
 const CLIENT_PHONE_NUMBER = '916381095854';
+
+// Pre-compute number styles to avoid recalculation
+const numberStyles = {
+  fontFamily: "'Arial Black', 'Impact', sans-serif",
+  fontWeight: '900',
+  fontSize: 'inherit',
+  display: 'inline-block',
+  textShadow: '2px 2px 0 #000, 4px 4px 0 rgba(255,215,0,0.3)',
+  letterSpacing: '1px',
+  transform: 'skew(-5deg)',
+  background: 'linear-gradient(145deg, #FFFFFF, #FFD700)',
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  backgroundClip: 'text',
+  filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.3))'
+};
+
+// Optimized number renderer - memoized to prevent recalculation
+const OptimizedNumber = React.memo(({ num }) => {
+  return <span style={numberStyles}>{num}</span>;
+});
 
 const Home = () => {
   const { user } = useAuth();
@@ -74,7 +95,7 @@ const Home = () => {
   const statsRef = useRef(null);
 
   // Background carousel images
-  const carouselImages = [
+  const carouselImages = useMemo(() => [
     {
       url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg',
       title: 'Luxury Sedans',
@@ -95,9 +116,9 @@ const Home = () => {
       title: 'Hill Station Trips',
       description: 'Special packages for mountain getaways'
     }
-  ];
+  ], []);
 
-  // Auto-play carousel
+  // Auto-play carousel with cleanup
   useEffect(() => {
     if (isAutoPlaying) {
       autoPlayRef.current = setInterval(() => {
@@ -111,12 +132,13 @@ const Home = () => {
     };
   }, [isAutoPlaying, carouselImages.length]);
 
-  // Intersection Observer for stats animation
+  // Intersection Observer for stats animation - optimized
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
           setStatsVisible(true);
+          observer.disconnect(); // Stop observing after animation starts
         }
       },
       { threshold: 0.3 }
@@ -135,7 +157,7 @@ const Home = () => {
     };
   }, []);
 
-  // Counter animation when stats become visible
+  // Counter animation when stats become visible - optimized
   useEffect(() => {
     if (statsVisible) {
       const targets = {
@@ -145,8 +167,8 @@ const Home = () => {
         customers: 5000
       };
 
-      const duration = 2000;
-      const steps = 60;
+      const duration = 1500; // Reduced from 2000ms for faster animation
+      const steps = 30; // Reduced steps for better performance
       const interval = duration / steps;
 
       let currentStep = 0;
@@ -509,7 +531,7 @@ const Home = () => {
   ];
 
   // Tariff Data
-  const tariffCars = [
+  const tariffCars = useMemo(() => [
     {
       name: 'SEDAN',
       model: 'TATA ZEST',
@@ -570,10 +592,10 @@ const Home = () => {
       image3: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg',
       image4: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg'
     }
-  ];
+  ], []);
 
   // Popular Routes Data
-  const popularRoutes = [
+  const popularRoutes = useMemo(() => [
     {
       from: 'Chennai',
       to: 'Kodaikanal',
@@ -630,67 +652,44 @@ const Home = () => {
         { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
       ]
     }
-  ];
+  ], []);
 
   // About Stats
-  const aboutStats = [
+  const aboutStats = useMemo(() => [
     { icon: <FaCar />, value: '15000+', label: 'Trips Completed' },
     { icon: <FaUsers />, value: '5000+', label: 'Happy Customers' },
     { icon: <FaAward />, value: '10+', label: 'Awards' },
     { icon: <FaHeart />, value: '100+', label: 'Fleet Size' }
-  ];
+  ], []);
 
-  // ============================================
-  // GENERATE SPARKLES FOR METALLIC EFFECT
-  // ============================================
-  const generateSparkles = () => {
+  // Optimized sparkles - reduced count and simplified
+  const generateSparkles = useCallback(() => {
+    // Reduced from 50 to 15 sparkles for better performance
     const sparkles = [];
-    for (let i = 0; i < 50; i++) {
-      const size = Math.random() * 4 + 1;
+    for (let i = 0; i < 15; i++) {
+      const size = Math.random() * 3 + 1;
       const style = {
         position: 'absolute',
         left: `${Math.random() * 100}%`,
         top: `${Math.random() * 100}%`,
         width: `${size}px`,
         height: `${size}px`,
-        backgroundColor: `rgba(255, 255, 255, ${Math.random() * 0.9 + 0.3})`,
+        backgroundColor: `rgba(255, 255, 255, ${Math.random() * 0.7 + 0.3})`,
         borderRadius: '50%',
-        boxShadow: `0 0 ${Math.random() * 15 + 5}px rgba(255, 215, 0, 0.8)`,
-        animation: `sparkle ${Math.random() * 3 + 2}s infinite ease-in-out`,
-        animationDelay: `${Math.random() * 2}s`,
+        boxShadow: `0 0 ${Math.random() * 8 + 2}px rgba(255, 215, 0, 0.6)`,
+        animation: `sparkle ${Math.random() * 4 + 3}s infinite ease-in-out`,
+        animationDelay: `${Math.random() * 3}s`,
         zIndex: 10,
-        pointerEvents: 'none'
+        pointerEvents: 'none',
+        willChange: 'transform, opacity' // Hint browser for optimization
       };
       sparkles.push(<div key={`sparkle-${i}`} className="sparkle" style={style}></div>);
     }
     return sparkles;
-  };
+  }, []);
 
   // ============================================
-  // CUSTOM NUMBER STYLES - Exactly like the image
-  // ============================================
-  const numberStyles = {
-    fontFamily: "'Arial Black', 'Impact', sans-serif",
-    fontWeight: '900',
-    fontSize: 'inherit',
-    display: 'inline-block',
-    textShadow: '2px 2px 0 #000, 4px 4px 0 rgba(255,215,0,0.3)',
-    letterSpacing: '1px',
-    transform: 'skew(-5deg)',
-    background: 'linear-gradient(145deg, #FFFFFF, #FFD700)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-    filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.3))'
-  };
-
-  // Function to render numbers with custom style
-  const renderNumber = (num) => {
-    return <span style={numberStyles}>{num}</span>;
-  };
-
-  // ============================================
-  // FORM STYLES
+  // FORM STYLES - Optimized for performance
   // ============================================
   
   const formStyles = {
@@ -713,7 +712,8 @@ const Home = () => {
       border: '1px solid rgba(255, 215, 0, 0.4)',
       position: 'relative',
       overflow: 'hidden',
-      transition: 'all 0.5s ease'
+      transition: 'all 0.5s ease',
+      willChange: 'transform, box-shadow' // Performance optimization
     },
     cardBody: {
       padding: '1.8rem',
@@ -967,20 +967,19 @@ const Home = () => {
         }
       }
       
-      /* Sparkle animation */
+      /* Optimized animations with will-change */
       @keyframes sparkle {
         0%, 100% { 
           opacity: 0.2; 
           transform: scale(1); 
         }
         50% { 
-          opacity: 1; 
-          transform: scale(1.8); 
-          box-shadow: 0 0 25px rgba(255, 215, 0, 1);
+          opacity: 0.8; 
+          transform: scale(1.5); 
+          box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
         }
       }
       
-      /* Main shine animation */
       @keyframes shineMove {
         0% {
           transform: translateX(-100%) rotate(25deg);
@@ -993,28 +992,19 @@ const Home = () => {
         }
       }
       
-      /* Red pulse animation */
-      @keyframes redPulse {
+      /* Simplified pulse animation - less intense */
+      @keyframes softPulse {
         0%, 100% {
-          box-shadow: 0 30px 60px rgba(139, 0, 0, 0.6), 0 0 0 2px rgba(255, 215, 0, 0.3) inset, 0 0 30px rgba(255, 215, 0, 0.2) inset;
+          box-shadow: 0 30px 60px rgba(139, 0, 0, 0.6), 0 0 0 2px rgba(255, 215, 0, 0.3) inset;
         }
         50% {
-          box-shadow: 0 35px 70px rgba(139, 0, 0, 0.8), 0 0 0 3px rgba(255, 215, 0, 0.5) inset, 0 0 50px rgba(255, 215, 0, 0.4) inset;
-        }
-      }
-      
-      /* Button shine animation */
-      @keyframes buttonShine {
-        0% {
-          transform: rotate(45deg) translateX(-100%);
-        }
-        100% {
-          transform: rotate(45deg) translateX(100%);
+          box-shadow: 0 35px 70px rgba(139, 0, 0, 0.7), 0 0 0 3px rgba(255, 215, 0, 0.4) inset;
         }
       }
       
       .form-card {
-        animation: redPulse 4s infinite ease-in-out;
+        animation: softPulse 4s infinite ease-in-out;
+        will-change: box-shadow;
       }
       
       .form-card::before {
@@ -1027,46 +1017,41 @@ const Home = () => {
         background: linear-gradient(
           115deg,
           transparent 30%,
-          rgba(255, 255, 255, 0.2) 35%,
-          rgba(255, 215, 0, 0.3) 40%,
-          rgba(255, 215, 0, 0.5) 45%,
-          rgba(255, 215, 0, 0.7) 50%,
-          rgba(255, 215, 0, 0.5) 55%,
-          rgba(255, 215, 0, 0.3) 60%,
-          rgba(255, 255, 255, 0.2) 65%,
+          rgba(255, 255, 255, 0.15) 35%,
+          rgba(255, 215, 0, 0.2) 40%,
+          rgba(255, 215, 0, 0.3) 45%,
+          rgba(255, 215, 0, 0.4) 50%,
+          rgba(255, 215, 0, 0.3) 55%,
+          rgba(255, 215, 0, 0.2) 60%,
+          rgba(255, 255, 255, 0.15) 65%,
           transparent 70%
         );
         transform: rotate(25deg);
-        animation: shineMove 6s infinite;
+        animation: shineMove 8s infinite;
         pointer-events: none;
         z-index: 5;
-        opacity: 0.6;
+        opacity: 0.4;
+        will-change: transform;
       }
       
+      /* Reduce animation intensity on hover */
       .form-card:hover {
         animation: none;
-        box-shadow: 0 35px 70px rgba(139, 0, 0, 0.8), 0 0 0 4px rgba(255, 215, 0, 0.7) inset, 0 0 60px rgba(255, 215, 0, 0.5) inset !important;
+        box-shadow: 0 35px 70px rgba(139, 0, 0, 0.8), 0 0 0 4px rgba(255, 215, 0, 0.5) inset !important;
+        transition: box-shadow 0.3s ease;
       }
       
       .form-input:focus {
         border-color: #FFD700 !important;
-        box-shadow: 0 0 0 0.3rem rgba(255, 215, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.4) !important;
-        transform: translateY(-2px);
+        box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.3) !important;
+        transform: translateY(-1px);
+        transition: all 0.2s ease;
       }
       
       .submit-button {
         position: relative;
         overflow: hidden;
-        animation: buttonPulse 3s infinite;
-      }
-      
-      @keyframes buttonPulse {
-        0%, 100% {
-          box-shadow: 0 8px 25px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.6) inset;
-        }
-        50% {
-          box-shadow: 0 12px 30px rgba(0,0,0,0.5), 0 0 0 2px rgba(255,255,255,0.8) inset, 0 0 30px rgba(255,215,0,0.6);
-        }
+        transition: all 0.3s ease;
       }
       
       .submit-button::before {
@@ -1079,30 +1064,41 @@ const Home = () => {
         background: linear-gradient(
           45deg,
           transparent 35%,
-          rgba(255, 255, 255, 0.4) 40%,
-          rgba(255, 255, 255, 0.8) 45%,
-          rgba(255, 255, 255, 1) 50%,
-          rgba(255, 255, 255, 0.8) 55%,
-          rgba(255, 255, 255, 0.4) 60%,
+          rgba(255, 255, 255, 0.3) 40%,
+          rgba(255, 255, 255, 0.5) 45%,
+          rgba(255, 255, 255, 0.7) 50%,
+          rgba(255, 255, 255, 0.5) 55%,
+          rgba(255, 255, 255, 0.3) 60%,
           transparent 65%
         );
         transform: rotate(45deg);
-        animation: buttonShine 3s infinite;
+        animation: buttonShine 4s infinite;
         pointer-events: none;
+        will-change: transform;
+      }
+      
+      @keyframes buttonShine {
+        0% {
+          transform: rotate(45deg) translateX(-100%);
+        }
+        100% {
+          transform: rotate(45deg) translateX(100%);
+        }
       }
       
       .trip-type-box:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 0 1px #FFD700 inset !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.2), 0 0 0 1px #FFD700 inset !important;
         border-color: #FFD700 !important;
+        transition: all 0.2s ease;
       }
       
       .route-image {
-        transition: transform 0.5s ease;
+        transition: transform 0.4s ease;
       }
       
       .route-image:hover {
-        transform: scale(1.1);
+        transform: scale(1.05);
       }
       
       .carousel .carousel-indicators {
@@ -1120,7 +1116,7 @@ const Home = () => {
       .carousel .carousel-control-next {
         width: 10%;
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transition: opacity 0.2s ease;
       }
       
       .carousel-container:hover .carousel-control-prev,
@@ -1156,16 +1152,18 @@ const Home = () => {
         --bs-gutter-y: 1rem;
       }
       
-      /* Mobile-specific pulse animation */
+      /* Mobile-specific optimizations */
       @keyframes mobile-pulse {
         0%, 100% {
           transform: translateY(-50%) scale(1);
-          box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
         50% {
-          transform: translateY(-50%) scale(1.1);
-          box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+          transform: translateY(-50%) scale(1.05);
         }
+      }
+      
+      .floating-icon {
+        will-change: transform;
       }
     `
   };
@@ -1200,12 +1198,13 @@ const Home = () => {
           boxShadow: '0 4px 15px rgba(37, 211, 102, 0.4)',
           cursor: 'pointer',
           zIndex: 1000,
-          transition: 'all 0.3s ease',
+          transition: 'transform 0.2s ease, box-shadow 0.2s ease',
           textDecoration: 'none',
-          animation: 'pulse 2s infinite'
+          animation: 'mobile-pulse 3s infinite',
+          willChange: 'transform'
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+          e.currentTarget.style.transform = 'translateY(-50%) scale(1.05)';
           e.currentTarget.style.boxShadow = '0 8px 25px rgba(37, 211, 102, 0.6)';
         }}
         onMouseLeave={(e) => {
@@ -1227,7 +1226,7 @@ const Home = () => {
           whiteSpace: 'nowrap',
           opacity: 0,
           visibility: 'hidden',
-          transition: 'all 0.3s ease',
+          transition: 'opacity 0.2s ease',
           boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
         }} className="whatsapp-tooltip">
           WhatsApp Us
@@ -1255,12 +1254,13 @@ const Home = () => {
           boxShadow: '0 4px 15px rgba(255, 193, 7, 0.4)',
           cursor: 'pointer',
           zIndex: 1000,
-          transition: 'all 0.3s ease',
+          transition: 'transform 0.2s ease, box-shadow 0.2s ease',
           textDecoration: 'none',
-          animation: 'pulse 2s infinite 0.5s'
+          animation: 'mobile-pulse 3s infinite 0.5s',
+          willChange: 'transform'
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+          e.currentTarget.style.transform = 'translateY(-50%) scale(1.05)';
           e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 193, 7, 0.6)';
         }}
         onMouseLeave={(e) => {
@@ -1282,7 +1282,7 @@ const Home = () => {
           whiteSpace: 'nowrap',
           opacity: 0,
           visibility: 'hidden',
-          transition: 'all 0.3s ease',
+          transition: 'opacity 0.2s ease',
           boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
         }} className="phone-tooltip">
           Call Us Now
@@ -1344,12 +1344,13 @@ const Home = () => {
                       top: 0,
                       left: 0,
                       opacity: index === currentSlide ? 1 : 0,
-                      transition: 'opacity 1s ease-in-out',
+                      transition: 'opacity 0.8s ease-in-out',
                       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${image.url})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                       backgroundRepeat: 'no-repeat',
-                      borderRadius: '15px'
+                      borderRadius: '15px',
+                      willChange: 'opacity'
                     }}
                   >
                     <div 
@@ -1407,7 +1408,7 @@ const Home = () => {
                       style={{
                         width: '10px',
                         height: '10px',
-                        transition: 'all 0.3s ease',
+                        transition: 'all 0.2s ease',
                         transform: index === currentSlide ? 'scale(1.2)' : 'scale(1)'
                       }}
                     />
@@ -1426,7 +1427,7 @@ const Home = () => {
                   overflow: 'hidden'
                 }}
               >
-                {/* Sparkles */}
+                {/* Optimized sparkles - fewer for better performance */}
                 {generateSparkles()}
                 
                 <Card.Body className="form-card-body" style={formStyles.cardBody}>
@@ -1447,7 +1448,7 @@ const Home = () => {
                             cursor: 'pointer',
                             backgroundColor: formData.tripType === 'one-way' ? '#ffe69b' : 'rgba(255, 255, 255, 0.98)',
                             borderColor: formData.tripType === 'one-way' ? '#FFD700' : 'rgba(255, 215, 0, 0.5)',
-                            boxShadow: formData.tripType === 'one-way' ? '0 0 20px rgba(255,215,0,0.4)' : '0 4px 10px rgba(0,0,0,0.2)',
+                            boxShadow: formData.tripType === 'one-way' ? '0 0 15px rgba(255,215,0,0.3)' : '0 4px 10px rgba(0,0,0,0.2)',
                             fontFamily: "'Impact', 'Arial Black', sans-serif"
                           }}
                           onClick={() => {
@@ -1466,7 +1467,7 @@ const Home = () => {
                             cursor: 'pointer',
                             backgroundColor: formData.tripType === 'round-trip' ? '#ffe69b' : 'rgba(255, 255, 255, 0.98)',
                             borderColor: formData.tripType === 'round-trip' ? '#FFD700' : 'rgba(255, 215, 0, 0.5)',
-                            boxShadow: formData.tripType === 'round-trip' ? '0 0 20px rgba(255,215,0,0.4)' : '0 4px 10px rgba(0,0,0,0.2)',
+                            boxShadow: formData.tripType === 'round-trip' ? '0 0 15px rgba(255,215,0,0.3)' : '0 4px 10px rgba(0,0,0,0.2)',
                             fontFamily: "'Impact', 'Arial Black', sans-serif"
                           }}
                           onClick={() => {
@@ -1588,16 +1589,14 @@ const Home = () => {
                       </Col>
                     </Row>
  
-                    {/* ============================================ */}
                     {/* SELECT CAR TYPE - TURNS FULL GOLD WHEN SELECTED */}
-                    {/* ============================================ */}
                     <div className="mb-3">
                       <label className="fw-bold form-label mb-3" style={{ ...formStyles.label, fontSize: '1.1rem' }}>
                         Select Car Type *
                       </label>
                       
                       <Row className="g-3">
-                        {/* SEDAN - Full gold when selected */}
+                        {/* SEDAN */}
                         <Col xs={6}>
                           <div 
                             className={`car-option ${formData.carType === 'SEDAN' ? 'selected' : ''}`}
@@ -1606,18 +1605,18 @@ const Home = () => {
                               borderRadius: '12px',
                               padding: '12px',
                               cursor: 'pointer',
-                              transition: 'all 0.3s ease',
+                              transition: 'all 0.2s ease',
                               backgroundColor: formData.carType === 'SEDAN' ? '#FFD700' : 'white',
                               height: '100%',
-                              boxShadow: formData.carType === 'SEDAN' ? '0 12px 30px rgba(255,215,0,0.6), 0 0 20px rgba(255,215,0,0.4) inset' : '0 4px 12px rgba(0,0,0,0.1)',
-                              transform: formData.carType === 'SEDAN' ? 'translateY(-3px)' : 'none'
+                              boxShadow: formData.carType === 'SEDAN' ? '0 8px 20px rgba(255,215,0,0.4), 0 0 10px rgba(255,215,0,0.3) inset' : '0 4px 12px rgba(0,0,0,0.1)',
+                              transform: formData.carType === 'SEDAN' ? 'translateY(-2px)' : 'none'
                             }}
                             onClick={() => selectCar('SEDAN')}
                             onMouseEnter={(e) => {
                               if (formData.carType !== 'SEDAN') {
                                 e.currentTarget.style.borderColor = '#FFD700';
-                                e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,215,0,0.3)';
-                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                e.currentTarget.style.boxShadow = '0 8px 20px rgba(255,215,0,0.2)';
+                                e.currentTarget.style.transform = 'translateY(-1px)';
                               }
                             }}
                             onMouseLeave={(e) => {
@@ -1640,6 +1639,7 @@ const Home = () => {
                                 border: formData.carType === 'SEDAN' ? '2px solid #B8860B' : 'none'
                               }}
                               className="car-image"
+                              loading="lazy"
                             />
                             <div className="fw-bold text-center car-name" style={{ 
                               color: formData.carType === 'SEDAN' ? '#8B0000' : '#333333',
@@ -1654,12 +1654,12 @@ const Home = () => {
                               fontFamily: "'Courier New', monospace",
                               fontSize: '1rem'
                             }}>
-                              ₹{renderNumber(14)}/km
+                              ₹<OptimizedNumber num={14} />/km
                             </div>
                           </div>
                         </Col>
 
-                        {/* ETIOS - Full gold when selected */}
+                        {/* ETIOS */}
                         <Col xs={6}>
                           <div 
                             className={`car-option ${formData.carType === 'ETIOS' ? 'selected' : ''}`}
@@ -1668,18 +1668,18 @@ const Home = () => {
                               borderRadius: '12px',
                               padding: '12px',
                               cursor: 'pointer',
-                              transition: 'all 0.3s ease',
+                              transition: 'all 0.2s ease',
                               backgroundColor: formData.carType === 'ETIOS' ? '#FFD700' : 'white',
                               height: '100%',
-                              boxShadow: formData.carType === 'ETIOS' ? '0 12px 30px rgba(255,215,0,0.6), 0 0 20px rgba(255,215,0,0.4) inset' : '0 4px 12px rgba(0,0,0,0.1)',
-                              transform: formData.carType === 'ETIOS' ? 'translateY(-3px)' : 'none'
+                              boxShadow: formData.carType === 'ETIOS' ? '0 8px 20px rgba(255,215,0,0.4), 0 0 10px rgba(255,215,0,0.3) inset' : '0 4px 12px rgba(0,0,0,0.1)',
+                              transform: formData.carType === 'ETIOS' ? 'translateY(-2px)' : 'none'
                             }}
                             onClick={() => selectCar('ETIOS')}
                             onMouseEnter={(e) => {
                               if (formData.carType !== 'ETIOS') {
                                 e.currentTarget.style.borderColor = '#FFD700';
-                                e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,215,0,0.3)';
-                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                e.currentTarget.style.boxShadow = '0 8px 20px rgba(255,215,0,0.2)';
+                                e.currentTarget.style.transform = 'translateY(-1px)';
                               }
                             }}
                             onMouseLeave={(e) => {
@@ -1702,6 +1702,7 @@ const Home = () => {
                                 border: formData.carType === 'ETIOS' ? '2px solid #B8860B' : 'none'
                               }}
                               className="car-image"
+                              loading="lazy"
                             />
                             <div className="fw-bold text-center car-name" style={{ 
                               color: formData.carType === 'ETIOS' ? '#8B0000' : '#333333',
@@ -1716,12 +1717,12 @@ const Home = () => {
                               fontFamily: "'Courier New', monospace",
                               fontSize: '1rem'
                             }}>
-                              ₹{renderNumber(15)}/km
+                              ₹<OptimizedNumber num={15} />/km
                             </div>
                           </div>
                         </Col>
 
-                        {/* MUV - Full gold when selected */}
+                        {/* MUV */}
                         <Col xs={6}>
                           <div 
                             className={`car-option ${formData.carType === 'MUV' ? 'selected' : ''}`}
@@ -1730,18 +1731,18 @@ const Home = () => {
                               borderRadius: '12px',
                               padding: '12px',
                               cursor: 'pointer',
-                              transition: 'all 0.3s ease',
+                              transition: 'all 0.2s ease',
                               backgroundColor: formData.carType === 'MUV' ? '#FFD700' : 'white',
                               height: '100%',
-                              boxShadow: formData.carType === 'MUV' ? '0 12px 30px rgba(255,215,0,0.6), 0 0 20px rgba(255,215,0,0.4) inset' : '0 4px 12px rgba(0,0,0,0.1)',
-                              transform: formData.carType === 'MUV' ? 'translateY(-3px)' : 'none'
+                              boxShadow: formData.carType === 'MUV' ? '0 8px 20px rgba(255,215,0,0.4), 0 0 10px rgba(255,215,0,0.3) inset' : '0 4px 12px rgba(0,0,0,0.1)',
+                              transform: formData.carType === 'MUV' ? 'translateY(-2px)' : 'none'
                             }}
                             onClick={() => selectCar('MUV')}
                             onMouseEnter={(e) => {
                               if (formData.carType !== 'MUV') {
                                 e.currentTarget.style.borderColor = '#FFD700';
-                                e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,215,0,0.3)';
-                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                e.currentTarget.style.boxShadow = '0 8px 20px rgba(255,215,0,0.2)';
+                                e.currentTarget.style.transform = 'translateY(-1px)';
                               }
                             }}
                             onMouseLeave={(e) => {
@@ -1764,6 +1765,7 @@ const Home = () => {
                                 border: formData.carType === 'MUV' ? '2px solid #B8860B' : 'none'
                               }}
                               className="car-image"
+                              loading="lazy"
                             />
                             <div className="fw-bold text-center car-name" style={{ 
                               color: formData.carType === 'MUV' ? '#8B0000' : '#333333',
@@ -1778,12 +1780,12 @@ const Home = () => {
                               fontFamily: "'Courier New', monospace",
                               fontSize: '1rem'
                             }}>
-                              ₹{renderNumber(19)}/km
+                              ₹<OptimizedNumber num={19} />/km
                             </div>
                           </div>
                         </Col>
 
-                        {/* INNOVA - Full gold when selected */}
+                        {/* INNOVA */}
                         <Col xs={6}>
                           <div 
                             className={`car-option ${formData.carType === 'INNOVA' ? 'selected' : ''}`}
@@ -1792,18 +1794,18 @@ const Home = () => {
                               borderRadius: '12px',
                               padding: '12px',
                               cursor: 'pointer',
-                              transition: 'all 0.3s ease',
+                              transition: 'all 0.2s ease',
                               backgroundColor: formData.carType === 'INNOVA' ? '#FFD700' : 'white',
                               height: '100%',
-                              boxShadow: formData.carType === 'INNOVA' ? '0 12px 30px rgba(255,215,0,0.6), 0 0 20px rgba(255,215,0,0.4) inset' : '0 4px 12px rgba(0,0,0,0.1)',
-                              transform: formData.carType === 'INNOVA' ? 'translateY(-3px)' : 'none'
+                              boxShadow: formData.carType === 'INNOVA' ? '0 8px 20px rgba(255,215,0,0.4), 0 0 10px rgba(255,215,0,0.3) inset' : '0 4px 12px rgba(0,0,0,0.1)',
+                              transform: formData.carType === 'INNOVA' ? 'translateY(-2px)' : 'none'
                             }}
                             onClick={() => selectCar('INNOVA')}
                             onMouseEnter={(e) => {
                               if (formData.carType !== 'INNOVA') {
                                 e.currentTarget.style.borderColor = '#FFD700';
-                                e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,215,0,0.3)';
-                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                e.currentTarget.style.boxShadow = '0 8px 20px rgba(255,215,0,0.2)';
+                                e.currentTarget.style.transform = 'translateY(-1px)';
                               }
                             }}
                             onMouseLeave={(e) => {
@@ -1826,6 +1828,7 @@ const Home = () => {
                                 border: formData.carType === 'INNOVA' ? '2px solid #B8860B' : 'none'
                               }}
                               className="car-image"
+                              loading="lazy"
                             />
                             <div className="fw-bold text-center car-name" style={{ 
                               color: formData.carType === 'INNOVA' ? '#8B0000' : '#333333',
@@ -1840,7 +1843,7 @@ const Home = () => {
                               fontFamily: "'Courier New', monospace",
                               fontSize: '1rem'
                             }}>
-                              ₹{renderNumber(20)}/km
+                              ₹<OptimizedNumber num={20} />/km
                             </div>
                           </div>
                         </Col>
@@ -1851,17 +1854,17 @@ const Home = () => {
                     {fareEstimate && (
                       <div className="bg-light rounded mb-3 fare-box" style={formStyles.fareBox}>
                         <div className="d-flex justify-content-between mb-1">
-                          <span style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", fontWeight: 'bold' }}>Base Fare (Min {renderNumber(fareEstimate.minDistance)}km):</span>
-                          <span className="fw-bold" style={{ color: '#8B0000', fontFamily: "'Courier New', monospace" }}>₹{renderNumber(fareEstimate.baseFare)}</span>
+                          <span style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", fontWeight: 'bold' }}>Base Fare (Min <OptimizedNumber num={fareEstimate.minDistance} />km):</span>
+                          <span className="fw-bold" style={{ color: '#8B0000', fontFamily: "'Courier New', monospace" }}>₹<OptimizedNumber num={fareEstimate.baseFare} /></span>
                         </div>
                         <div className="d-flex justify-content-between mb-1">
                           <span style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", fontWeight: 'bold' }}>Driver Bata:</span>
-                          <span className="fw-bold" style={{ color: '#8B0000', fontFamily: "'Courier New', monospace" }}>₹{renderNumber(fareEstimate.driverBata)}</span>
+                          <span className="fw-bold" style={{ color: '#8B0000', fontFamily: "'Courier New', monospace" }}>₹<OptimizedNumber num={fareEstimate.driverBata} /></span>
                         </div>
                         <hr className="my-1" />
                         <div className="d-flex justify-content-between">
                           <span className="fw-bold" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Estimated Total:</span>
-                          <span className="fw-bold" style={{ color: '#8B0000', fontFamily: "'Courier New', monospace", fontSize: '1.1rem' }}>₹{renderNumber(fareEstimate.total)}</span>
+                          <span className="fw-bold" style={{ color: '#8B0000', fontFamily: "'Courier New', monospace", fontSize: '1.1rem' }}>₹<OptimizedNumber num={fareEstimate.total} /></span>
                         </div>
                         <small className="text-muted d-block mt-1" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
                           *Toll, permit & hill charges extra
@@ -1882,8 +1885,8 @@ const Home = () => {
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.backgroundColor = '#FFE55C';
-                        e.currentTarget.style.transform = 'translateY(-3px)';
-                        e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.8) inset, 0 0 30px rgba(255,215,0,0.6)';
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.8) inset';
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.backgroundColor = '#FFD700';
@@ -1966,8 +1969,8 @@ const Home = () => {
                   fontSize: 'clamp(1.5rem, 4vw, 2.2rem)',
                   fontFamily: "'Courier New', monospace"
                 }}>
-                  {stat.isDecimal ? renderNumber(stat.value.toFixed(1)) : renderNumber(Math.round(stat.value).toLocaleString())}
-                  {renderNumber(stat.suffix)}
+                  {stat.isDecimal ? <OptimizedNumber num={stat.value.toFixed(1)} /> : <OptimizedNumber num={Math.round(stat.value).toLocaleString()} />}
+                  {stat.suffix && <OptimizedNumber num={stat.suffix} />}
                 </h2>
                 <p className="text-secondary" style={{ 
                   fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
@@ -2023,6 +2026,7 @@ const Home = () => {
                               objectFit: 'cover',
                               objectPosition: 'center'
                             }}
+                            loading="lazy"
                           />
                           <Carousel.Caption style={{ bottom: '0', left: '0', right: '0', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', textAlign: 'left' }}>
                             <h5 className="fw-bold mb-0" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>{car.name}</h5>
@@ -2040,18 +2044,18 @@ const Home = () => {
                             <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
                               <h6 className="fw-bold mb-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>ONE WAY</h6>
                               <h5 className="text-warning fw-bold mb-1" style={{ fontFamily: "'Courier New', monospace" }}>
-                                <FaRupeeSign className="me-1" /> {renderNumber(car.oneWayRate)}/KM
+                                <FaRupeeSign className="me-1" /> <OptimizedNumber num={car.oneWayRate} />/KM
                               </h5>
-                              <small className="text-muted" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>(Min {renderNumber(car.minKmOneWay)} KM)</small>
+                              <small className="text-muted" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>(Min <OptimizedNumber num={car.minKmOneWay} /> KM)</small>
                             </div>
                           </Col>
                           <Col xs={6}>
                             <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
                               <h6 className="fw-bold mb-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>ROUND TRIP</h6>
                               <h5 className="text-warning fw-bold mb-1" style={{ fontFamily: "'Courier New', monospace" }}>
-                                <FaRupeeSign className="me-1" /> {renderNumber(car.roundTripRate)}/KM
+                                <FaRupeeSign className="me-1" /> <OptimizedNumber num={car.roundTripRate} />/KM
                               </h5>
-                              <small className="text-muted" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>(Min {renderNumber(car.minKmRoundTrip)} KM)</small>
+                              <small className="text-muted" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>(Min <OptimizedNumber num={car.minKmRoundTrip} /> KM)</small>
                             </div>
                           </Col>
                         </Row>
@@ -2064,11 +2068,11 @@ const Home = () => {
                             <ul className="list-unstyled">
                               <li className="mb-2 d-flex align-items-center" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Driver Bata <strong className="ms-1" style={{ fontFamily: "'Courier New', monospace" }}>₹{renderNumber(car.driverBata)}</strong>
+                                Driver Bata <strong className="ms-1" style={{ fontFamily: "'Courier New', monospace" }}>₹<OptimizedNumber num={car.driverBata} /></strong>
                               </li>
                               <li className="mb-2 d-flex align-items-center" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Hillstation Charges <strong className="ms-1" style={{ fontFamily: "'Courier New', monospace" }}>₹{renderNumber(car.hillCharges)}</strong>
+                                Hillstation Charges <strong className="ms-1" style={{ fontFamily: "'Courier New', monospace" }}>₹<OptimizedNumber num={car.hillCharges} /></strong>
                               </li>
                             </ul>
                           </Col>
@@ -2076,7 +2080,7 @@ const Home = () => {
                             <ul className="list-unstyled">
                               <li className="mb-2 d-flex align-items-center" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Other State Permit <strong className="ms-1" style={{ fontFamily: "'Courier New', monospace" }}>₹{renderNumber(car.permitCharge)}/KM</strong>
+                                Other State Permit <strong className="ms-1" style={{ fontFamily: "'Courier New', monospace" }}>₹<OptimizedNumber num={car.permitCharge} />/KM</strong>
                               </li>
                               <li className="mb-2 d-flex align-items-center" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
                                 <span className="text-warning me-2 fw-bold">•</span>
@@ -2119,6 +2123,7 @@ const Home = () => {
                       alt={`${route.from} to ${route.to}`}
                       style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s ease' }}
                       className="route-image"
+                      loading="lazy"
                     />
                     <div className="position-absolute bottom-0 start-0 w-100 p-3" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: 'white' }}>
                       <h5 className="fw-bold mb-1" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>{route.from} to {route.to}</h5>
@@ -2136,8 +2141,8 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="small mb-3" style={{ fontFamily: "'Courier New', monospace" }}>
-                      <span className="fw-bold me-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>SEDAN:</span> ₹{renderNumber(route.cars[0].oneWay)}/km | 
-                      <span className="fw-bold ms-2 me-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>SUV:</span> ₹{renderNumber(route.cars[2].oneWay)}/km
+                      <span className="fw-bold me-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>SEDAN:</span> ₹<OptimizedNumber num={route.cars[0].oneWay} />/km | 
+                      <span className="fw-bold ms-2 me-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>SUV:</span> ₹<OptimizedNumber num={route.cars[2].oneWay} />/km
                     </div>
                     <div className="mt-3">
                       <Button variant="outline-warning" size="sm" className="w-100" onClick={() => navigate('/popular-routes')} style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>
@@ -2171,6 +2176,7 @@ const Home = () => {
                 src="https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg"
                 alt="Our Fleet"
                 className="img-fluid rounded-3 shadow"
+                loading="lazy"
               />
             </Col>
             <Col lg={6}>
@@ -2296,8 +2302,8 @@ const Home = () => {
                     <FaPhone size={24} className="text-dark" />
                   </div>
                   <h5 className="fw-bold mb-3" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>Call Us</h5>
-                  <p className="text-secondary mb-1" style={{ fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>+91 {renderNumber(63810)} {renderNumber(95854)}</p>
-                  <p className="text-secondary mb-1" style={{ fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>+91 {renderNumber(72003)} {renderNumber(43435)}</p>
+                  <p className="text-secondary mb-1" style={{ fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>+91 <OptimizedNumber num={63810} /> <OptimizedNumber num={95854} /></p>
+                  <p className="text-secondary mb-1" style={{ fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>+91 <OptimizedNumber num={72003} /> <OptimizedNumber num={43435} /></p>
                 </Card.Body>
               </Card>
             </Col>
@@ -2328,7 +2334,7 @@ const Home = () => {
             fontFamily: "'Arial Black', 'Impact', sans-serif",
             letterSpacing: '2px'
           }}>Ready to travel?</h2>
-          <p className="lead mb-4" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>Book your cab now and get {renderNumber(10)}% off on first ride!</p>
+          <p className="lead mb-4" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>Book your cab now and get <OptimizedNumber num={10} />% off on first ride!</p>
           <div className="d-flex justify-content-center gap-3 flex-wrap">
             <Button 
               variant="dark" 
