@@ -113,28 +113,28 @@ const Home = () => {
   const statsRef = useRef(null);
 
   // ============================================
-  // BACKGROUND CAROUSEL IMAGES - HD QUALITY, NO OPACITY, CLEAR DISPLAY
+  // BACKGROUND CAROUSEL IMAGES - FROM PUBLIC FOLDER
   // ============================================
   const carouselImages = useMemo(() => [
     {
-      url: '/images/image1.jpg', // First HD image from public/images folder
-      title: 'Luxury Sedans',
-      description: 'Comfortable and stylish sedans for your journey'
+      url: '/images/image1.jpg', // First image from public/images folder
+      title: '𝓛𝓾𝔁𝓾𝓻𝔂 𝓢𝓮𝓭𝓪𝓷𝓼',
+      description: '𝓒𝓸𝓶𝓯𝓸𝓻𝓽𝓪𝓫𝓵𝓮 𝓪𝓷𝓭 𝓼𝓽𝔂𝓵𝓲𝓼𝓱 𝓼𝓮𝓭𝓪𝓷𝓼 𝓯𝓸𝓻 𝔂𝓸𝓾𝓻 𝓳𝓸𝓾𝓻𝓷𝓮𝔂'
     },
     {
-      url: '/images/image2.jpg', // Second HD image from public/images folder
-      title: 'Spacious SUVs',
-      description: 'Perfect for family trips and group travel'
+      url: '/images/image2.jpg', // Second image from public/images folder
+      title: '𝓢𝓹𝓪𝓬𝓲𝓸𝓾𝓼 𝓢𝓤𝓥𝓼',
+      description: '𝓟𝓮𝓻𝓯𝓮𝓬𝓽 𝓯𝓸𝓻 𝓯𝓪𝓶𝓲𝓵𝔂 𝓽𝓻𝓲𝓹𝓼 𝓪𝓷𝓭 𝓰𝓻𝓸𝓾𝓹 𝓽𝓻𝓪𝓿𝓮𝓵'
     },
     {
-      url: '/images/image3.jpg', // Third HD image from public/images folder
-      title: 'Premium INNOVA',
-      description: 'Experience luxury with our premium fleet'
+      url: '/images/image3.jpg', // Third image from public/images folder
+      title: '𝓟𝓻𝓮𝓶𝓲𝓾𝓶 𝓘𝓝𝓝𝓞𝓥𝓐',
+      description: '𝓔𝔁𝓹𝓮𝓻𝓲𝓮𝓷𝓬𝓮 𝓵𝓾𝔁𝓾𝓻𝔂 𝔀𝓲𝓽𝓱 𝓸𝓾𝓻 𝓹𝓻𝓮𝓶𝓲𝓾𝓶 𝓯𝓵𝓮𝓮𝓽'
     },
     {
-      url: '/images/image4.jpg', // Fourth HD image from public/images folder
-      title: 'Hill Station Trips',
-      description: 'Special packages for mountain getaways'
+      url: '/images/image4.jpg', // Fourth image from public/images folder (optional)
+      title: '𝓗𝓲𝓵𝓵 𝓢𝓽𝓪𝓽𝓲𝓸𝓷 𝓣𝓻𝓲𝓹𝓼',
+      description: '𝓢𝓹𝓮𝓬𝓲𝓪𝓵 𝓹𝓪𝓬𝓴𝓪𝓰𝓮𝓼 𝓯𝓸𝓻 𝓶𝓸𝓾𝓷𝓽𝓪𝓲𝓷 𝓰𝓮𝓽𝓪𝔀𝓪𝔂𝓼'
     }
   ], []);
 
@@ -264,19 +264,19 @@ const Home = () => {
           setCars(response.data.data);
         } else {
           setCars([
-            { name: 'SEDAN', displayName: 'SEDAN', oneWayRate: 14, roundTripRate: 13, driverBata: 400 },
-            { name: 'ETIOS', displayName: 'ETIOS', oneWayRate: 15, roundTripRate: 14, driverBata: 400 },
-            { name: 'MUV', displayName: 'MUV', oneWayRate: 19, roundTripRate: 18, driverBata: 500 },
-            { name: 'INNOVA', displayName: 'INNOVA', oneWayRate: 20, roundTripRate: 19, driverBata: 500 }
+            { name: '𝓢𝓔𝓓𝓐𝓝', displayName: '𝓢𝓔𝓓𝓐𝓝', oneWayRate: 14, roundTripRate: 13, driverBata: 400 },
+            { name: '𝓔𝓣𝓘𝓞𝓢', displayName: '𝓔𝓣𝓘𝓞𝓢', oneWayRate: 15, roundTripRate: 14, driverBata: 400 },
+            { name: '𝓜𝓤𝓥', displayName: '𝓜𝓤𝓥', oneWayRate: 19, roundTripRate: 18, driverBata: 500 },
+            { name: '𝓘𝓝𝓝𝓞𝓥𝓐', displayName: '𝓘𝓝𝓝𝓞𝓥𝓐', oneWayRate: 20, roundTripRate: 19, driverBata: 500 }
           ]);
         }
       } catch (error) {
         console.error('Error fetching cars:', error);
         setCars([
-          { name: 'SEDAN', displayName: 'SEDAN', oneWayRate: 14, roundTripRate: 13, driverBata: 400 },
-          { name: 'ETIOS', displayName: 'ETIOS', oneWayRate: 15, roundTripRate: 14, driverBata: 400 },
-          { name: 'MUV', displayName: 'MUV', oneWayRate: 19, roundTripRate: 18, driverBata: 500 },
-          { name: 'INNOVA', displayName: 'INNOVA', oneWayRate: 20, roundTripRate: 19, driverBata: 500 }
+          { name: '𝓢𝓔𝓓𝓐𝓝', displayName: '𝓢𝓔𝓓𝓐𝓝', oneWayRate: 14, roundTripRate: 13, driverBata: 400 },
+          { name: '𝓔𝓣𝓘𝓞𝓢', displayName: '𝓔𝓣𝓘𝓞𝓢', oneWayRate: 15, roundTripRate: 14, driverBata: 400 },
+          { name: '𝓜𝓤𝓥', displayName: '𝓜𝓤𝓥', oneWayRate: 19, roundTripRate: 18, driverBata: 500 },
+          { name: '𝓘𝓝𝓝𝓞𝓥𝓐', displayName: '𝓘𝓝𝓝𝓞𝓥𝓐', oneWayRate: 20, roundTripRate: 19, driverBata: 500 }
         ]);
       }
     };
@@ -537,24 +537,24 @@ const Home = () => {
   };
 
   const stats = [
-    { icon: '🚗', value: counters.trips, label: 'Trips Completed', suffix: '+' },
-    { icon: '⭐', value: counters.rating, label: 'Customer Rating', suffix: '', isDecimal: true },
-    { icon: '🏆', value: counters.awards, label: 'Awards', suffix: '+' },
-    { icon: '👥', value: counters.customers, label: 'Happy Customers', suffix: '+' }
+    { icon: '🚗', value: counters.trips, label: '𝕿𝖗𝖎𝖕𝖘 𝕮𝖔𝖒𝖕𝖑𝖊𝖙𝖊𝖉', suffix: '+' },
+    { icon: '⭐', value: counters.rating, label: '𝕮𝖚𝖘𝖙𝖔𝖒𝖊𝖗 𝕽𝖆𝖙𝖎𝖓𝖌', suffix: '', isDecimal: true },
+    { icon: '🏆', value: counters.awards, label: '𝕬𝖜𝖆𝖗𝖉𝖘', suffix: '+' },
+    { icon: '👥', value: counters.customers, label: '𝕳𝖆𝖕𝖕𝖞 𝕮𝖚𝖘𝖙𝖔𝖒𝖊𝖗𝖘', suffix: '+' }
   ];
 
   const testimonials = [
-    { name: 'Priya S.', text: 'Driver was on time, car was clean, and the ride was smooth. Will definitely book again!', rating: 5 },
-    { name: 'Anita R.', text: "I've used this service they've always been punctual. Highly recommend for airport transfers.", rating: 5 },
-    { name: 'Vignesh P.', text: 'Affordable prices compared to others, but still excellent service quality.', rating: 4 },
-    { name: 'Rajesh K.', text: 'The driver was polite and knew the best route to avoid traffic.', rating: 5 }
+    { name: '𝓟𝓻𝓲𝔂𝓪 𝓢.', text: '𝓓𝓻𝓲𝓿𝓮𝓻 𝔀𝓪𝓼 𝓸𝓷 𝓽𝓲𝓶𝓮, 𝓬𝓪𝓻 𝔀𝓪𝓼 𝓬𝓵𝓮𝓪𝓷, 𝓪𝓷𝓭 𝓽𝓱𝓮 𝓻𝓲𝓭𝓮 𝔀𝓪𝓼 𝓼𝓶𝓸𝓸𝓽𝓱. 𝓦𝓲𝓵𝓵 𝓭𝓮𝓯𝓲𝓷𝓲𝓽𝓮𝓵𝔂 𝓫𝓸𝓸𝓴 𝓪𝓰𝓪𝓲𝓷!', rating: 5 },
+    { name: '𝓐𝓷𝓲𝓽𝓪 𝓡.', text: "𝓘'𝓿𝓮 𝓾𝓼𝓮𝓭 𝓽𝓱𝓲𝓼 𝓼𝓮𝓻𝓿𝓲𝓬𝓮 𝓽𝓱𝓮𝔂'𝓿𝓮 𝓪𝓵𝔀𝓪𝔂𝓼 𝓫𝓮𝓮𝓷 𝓹𝓾𝓷𝓬𝓽𝓾𝓪𝓵. 𝓗𝓲𝓰𝓱𝓵𝔂 𝓻𝓮𝓬𝓸𝓶𝓶𝓮𝓷𝓭 𝓯𝓸𝓻 𝓪𝓲𝓻𝓹𝓸𝓻𝓽 𝓽𝓻𝓪𝓷𝓼𝓯𝓮𝓻𝓼.", rating: 5 },
+    { name: '𝓥𝓲𝓰𝓷𝓮𝓼𝓱 𝓟.', text: '𝓐𝓯𝓯𝓸𝓻𝓭𝓪𝓫𝓵𝓮 𝓹𝓻𝓲𝓬𝓮𝓼 𝓬𝓸𝓶𝓹𝓪𝓻𝓮𝓭 𝓽𝓸 𝓸𝓽𝓱𝓮𝓻𝓼, 𝓫𝓾𝓽 𝓼𝓽𝓲𝓵𝓵 𝓮𝔁𝓬𝓮𝓵𝓵𝓮𝓷𝓽 𝓼𝓮𝓻𝓿𝓲𝓬𝓮 𝓺𝓾𝓪𝓵𝓲𝓽𝔂.', rating: 4 },
+    { name: '𝓡𝓪𝓳𝓮𝓼𝓱 𝓚.', text: '𝓣𝓱𝓮 𝓭𝓻𝓲𝓿𝓮𝓻 𝔀𝓪𝓼 𝓹𝓸𝓵𝓲𝓽𝓮 𝓪𝓷𝓭 𝓴𝓷𝓮𝔀 𝓽𝓱𝓮 𝓫𝓮𝓼𝓽 𝓻𝓸𝓾𝓽𝓮 𝓽𝓸 𝓪𝓿𝓸𝓲𝓭 𝓽𝓻𝓪𝓯𝓯𝓲𝓬.', rating: 5 }
   ];
 
   // Tariff Data
   const tariffCars = useMemo(() => [
     {
-      name: 'SEDAN',
-      model: 'TATA ZEST',
+      name: '𝓢𝓔𝓓𝓐𝓝',
+      model: '𝓣𝓐𝓣𝓐 𝓩𝓔𝓢𝓣',
       oneWayRate: 14,
       roundTripRate: 13,
       minKmOneWay: 130,
@@ -568,8 +568,8 @@ const Home = () => {
       image4: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg'
     },
     {
-      name: 'SEDAN',
-      model: 'MARUTI CIAZ',
+      name: '𝓢𝓔𝓓𝓐𝓝',
+      model: '𝓜𝓐𝓡𝓤𝓣𝓘 𝓒𝓘𝓐𝓩',
       oneWayRate: 15,
       roundTripRate: 14,
       minKmOneWay: 130,
@@ -583,8 +583,8 @@ const Home = () => {
       image4: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg'
     },
     {
-      name: 'SUV',
-      model: 'MARUTI ERTIGA',
+      name: '𝓢𝓔𝓓𝓐𝓝',
+      model: '𝓜𝓐𝓡𝓤𝓣𝓘 𝓔𝓡Tİ🇬🄰',
       oneWayRate: 19,
       roundTripRate: 18,
       minKmOneWay: 130,
@@ -598,8 +598,8 @@ const Home = () => {
       image4: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg'
     },
     {
-      name: 'INNOVA',
-      model: 'INNOVA',
+      name: '𝓘𝓝𝓝𝓞𝓥𝓐',
+      model: '𝓘𝓝𝓝𝓞𝓥𝓐',
       oneWayRate: 20,
       roundTripRate: 19,
       minKmOneWay: 130,
@@ -617,69 +617,69 @@ const Home = () => {
   // Popular Routes Data
   const popularRoutes = useMemo(() => [
     {
-      from: 'Chennai',
-      to: 'Kodaikanal',
+      from: '𝓒𝓱𝓮𝓷𝓷𝓪𝓲',
+      to: '𝓚𝓸𝓭𝓪𝓲𝓴𝓪𝓷𝓪𝓵',
       icon: <FaMountain />,
       image: 'https://i.pinimg.com/736x/88/70/b3/8870b3ccb1791acc57c6a5771dc9fab8.jpg',
-      description: 'Princess of Hill Stations - Scenic beauty & pleasant climate',
+      description: '𝓟𝓻𝓲𝓷𝓬𝓮𝓼𝓼 𝓸𝓯 𝓗𝓲𝓵𝓵 𝓢𝓽𝓪𝓽𝓲𝓸𝓷𝓼 - 𝓢𝓬𝓮𝓷𝓲𝓬 𝓫𝓮𝓪𝓾𝓽𝔂 & 𝓹𝓵𝓮𝓪𝓼𝓪𝓷𝓽 𝓬𝓵𝓲𝓶𝓪𝓽𝓮',
       distance: '520 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: '𝓢𝓔𝓓𝓐𝓝', oneWay: 14, roundTrip: 13 },
+        { type: '𝓔𝓣𝓘𝓞𝓢', oneWay: 15, roundTrip: 14 },
+        { type: '𝓢𝓤𝓥', oneWay: 19, roundTrip: 18 },
+        { type: '𝓘𝓝𝓞𝓦𝓐', oneWay: 20, roundTrip: 18 }
       ]
     },
     {
-      from: 'Chennai',
-      to: 'Coutralam',
+      from: '𝓒𝓱𝓮𝓷𝓷𝓪𝓲',
+      to: '𝓒𝓸𝓾𝓽𝓻𝓪𝓵𝓪𝓶',
       icon: <FaWater />,
       image: 'https://i.pinimg.com/736x/39/4d/db/394ddb010d843e99f28b76b01ad7e88a.jpg',
-      description: 'Famous waterfalls & natural spa - The Spa of South India',
+      description: '𝓕𝓪𝓿𝓸𝓾𝓻𝓲𝓽𝓮 𝓦𝓪𝓽𝓮𝓻𝓯𝓪𝓵𝓵𝓼 & 𝓝𝓪𝓽𝓾𝓻𝓪𝓵 𝓢𝓹𝓪 - 𝓣𝓱𝓮 𝓢𝓹𝓪 𝓸𝓯 𝓢𝓸𝓾𝓽𝓱 𝓘𝓷𝓭𝓲𝓪',
       distance: '650 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: '𝓢𝓔𝓓𝓐𝓝', oneWay: 14, roundTrip: 13 },
+        { type: '𝓔𝓣𝓘𝓞𝓢', oneWay: 15, roundTrip: 14 },
+        { type: '𝓢𝓤𝓥', oneWay: 19, roundTrip: 18 },
+        { type: '𝓘𝓝𝓞𝓦𝓐', oneWay: 20, roundTrip: 18 }
       ]
     },
     {
-      from: 'Chennai',
-      to: 'Kanniyakumari',
+      from: '𝓒𝓱𝓮𝓷𝓷𝓪𝓲',
+      to: '𝓚𝓪𝓷𝓷𝓲𝔂𝓪𝓴𝓾𝓶𝓪𝓻𝓲',
       icon: <FaSun />,
       image: 'https://i.pinimg.com/736x/6e/ad/4c/6ead4caddfb2d3c18ae1bc89ce303e95.jpg',
-      description: 'Southernmost tip of India - Sunrise & sunset view',
+      description: '𝓢𝓸𝓾𝓽𝓱𝓮𝓻𝓷𝓶𝓸𝓼𝓽 𝓽𝓲𝓹 𝓸𝓯 𝓘𝓷𝓭𝓲𝓪 - 𝓢𝓾𝓷𝓻𝓲𝓼𝓮 & 𝓼𝓾𝓷𝓼𝓮𝓽 𝓿𝓲𝓮𝔀',
       distance: '720 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: '𝓢𝓔𝓓𝓐𝓝', oneWay: 14, roundTrip: 13 },
+        { type: '𝓔𝓣𝓘𝓞𝓢', oneWay: 15, roundTrip: 14 },
+        { type: '𝓢𝓤𝓥', oneWay: 19, roundTrip: 18 },
+        { type: '𝓘𝓝𝓞𝓦𝓐', oneWay: 20, roundTrip: 18 }
       ]
     },
     {
-      from: 'Tenkasi',
-      to: 'Chennai',
+      from: '𝓣𝓮𝓷𝓴𝓪𝓼𝓲',
+      to: '𝓒𝓱𝓮𝓷𝓷𝓪𝓲',
       icon: <FaRoad />,
       image: 'https://i.pinimg.com/1200x/7a/76/1d/7a761d0c69df3858fceff11ef8708f48.jpg',
-      description: 'Temple town to Metropolitan city - Comfortable journey',
+      description: '𝓣𝓮𝓶𝓹𝓵𝓮 𝓽𝓸𝔀𝓷 𝓽𝓸 𝓜𝓮𝓽𝓻𝓸𝓹𝓸𝓵𝓲𝓽𝓪𝓷 𝓬𝓲𝓽𝔂 - 𝓒𝓸𝓶𝓯𝓸𝓻𝓽𝓪𝓫𝓵𝓮 𝓳𝓸𝓾𝓻𝓷𝓮𝔂',
       distance: '580 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: '𝓢𝓔𝓓𝓐𝓝', oneWay: 14, roundTrip: 13 },
+        { type: '𝓔𝓣𝓘𝓞𝓢', oneWay: 15, roundTrip: 14 },
+        { type: '𝓢𝓤𝓥', oneWay: 19, roundTrip: 18 },
+        { type: '𝓘𝓝𝓞𝓦𝓐', oneWay: 20, roundTrip: 18 }
       ]
     }
   ], []);
 
   // About Stats
   const aboutStats = useMemo(() => [
-    { icon: <FaCar />, value: '15000+', label: 'Trips Completed' },
-    { icon: <FaUsers />, value: '5000+', label: 'Happy Customers' },
-    { icon: <FaAward />, value: '10+', label: 'Awards' },
-    { icon: <FaHeart />, value: '100+', label: 'Fleet Size' }
+    { icon: <FaCar />, value: '15000+', label: '𝓣𝓻𝓲𝓹𝓼 𝓒𝓸𝓶𝓹𝓵𝓮𝓽𝓮𝓭' },
+    { icon: <FaUsers />, value: '5000+', label: '𝓗𝓪𝓹𝓹𝔂 𝓒𝓾𝓼𝓽𝓸𝓶𝓮𝓻𝓼' },
+    { icon: <FaAward />, value: '10+', label: '𝓐𝔀𝓪𝓻𝓭𝓼' },
+    { icon: <FaHeart />, value: '100+', label: '𝓕𝓵𝓮𝓮𝓽 𝓢𝓲𝔃𝓮' }
   ], []);
 
   // Optimized sparkles - reduced count and simplified
@@ -1028,7 +1028,7 @@ const Home = () => {
         font-weight: inherit !important;
       }
       
-      /* Sparkle animation - only for form, not carousel */
+      /* Optimized animations with will-change */
       @keyframes sparkle {
         0%, 100% { 
           opacity: 0.2; 
@@ -1374,24 +1374,24 @@ const Home = () => {
                   letterSpacing: '-0.03em'
                 }}
               >
-                Anywhere You Go, <br />
-                <span className="text-warning" style={headingStyle}>We're There</span>
+                𝓐𝓷𝔂𝔀𝓱𝓮𝓻𝓮 𝓨𝓸𝓾 𝓖𝓸,
+<br />
+                <span className="text-warning" style={headingStyle}>𝓦𝓮'𝓻𝓮 𝓣𝓱𝓮𝓻𝓮 </span>
               </h1>
               <p 
                 className="lead mb-5 text-white-50" 
                 style={{ 
-                  fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
+                  fontSize: 'clamp(1rem, 4vw, 2.1rem)',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
                   ...letterStyle,
                   lineHeight: '1.6'
                 }}
               >
-                Safe, comfortable, and on-time taxi service across Tamilnadu, 
-                Kerala, Andhra Pradesh, Karnataka, and Pondicherry.
+                💘🍭  𝓢𝓪𝓯𝓮, 𝓬𝓸𝓶𝓯𝓸𝓻𝓽𝓪𝓫𝓵𝓮, 𝓪𝓷𝓭 𝓸𝓷-𝓽𝓲𝓶𝓮 𝓽𝓪𝔁𝓲 𝓼𝓮𝓻𝓿𝓲𝓬𝓮 𝓪𝓬𝓻𝓸𝓼𝓼 𝓣𝓪𝓶𝓲𝓵𝓷𝓪𝓭𝓾, 𝓚𝓮𝓻𝓪𝓵𝓪, 𝓐𝓷𝓭𝓱𝓻𝓪 𝓟𝓻𝓪𝓭𝓮𝓼𝓱, 𝓚𝓪𝓻𝓷𝓪𝓽𝓪𝓴𝓪, 𝓪𝓷𝓭 𝓟𝓸𝓷𝓭𝓲𝓬𝓱𝓮𝓻𝓻𝔂.  🍟🎉
               </p>
             </Col>
 
-            {/* Middle Column - HD Carousel with Clear Images (No Opacity, No Background Color) */}
+            {/* Middle Column - Carousel with Local Images */}
             <Col lg={6} className="hero-col-carousel">
               <div 
                 className="carousel-container"
@@ -1407,13 +1407,12 @@ const Home = () => {
                       left: 0,
                       opacity: index === currentSlide ? 1 : 0,
                       transition: 'opacity 0.8s ease-in-out',
-                      backgroundImage: `url(${image.url})`,
+                      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${image.url})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                       backgroundRepeat: 'no-repeat',
                       borderRadius: '15px',
-                      willChange: 'opacity',
-                      boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+                      willChange: 'opacity'
                     }}
                   >
                     <div 
@@ -1424,7 +1423,7 @@ const Home = () => {
                         right: '20px',
                         textAlign: 'left',
                         zIndex: 5,
-                        textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+                        textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
                       }}
                     >
                       <h3 className="fw-bold mb-2" style={headingStyle}>{image.title}</h3>
@@ -1495,8 +1494,8 @@ const Home = () => {
                 
                 <Card.Body className="form-card-body" style={formStyles.cardBody}>
                   <h3 className="text-center fw-bold mb-4 form-title" style={formStyles.title}>
-                    <span style={{ color: '#FFFFFF', ...headingStyle }}>Lexus-Drop</span>{' '}
-                    <span style={{ color: '#FFD700', ...headingStyle }}>Taxi</span>
+                    <span style={{ color: '#FFFFFF', ...headingStyle }}>𝓛𝓮𝔁𝓾𝓼-𝓓𝓻𝓸𝓹 </span>{' '}
+                    <span style={{ color: '#FFD700', ...headingStyle }}>𝓣𝓪𝔁𝓲</span>
                   </h3>
 
                   <form onSubmit={handleSubmit}>
@@ -1518,9 +1517,9 @@ const Home = () => {
                             if (formData.carType) selectCar(formData.carType);
                           }}
                         >
-                          <strong style={{ fontSize: '1.1rem', letterSpacing: '0px', ...boldStyle }}>ONE WAY</strong>
+                          <strong style={{ fontSize: '1.1rem', letterSpacing: '0px', ...boldStyle }}>𝓞𝓝𝓔 𝓦𝓐𝓨</strong>
                           <br />
-                          <small className="text-muted" style={letterStyle}>(Min 130KM)</small>
+                          <small className="text-muted" style={letterStyle}>(𝓜𝓲𝓷 130𝓚𝓜)</small>
                         </div>
                         <div 
                           className={`flex-fill border rounded text-center trip-type-box ${formData.tripType === 'round-trip' ? 'border-warning bg-warning bg-opacity-10' : ''}`}
@@ -1536,7 +1535,7 @@ const Home = () => {
                             if (formData.carType) selectCar(formData.carType);
                           }}
                         >
-                          <strong style={{ fontSize: '1.1rem', letterSpacing: '0px', ...boldStyle }}>ROUND TRIP</strong>
+                          <strong style={{ fontSize: '1.1rem', letterSpacing: '0px', ...boldStyle }}>𝓡𝓞𝓤𝓝𝓓 𝓣𝓡𝓘𝓟</strong>
                         </div>
                       </div>
                     </div>
@@ -1545,7 +1544,7 @@ const Home = () => {
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
                         <FaMapMarkerAlt className="me-1" style={{ color: '#FFD700' }} size={12} />
-                        Pickup Location *
+                        𝓟𝓲𝓬𝓴𝓾𝓹 𝓛𝓸𝓬𝓪𝓽𝓲𝓸𝓷*
                       </label>
                       <input
                         type="text"
@@ -1554,7 +1553,7 @@ const Home = () => {
                         onChange={handleChange}
                         className="form-control form-input"
                         style={formStyles.input}
-                        placeholder="Enter Pickup Location"
+                        placeholder="𝓔𝓷𝓽𝓮𝓻 𝓟𝓲𝓬𝓴𝓾𝓹 𝓛𝓸𝓬𝓪𝓽𝓲𝓸𝓷"
                         required
                       />
                     </div>
@@ -1563,7 +1562,7 @@ const Home = () => {
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
                         <FaMapMarkerAlt className="me-1" style={{ color: '#FFD700' }} size={12} />
-                        Drop Location *
+                        𝓓𝓻𝓸𝓹 𝓛𝓸𝓬𝓪𝓽𝓲𝓸𝓷*
                       </label>
                       <input
                         type="text"
@@ -1572,7 +1571,7 @@ const Home = () => {
                         onChange={handleChange}
                         className="form-control form-input"
                         style={formStyles.input}
-                        placeholder="Enter Drop Location"
+                        placeholder="𝓔𝓷𝓽𝓮𝓻 𝓓𝓻𝓸𝓹 𝓛𝓸𝓬𝓪𝓽𝓲𝓸𝓷"
                         required
                       />
                     </div>
@@ -1581,7 +1580,7 @@ const Home = () => {
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
                         <FaUser className="me-1" style={{ color: '#FFD700' }} size={12} />
-                        Name *
+                        𝓝𝓪𝓶𝓮 *
                       </label>
                       <input
                         type="text"
@@ -1590,7 +1589,7 @@ const Home = () => {
                         onChange={handleChange}
                         className="form-control form-input"
                         style={formStyles.input}
-                        placeholder="Enter Your Name"
+                        placeholder="𝓔𝓷𝓽𝓮𝓻 𝓨𝓸𝓾𝓻 𝓝𝓪𝓶𝓮"
                         required
                       />
                     </div>
@@ -1599,7 +1598,7 @@ const Home = () => {
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
                         <FaPhone className="me-1" style={{ color: '#FFD700' }} size={12} />
-                        Mobile *
+                        𝓜𝓸𝓫𝓲𝓵𝓮 *
                       </label>
                       <input
                         type="tel"
@@ -1608,7 +1607,7 @@ const Home = () => {
                         onChange={handleChange}
                         className="form-control form-input"
                         style={formStyles.input}
-                        placeholder="Enter Mobile Number"
+                        placeholder="𝓔𝓷𝓽𝓮𝓻 𝓜𝓸𝓫𝓲𝓵𝓮 𝓝𝓾𝓶𝓫𝓮𝓻"
                         required
                         maxLength="10"
                         pattern="[0-9]{10}"
@@ -1620,7 +1619,7 @@ const Home = () => {
                       <Col xs={6}>
                         <label className="fw-bold form-label" style={formStyles.label}>
                           <FaCalendarAlt className="me-1" style={{ color: '#FFD700' }} size={12} />
-                          Date *
+                          𝓓𝓪𝓽𝓮 *
                         </label>
                         <input
                           type="date"
@@ -1636,7 +1635,7 @@ const Home = () => {
                       <Col xs={6}>
                         <label className="fw-bold form-label" style={formStyles.label}>
                           <FaClock className="me-1" style={{ color: '#FFD700' }} size={12} />
-                          Time *
+                          𝓣𝓲𝓶𝓮 *
                         </label>
                         <input
                           type="time"
@@ -1653,7 +1652,7 @@ const Home = () => {
                     {/* SELECT CAR TYPE */}
                     <div className="mb-3">
                       <label className="fw-bold form-label mb-3" style={{ ...formStyles.label, fontSize: '1.1rem' }}>
-                        Select Car Type *
+                        𝓢𝓮𝓵𝓮𝓬𝓽 𝓒𝓪𝓻 𝓣𝔂𝓹𝓮 *
                       </label>
                       
                       <Row className="g-3">
@@ -1707,7 +1706,7 @@ const Home = () => {
                               ...boldStyle,
                               fontSize: '1.1rem'
                             }}>
-                              SEDAN
+                              𝓢𝓔𝓓𝓐𝓝
                             </div>
                             <div className="fw-bold text-center car-price" style={{ 
                               color: formData.carType === 'SEDAN' ? '#8B0000' : '#8B0000',
@@ -1769,7 +1768,7 @@ const Home = () => {
                               ...boldStyle,
                               fontSize: '1.1rem'
                             }}>
-                              ETIOS
+                              𝓔𝓣𝓘𝓞𝓢
                             </div>
                             <div className="fw-bold text-center car-price" style={{ 
                               color: formData.carType === 'ETIOS' ? '#ea2e2eff' : '#8B0000',
@@ -1831,7 +1830,7 @@ const Home = () => {
                               ...boldStyle,
                               fontSize: '1.1rem'
                             }}>
-                              MUV
+                              𝓜𝓤𝓥
                             </div>
                             <div className="fw-bold text-center car-price" style={{ 
                               color: formData.carType === 'MUV' ? '#8B0000' : '#8B0000',
@@ -1893,7 +1892,7 @@ const Home = () => {
                               ...boldStyle,
                               fontSize: '1.1rem'
                             }}>
-                              INNOVA
+                              𝓘𝓝𝓝𝓞𝓥𝓐
                             </div>
                             <div className="fw-bold text-center car-price" style={{ 
                               color: formData.carType === 'INNOVA' ? '#8B0000' : '#8B0000',
@@ -1911,20 +1910,20 @@ const Home = () => {
                     {fareEstimate && (
                       <div className="bg-light rounded mb-3 fare-box" style={formStyles.fareBox}>
                         <div className="d-flex justify-content-between mb-1">
-                          <span style={letterStyle}>Base Fare (Min <OptimizedNumber num={fareEstimate.minDistance} />km):</span>
+                          <span style={letterStyle}>𝓑𝓪𝓼𝓮 𝓕𝓪𝓻𝓮 (Min <OptimizedNumber num={fareEstimate.minDistance} />km):</span>
                           <span className="fw-bold" style={{ color: '#8B0000', ...boldStyle }}>₹<OptimizedNumber num={fareEstimate.baseFare} /></span>
                         </div>
                         <div className="d-flex justify-content-between mb-1">
-                          <span style={letterStyle}>Driver Bata:</span>
+                          <span style={letterStyle}>𝓓𝓻𝓲𝓿𝓮𝓻 𝓑𝓪𝓽𝓪:</span>
                           <span className="fw-bold" style={{ color: '#8B0000', ...boldStyle }}>₹<OptimizedNumber num={fareEstimate.driverBata} /></span>
                         </div>
                         <hr className="my-1" />
                         <div className="d-flex justify-content-between">
-                          <span className="fw-bold" style={boldStyle}>Estimated Total:</span>
+                          <span className="fw-bold" style={boldStyle}>𝓔𝓼𝓽𝓲𝓶𝓪𝓽𝓮𝓭 𝓣𝓸𝓽𝓪𝓵:</span>
                           <span className="fw-bold" style={{ color: '#8B0000', ...boldStyle, fontSize: '1.1rem' }}>₹<OptimizedNumber num={fareEstimate.total} /></span>
                         </div>
                         <small className="text-muted d-block mt-1" style={letterStyle}>
-                          *Toll, permit & hill charges extra
+                          *𝓣𝓸𝓵𝓵, 𝓹𝓮𝓻𝓶𝓲𝓽 & 𝓱𝓲𝓵𝓵 𝓬𝓱𝓪𝓻𝓰𝓮𝓼 𝓮𝔁𝓽𝓻𝓪
                         </small>
                       </div>
                     )}
@@ -1951,13 +1950,13 @@ const Home = () => {
                         e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.6) inset';
                       }}
                     >
-                      {loading ? 'Booking...' : 'Book Your Cab'}
+                      {loading ? 'Booking...' : '𝓑𝓸𝓸𝓴 𝓨𝓸𝓾𝓻 𝓒𝓪𝓫'}
                     </Button>
                     
                     {/* WhatsApp Info */}
                     <p className="text-center mt-2 mb-0 small" style={{ color: '#FFFFFF', ...letterStyle }}>
                       <FaWhatsapp className="me-1" style={{ color: '#25d366' }} size={12} />
-                      Notification sent to admin
+                      𝓝𝓸𝓽𝓲𝓯𝓲𝓬𝓪𝓽𝓲𝓸𝓷 𝓼𝓮𝓷𝓽 𝓽𝓸 𝓭𝓻𝓲𝓿𝓮𝓻
                     </p>
                   </form>
                 </Card.Body>
@@ -1984,14 +1983,14 @@ const Home = () => {
             ...headingStyle,
             fontSize: '2rem'
           }}>
-            Your Booking Confirmed!
+            𝓨𝓸𝓾𝓻 𝓑𝓸𝓸𝓴𝓲𝓷𝓰 𝓒𝓸𝓷𝓯𝓲𝓻𝓶𝓮𝓭!
           </h2>
           <p className="mb-4" style={{ 
             fontSize: '1.1rem',
             ...letterStyle,
             color: '#666'
           }}>
-            Thank you for choosing Leo Drop Taxi. Your booking has been successfully confirmed.
+            𝓣𝓱𝓪𝓷𝓴 𝔂𝓸𝓾 𝓯𝓸𝓻 𝓬𝓱𝓸𝓸𝓼𝓲𝓷𝓰 𝓛𝓮𝓸 𝓓𝓻𝓸𝓹 𝓣𝓪𝔁𝓲. 𝓨𝓸𝓾𝓻 𝓫𝓸𝓸𝓴𝓲𝓷𝓰 𝓱𝓪𝓼 𝓫𝓮𝓮𝓷 𝓼𝓾𝓬𝓬𝓮𝓼𝓼𝓯𝓾𝓵𝓵𝔂 𝓬𝓸𝓷𝓯𝓲𝓻𝓶𝓮𝓭.
           </p>
           <Button 
             variant="success" 
@@ -2014,7 +2013,7 @@ const Home = () => {
           fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
           ...headingStyle
         }}>
-          Our <span className="text-warning" style={headingStyle}>Achievements</span>
+          𝓞𝓾𝓻 <span className="text-warning" style={headingStyle}>𝓐𝓬𝓱𝓲𝓮𝓿𝓮𝓶𝓮𝓷𝓽𝓼</span>
         </h2>
         <Row>
           {stats.map((stat, index) => (
@@ -2046,7 +2045,7 @@ const Home = () => {
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             ...headingStyle
           }}>
-            <span className="text-warning" style={headingStyle}>Outstation</span> Tariff
+            <span className="text-warning" style={headingStyle}>𝓞𝓾𝓽𝓼𝓽𝓪𝓽𝓲𝓸𝓷</span> 𝓣𝓪𝓻𝓲𝓯𝓯
           </h2>
           
           <Row>
@@ -2093,41 +2092,41 @@ const Home = () => {
 
                     <Card.Body className="p-4">
                       <div className="mb-4">
-                        <h6 className="fw-bold mb-3" style={{ ...headingStyle, fontSize: '1.1rem' }}>TARIFF</h6>
+                        <h6 className="fw-bold mb-3" style={{ ...headingStyle, fontSize: '1.1rem' }}>𝓣𝓐𝓡𝓘𝓕𝓕</h6>
                         <Row className="g-3">
                           <Col xs={6}>
                             <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
-                              <h6 className="fw-bold mb-2" style={boldStyle}>ONE WAY</h6>
+                              <h6 className="fw-bold mb-2" style={boldStyle}>𝓞𝓝𝓔 𝓦𝓐𝓨</h6>
                               <h5 className="text-warning fw-bold mb-1" style={boldStyle}>
                                 <FaRupeeSign className="me-1" /> <OptimizedNumber num={car.oneWayRate} />/KM
                               </h5>
-                              <small className="text-muted" style={letterStyle}>(Min <OptimizedNumber num={car.minKmOneWay} /> KM)</small>
+                              <small className="text-muted" style={letterStyle}>(𝓜𝓲𝓷 <OptimizedNumber num={car.minKmOneWay} /> 𝓚𝓜)</small>
                             </div>
                           </Col>
                           <Col xs={6}>
                             <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
-                              <h6 className="fw-bold mb-2" style={boldStyle}>ROUND TRIP</h6>
+                              <h6 className="fw-bold mb-2" style={boldStyle}>𝓡𝓞𝓤𝓝𝓓 𝓣𝓡𝓘𝓟</h6>
                               <h5 className="text-warning fw-bold mb-1" style={boldStyle}>
                                 <FaRupeeSign className="me-1" /> <OptimizedNumber num={car.roundTripRate} />/KM
                               </h5>
-                              <small className="text-muted" style={letterStyle}>(Min <OptimizedNumber num={car.minKmRoundTrip} /> KM)</small>
+                              <small className="text-muted" style={letterStyle}>(𝓜𝓲𝓷 <OptimizedNumber num={car.minKmRoundTrip} /> 𝓚𝓜)</small>
                             </div>
                           </Col>
                         </Row>
                       </div>
 
                       <div>
-                        <h6 className="fw-bold mb-3" style={headingStyle}><FaInfoCircle className="text-warning me-2" />INCLUDE WITH</h6>
+                        <h6 className="fw-bold mb-3" style={headingStyle}><FaInfoCircle className="text-warning me-2" />𝓔𝓧𝓒𝓛𝓤𝓓𝓔 𝓦𝓘𝓣𝓗</h6>
                         <Row>
                           <Col xs={6}>
                             <ul className="list-unstyled">
                               <li className="mb-2 d-flex align-items-center" style={letterStyle}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Driver Bata <strong className="ms-1" style={boldStyle}>₹<OptimizedNumber num={car.driverBata} /></strong>
+                                𝓓𝓻𝓲𝓿𝓮𝓻 𝓑𝓮𝓽𝓪 <strong className="ms-1" style={boldStyle}>₹<OptimizedNumber num={car.driverBata} /></strong>
                               </li>
                               <li className="mb-2 d-flex align-items-center" style={letterStyle}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Hillstation Charges <strong className="ms-1" style={boldStyle}>₹<OptimizedNumber num={car.hillCharges} /></strong>
+                                𝓗𝓲𝓵𝓵𝓼𝓽𝓪𝓽𝓲𝓸𝓷 𝓒𝓱𝓪𝓻𝓰𝓮𝓼 <strong className="ms-1" style={boldStyle}>₹<OptimizedNumber num={car.hillCharges} /></strong>
                               </li>
                             </ul>
                           </Col>
@@ -2135,11 +2134,11 @@ const Home = () => {
                             <ul className="list-unstyled">
                               <li className="mb-2 d-flex align-items-center" style={letterStyle}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Other State Permit <strong className="ms-1" style={boldStyle}>₹<OptimizedNumber num={car.permitCharge} />/KM</strong>
+                                𝓞𝓽𝓱𝓮𝓻 𝓢𝓽𝓪𝓽𝓮 𝓟𝓮𝓻𝓶𝓲𝓽 <strong className="ms-1" style={boldStyle}>₹<OptimizedNumber num={car.permitCharge} />/𝓚𝓜</strong>
                               </li>
                               <li className="mb-2 d-flex align-items-center" style={letterStyle}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Tolls & Parking
+                                𝓣𝓸𝓵𝓵𝓼 & 𝓟𝓪𝓻𝓴𝓲𝓷𝓰
                               </li>
                             </ul>
                           </Col>
@@ -2153,7 +2152,7 @@ const Home = () => {
           </Row>
           
           <div className="text-center mt-4">
-            <Button variant="warning" onClick={() => navigate('/tariff')} style={boldStyle}>View All Tariffs</Button>
+            <Button variant="warning" onClick={() => navigate('/tariff')} style={boldStyle}>𝓥𝓲𝓮𝔀 𝓐𝓵𝓵 𝓣𝓪𝓻𝓲𝓯𝓯𝓼</Button>
           </div>
         </Container>
       </section>
@@ -2165,7 +2164,7 @@ const Home = () => {
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             ...headingStyle
           }}>
-            <span className="text-warning" style={headingStyle}>Popular</span> Routes
+            <span className="text-warning" style={headingStyle}>𝓟𝓸𝓹𝓾𝓵𝓪𝓻</span> 𝓡𝓸𝓾𝓽𝓮𝓼
           </h2>
           <Row>
             {popularRoutes.map((route, index) => (
@@ -2180,7 +2179,7 @@ const Home = () => {
                       loading="lazy"
                     />
                     <div className="position-absolute bottom-0 start-0 w-100 p-3" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: 'white' }}>
-                      <h5 className="fw-bold mb-1" style={headingStyle}>{route.from} to {route.to}</h5>
+                      <h5 className="fw-bold mb-1" style={headingStyle}>{route.from} 𝖙𝖔 {route.to}</h5>
                       <p className="mb-0 small" style={letterStyle}>{route.description}</p>
                     </div>
                   </div>
@@ -2191,16 +2190,16 @@ const Home = () => {
                       </div>
                       <div>
                         <h6 className="fw-bold mb-1" style={headingStyle}>{route.from} → {route.to}</h6>
-                        <small className="text-secondary" style={letterStyle}>Distance: {route.distance}</small>
+                        <small className="text-secondary" style={letterStyle}>𝕯𝖎𝖘𝖙𝖆𝖓𝖈𝖊: {route.distance}</small>
                       </div>
                     </div>
                     <div className="small mb-3" style={boldStyle}>
-                      <span className="fw-bold me-2" style={boldStyle}>SEDAN:</span> ₹<OptimizedNumber num={route.cars[0].oneWay} />/km | 
-                      <span className="fw-bold ms-2 me-2" style={boldStyle}>SUV:</span> ₹<OptimizedNumber num={route.cars[2].oneWay} />/km
+                      <span className="fw-bold me-2" style={boldStyle}>𝓢𝓔𝓓𝓐𝓝:</span> ₹<OptimizedNumber num={route.cars[0].oneWay} />/𝓚𝓜 | 
+                      <span className="fw-bold ms-2 me-2" style={boldStyle}>𝓢𝓤𝓥:</span> ₹<OptimizedNumber num={route.cars[2].oneWay} />/𝓚𝓜
                     </div>
                     <div className="mt-3">
                       <Button variant="outline-warning" size="sm" className="w-100" onClick={() => navigate('/popular-routes')} style={boldStyle}>
-                        View Details
+                        𝓥𝓲𝓮𝔀 𝓓𝓮𝓽𝓪𝓲𝓵𝓼
                       </Button>
                     </div>
                   </Card.Body>
@@ -2209,7 +2208,7 @@ const Home = () => {
             ))}
           </Row>
           <div className="text-center mt-4">
-            <Button variant="warning" onClick={() => navigate('/popular-routes')} style={boldStyle}>View All Routes</Button>
+            <Button variant="warning" onClick={() => navigate('/popular-routes')} style={boldStyle}>𝓥𝓲𝓮𝔀 𝓐𝓵𝓵 𝓡𝓸𝓾𝓽𝓮𝓼</Button>
           </div>
         </Container>
       </section>
@@ -2221,7 +2220,7 @@ const Home = () => {
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             ...headingStyle
           }}>
-            About <span className="text-warning" style={headingStyle}>Us</span>
+            𝓐𝓫𝓸𝓾𝓽 <span className="text-warning" style={headingStyle}>Us</span>
           </h2>
           <Row className="align-items-center">
             <Col lg={6} className="mb-4 mb-lg-0">
@@ -2233,12 +2232,12 @@ const Home = () => {
               />
             </Col>
             <Col lg={6}>
-              <h3 className="text-warning mb-4" style={headingStyle}>OUR COMPANY</h3>
+              <h3 className="text-warning mb-4" style={headingStyle}>𝓞𝓤𝓡 𝓒𝓞𝓜𝓟𝓐𝓝𝓨</h3>
               <p className="lead mb-4" style={letterStyle}>
-                At <strong style={boldStyle}>Lexus DROP TAXI</strong>, we believe every journey should be safe, comfortable, and on time.
+                𝓐𝓽 <strong style={boldStyle}>𝓛𝓮𝔁𝓾𝓼 𝓓𝓡𝓞𝓟 𝓣𝓐𝓧𝓘</strong>, 𝔀𝓮 𝓫𝓮𝓵𝓲𝓮𝓿𝓮 𝓮𝓿𝓮𝓻𝔂 𝓳𝓸𝓾𝓻𝓷𝓮𝔂 𝓼𝓱𝓸𝓾𝓵𝓭 𝓫𝓮 𝓼𝓪𝓯𝓮, 𝓬𝓸𝓶𝓯𝓸𝓻𝓽𝓪𝓫𝓵𝓮, 𝓪𝓷𝓭 𝓸𝓷 𝓽𝓲𝓶𝓮.
               </p>
               <p className="mb-4" style={letterStyle}>
-                Since 2023, we've been proudly serving Tamilnadu, Kerala, Andhra Pradesh, Karnataka, and Pondicherry with reliable taxi services.
+                𝓢𝓲𝓷𝓬𝓮 2023, 𝔀𝓮'𝓿𝓮 𝓫𝓮𝓮𝓷 𝓹𝓻𝓸𝓾𝓭𝓵𝔂 𝓼𝓮𝓻𝓿𝓲𝓷𝓰 𝓣𝓪𝓶𝓲𝓵𝓷𝓪𝓭𝓾, 𝓚𝓮𝓻𝓪𝓵𝓪, 𝓐𝓷𝓭𝓱𝓻𝓪 𝓟𝓻𝓪𝓭𝓮𝓼𝓱, 𝓚𝓪𝓻𝓷𝓪𝓽𝓪𝓴𝓪, 𝓪𝓷𝓭 𝓟𝓸𝓷𝓭𝓲𝓬𝓱𝓮𝓻𝓻𝔂 𝔀𝓲𝓽𝓱 𝓻𝓮𝓵𝓲𝓪𝓫𝓵𝓮 𝓽𝓪𝔁𝓲 𝓼𝓮𝓻𝓿𝓲𝓬𝓮𝓼.
               </p>
               <Row className="g-3">
                 {aboutStats.slice(0, 2).map((stat, idx) => (
@@ -2252,7 +2251,7 @@ const Home = () => {
                 ))}
               </Row>
               <div className="mt-4">
-                <Button variant="warning" onClick={() => navigate('/about')} style={boldStyle}>Read More</Button>
+                <Button variant="warning" onClick={() => navigate('/about')} style={boldStyle}>𝓡𝓮𝓪𝓭 𝓜𝓸𝓻𝓮</Button>
               </div>
             </Col>
           </Row>
@@ -2266,7 +2265,8 @@ const Home = () => {
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             ...headingStyle
           }}>
-            Customer <span className="text-warning" style={headingStyle}>Reviews</span>
+            𝕮𝖚𝖘𝖙𝖔𝖒𝖊𝖗
+ <span className="text-warning" style={headingStyle}>𝕽𝖊𝖛𝖎𝖊𝖜𝖘</span>
           </h2>
           <Row>
             {testimonials.map((testimonial, index) => (
@@ -2300,16 +2300,16 @@ const Home = () => {
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             ...headingStyle
           }}>
-            Why <span className="text-warning" style={headingStyle}>Choose Us</span>
+            Why <span className="text-warning" style={headingStyle}>𝕮𝖍𝖔𝖔𝖘𝖊 𝖀𝖘</span>
           </h2>
           <Row>
             {[
-              { icon: '👨‍✈️', title: 'Trained Drivers', desc: 'Experienced and courteous drivers' },
-              { icon: '⏰', title: 'Always On Time', desc: 'Punctual and reliable service' },
-              { icon: '💰', title: 'Fair Pricing', desc: 'No hidden charges, ever' },
-              { icon: '📍', title: 'GPS Vehicles', desc: 'Real-time tracking for safety' },
-              { icon: '📞', title: '24/7 Support', desc: 'Round-the-clock assistance' },
-              { icon: '🏔️', title: 'Hill Station Trips', desc: 'Special packages available' }
+              { icon: '👨‍✈️', title: '𝓣𝓻𝓪𝓲𝓷𝓮𝓭 𝓓𝓻𝓲𝓿𝓮𝓻𝓼', desc: '𝕰𝖝𝖕𝖊𝖗𝖎𝖊𝖓𝖈𝖊𝖉 𝖆𝖓𝖉 𝖈𝖔𝖚𝖗𝖙𝖊𝖔𝖚𝖘 𝖉𝖗𝖎𝖛𝖊𝖗𝖘' },
+              { icon: '⏰', title: '𝓐𝓵𝔀𝓪𝔂𝓼 𝓞𝓷 𝓣𝓲𝓶𝓮', desc: '𝕻𝖚𝖓𝖈𝖙𝖚𝖆𝖑 𝖆𝖓𝖉 𝖗𝖊𝖑𝖎𝖆𝖇𝖑𝖊 𝖘𝖊𝖗𝖛𝖎𝖈𝖊' },
+              { icon: '💰', title: '𝓕𝓪𝓲𝓻 𝓟𝓻𝓲𝓬𝓲𝓷𝓰', desc: '𝕹𝖔 𝖍𝖎𝖉𝖉𝖊𝖓 𝖈𝖍𝖆𝖗𝖌𝖊𝖘, 𝖊𝖛𝖊𝖗' },
+              { icon: '📍', title: '𝓖𝓟𝓢 𝓥𝓮𝓱𝓲𝓬𝓵𝓮𝓼', desc: '𝕽𝖊𝖆𝖑-𝖙𝖎𝖒𝖊 𝖙𝖗𝖆𝖈𝖐𝖎𝖓𝖌 𝖋𝖔𝖗 𝖘𝖆𝖋𝖊𝖙𝖞' },
+              { icon: '📞', title: '24/7 𝓢𝓾𝓹𝓹𝓸𝓻𝓽', desc: '𝕽𝖔𝖚𝖓𝖉-𝖙𝖍𝖊-𝖈𝖑𝖔𝖈𝖐 𝖆𝖘𝖘𝖎𝖘𝖙𝖆𝖓𝖈𝖊' },
+              { icon: '🏔️', title: '𝓗𝓲𝓵𝓵 𝓢𝓽𝓪𝓽𝓲𝓸𝓷 𝓣𝓻𝓲𝓹𝓼', desc: '𝕾𝖕𝖊𝖈𝖎𝖆𝖑 𝖕𝖆𝖈𝖐𝖆𝖌𝖊𝖘 𝖆𝖛𝖆𝖎𝖑𝖆𝖇𝖑𝖊' }
             ].map((item, index) => (
               <Col md={4} sm={6} key={index} className="mb-4">
                 <Card className="border-0 shadow-sm p-4 text-center h-100">
@@ -2330,7 +2330,7 @@ const Home = () => {
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             ...headingStyle
           }}>
-            Contact <span className="text-warning" style={headingStyle}>Us</span>
+            𝕮𝖔𝖓𝖙𝖆𝖈𝖙 <span className="text-warning" style={headingStyle}>𝖀𝖘</span>
           </h2>
           <Row>
             <Col lg={4} md={6} className="mb-4">
@@ -2339,9 +2339,9 @@ const Home = () => {
                   <div className="bg-warning rounded-circle d-inline-flex p-3 mb-3">
                     <FaMapMarkerAlt size={24} className="text-dark" />
                   </div>
-                  <h5 className="fw-bold mb-3" style={boldStyle}>Visit Us</h5>
-                  <p className="text-secondary mb-1" style={letterStyle}>No.71, 18th Block A Type Thiru,</p>
-                  <p className="text-secondary mb-1" style={letterStyle}>Avadi, Chennai - 600054</p>
+                  <h5 className="fw-bold mb-3" style={boldStyle}>𝓥𝓲𝓼𝓲𝓽 𝓤𝓼</h5>
+                  <p className="text-secondary mb-1" style={letterStyle}>𝓝𝓸.71, 18𝓽𝓱 𝓑𝓵𝓸𝓬𝓴 𝓐 𝓣𝔂𝓹𝓮 𝓣𝓱𝓲𝓻𝓾,</p>
+                  <p className="text-secondary mb-1" style={letterStyle}>𝓐𝓿𝓪𝓭𝓲, 𝓒𝓱𝓮𝓷𝓷𝓪𝓲 - 600054</p>
                 </Card.Body>
               </Card>
             </Col>
@@ -2351,7 +2351,7 @@ const Home = () => {
                   <div className="bg-warning rounded-circle d-inline-flex p-3 mb-3">
                     <FaPhone size={24} className="text-dark" />
                   </div>
-                  <h5 className="fw-bold mb-3" style={boldStyle}>Call Us</h5>
+                  <h5 className="fw-bold mb-3" style={boldStyle}>𝓒𝓪𝓵𝓵 𝓤𝓼</h5>
                   <p className="text-secondary mb-1" style={boldStyle}>+91 <OptimizedNumber num={63810} /> <OptimizedNumber num={95854} /></p>
                   <p className="text-secondary mb-1" style={boldStyle}>+91 <OptimizedNumber num={72003} /> <OptimizedNumber num={43435} /></p>
                 </Card.Body>
@@ -2363,15 +2363,15 @@ const Home = () => {
                   <div className="bg-warning rounded-circle d-inline-flex p-3 mb-3">
                     <FaEnvelope size={24} className="text-dark" />
                   </div>
-                  <h5 className="fw-bold mb-3" style={boldStyle}>Email Us</h5>
-                  <p className="text-secondary mb-1" style={letterStyle}>info@lexusdroptaxi.com</p>
-                  <p className="text-secondary mb-1" style={letterStyle}>nagarajan16052001@gmail.com</p>
+                  <h5 className="fw-bold mb-3" style={boldStyle}>𝓔𝓶𝓪𝓲𝓵 𝓤𝓼</h5>
+                  <p className="text-secondary mb-1" style={letterStyle}>𝓲𝓷𝓯𝓸@𝓵𝓮𝔁𝓾𝓼𝓭𝓻𝓸𝓹𝓽𝓪𝔁𝓲.𝓬𝓸𝓶</p>
+                  <p className="text-secondary mb-1" style={letterStyle}>𝓷𝓪𝓰𝓪𝓻𝓪𝓳𝓪𝓷16052001@𝓰𝓶𝓪𝓲𝓵.𝓬𝓸𝓶</p>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
           <div className="text-center mt-4">
-            <Button variant="warning" onClick={() => navigate('/contact')} style={boldStyle}>Contact Us</Button>
+            <Button variant="warning" onClick={() => navigate('/contact')} style={boldStyle}>𝓒𝓸𝓷𝓽𝓪𝓬𝓽 𝓤𝓼</Button>
           </div>
         </Container>
       </section>
@@ -2382,8 +2382,9 @@ const Home = () => {
           <h2 className="fw-bold mb-3" style={{ 
             fontSize: 'clamp(1.5rem, 4vw, 2rem)',
             ...headingStyle
-          }}>Ready to travel?</h2>
-          <p className="lead mb-4" style={letterStyle}>Book your cab now and get <OptimizedNumber num={10} />% off on first ride!</p>
+          }}>𝓡𝓮𝓪𝓭𝔂 𝓽𝓸 𝓽𝓻𝓪𝓿𝓮𝓵?</h2>
+          <p className="lead mb-4" style={letterStyle}>𝓑𝓸𝓸𝓴 𝔂𝓸𝓾𝓻 𝓬𝓪𝓫 𝓷𝓸𝔀 𝓪𝓷𝓭 𝓰𝓮𝓽 <OptimizedNumber num={10} />% 𝓸𝓯𝓯 𝓸𝓷 𝓯𝓲𝓻𝓼𝓽 𝓻𝓲𝓭𝓮!
+</p>
           <div className="d-flex justify-content-center gap-3 flex-wrap">
             <Button 
               variant="dark" 
@@ -2392,11 +2393,11 @@ const Home = () => {
               onClick={() => document.querySelector('.card').scrollIntoView({ behavior: 'smooth' })}
               style={boldStyle}
             >
-              Book Now
+              𝓑𝓸𝓸𝓴 𝓝𝓸𝔀
             </Button>
             <a href="tel:+916381095854">
               <Button variant="outline-dark" size="lg" className="rounded-pill px-5" style={boldStyle}>
-                <FaPhone className="me-2" /> Call Us
+                <FaPhone className="me-2" /> 𝓒𝓪𝓵𝓵 𝓤𝓼
               </Button>
             </a>
           </div>
