@@ -35,20 +35,38 @@ const API_URL = 'https://leo-drop-taxi.onrender.com/api';
 const CLIENT_WHATSAPP_NUMBER = '916381095854';
 const CLIENT_PHONE_NUMBER = '916381095854';
 
-// Pre-compute number styles to avoid recalculation
+// ============================================
+// LETTER STYLING - Exactly matching the photo
+// Bold, clean, professional font with proper spacing
+// ============================================
+const letterStyle = {
+  fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+  fontWeight: '600',
+  letterSpacing: '-0.02em',
+  lineHeight: '1.4'
+};
+
+const headingStyle = {
+  fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+  fontWeight: '700',
+  letterSpacing: '-0.03em',
+  lineHeight: '1.3'
+};
+
+const boldStyle = {
+  fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+  fontWeight: '800',
+  letterSpacing: '-0.02em'
+};
+
+// Pre-compute number styles with clean professional look
 const numberStyles = {
-  fontFamily: "'Arial Black', 'Impact', sans-serif",
-  fontWeight: '900',
+  fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+  fontWeight: '700',
   fontSize: 'inherit',
   display: 'inline-block',
-  textShadow: '2px 2px 0 #000, 4px 4px 0 rgba(255,215,0,0.3)',
-  letterSpacing: '1px',
-  transform: 'skew(-5deg)',
-  background: 'linear-gradient(145deg, #FFFFFF, #FFD700)',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  backgroundClip: 'text',
-  filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.3))'
+  letterSpacing: '-0.02em',
+  color: 'inherit'
 };
 
 // Optimized number renderer - memoized to prevent recalculation
@@ -94,25 +112,27 @@ const Home = () => {
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef(null);
 
-  // Background carousel images
+  // ============================================
+  // BACKGROUND CAROUSEL IMAGES - HD QUALITY, NO OPACITY, CLEAR DISPLAY
+  // ============================================
   const carouselImages = useMemo(() => [
     {
-      url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg',
+      url: '/images/image1.jpg', // First HD image from public/images folder
       title: 'Luxury Sedans',
       description: 'Comfortable and stylish sedans for your journey'
     },
     {
-      url: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg',
+      url: '/images/image2.jpg', // Second HD image from public/images folder
       title: 'Spacious SUVs',
       description: 'Perfect for family trips and group travel'
     },
     {
-      url: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg',
+      url: '/images/image3.jpg', // Third HD image from public/images folder
       title: 'Premium INNOVA',
       description: 'Experience luxury with our premium fleet'
     },
     {
-      url: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg',
+      url: '/images/image4.jpg', // Fourth HD image from public/images folder
       title: 'Hill Station Trips',
       description: 'Special packages for mountain getaways'
     }
@@ -698,11 +718,11 @@ const Home = () => {
       maxWidth: '500px',
       margin: '0 auto',
       width: '100%',
-      backgroundColor: '#3b9cf7e6',
+      backgroundColor: '#0c7a24e6',
       backgroundImage: `
-        radial-gradient(circle at 20% 30%, rgba(35, 157, 227, 0.93) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(53, 195, 238, 0.86) 0%, transparent 40%),
-        linear-gradient(145deg, #3b9cf7e6 0%, #3b9cf7e6 30%, #3b9cf7e6 50%, #3b9cf7e6 70%, #3b9cf7e6 100%)
+        radial-gradient(circle at 20% 30%, rgba(207, 236, 42, 0.93) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(176, 212, 29, 0.86) 0%, transparent 40%),
+        linear-gradient(145deg, #cad527ff 0%, #cad527ff 30%, #cad527ff 50%, #cad527ff 70%, #d6dee6e6 100%)
       `,
       boxShadow: `
         0 30px 60px rgba(139, 0, 0, 0.6),
@@ -724,10 +744,8 @@ const Home = () => {
       fontSize: '1.6rem',
       marginBottom: '1.2rem',
       color: '#FFFFFF',
-      textShadow: '2px 2px 4px rgba(0,0,0,0.6), 0 0 20px rgba(255,215,0,0.4)',
-      fontWeight: 'bold',
-      letterSpacing: '1px',
-      fontFamily: "'Arial Black', 'Impact', sans-serif"
+      textShadow: '2px 2px 4px rgba(0,0,0,0.6)',
+      ...headingStyle
     },
     label: {
       fontSize: '0.95rem',
@@ -735,8 +753,7 @@ const Home = () => {
       color: '#FFFFFF',
       fontWeight: '600',
       textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-      fontFamily: "'Arial', 'Helvetica', sans-serif",
-      letterSpacing: '0.5px',
+      ...letterStyle,
       textTransform: 'uppercase'
     },
     input: {
@@ -748,9 +765,7 @@ const Home = () => {
       borderRadius: '10px',
       boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
       transition: 'all 0.3s ease',
-      fontFamily: "'Courier New', monospace",
-      fontWeight: 'bold',
-      letterSpacing: '1px'
+      ...letterStyle
     },
     tripTypeBox: {
       padding: '0.6rem',
@@ -761,23 +776,22 @@ const Home = () => {
       borderRadius: '10px',
       transition: 'all 0.3s ease',
       boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
-      fontFamily: "'Impact', 'Arial Black', sans-serif",
-      letterSpacing: '1px',
+      ...boldStyle,
       textTransform: 'uppercase'
     },
     button: {
       fontSize: '1.1rem',
       padding: '0.8rem 1rem',
-      backgroundColor: '#FFD700',
+      backgroundColor: '#b0062bff',
       border: 'none',
-      color: '#8B0000',
-      fontWeight: 'bold',
+      color: '#FFFFFF',
+      fontWeight: '700',
       borderRadius: '10px',
       boxShadow: '0 8px 25px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.6) inset',
       transition: 'all 0.3s ease',
       textTransform: 'uppercase',
-      letterSpacing: '2px',
-      fontFamily: "'Arial Black', 'Impact', sans-serif"
+      letterSpacing: '1px',
+      ...boldStyle
     },
     fareBox: {
       padding: '0.8rem',
@@ -787,8 +801,7 @@ const Home = () => {
       borderRadius: '10px',
       color: '#333333',
       boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-      fontFamily: "'Courier New', monospace",
-      fontWeight: 'bold'
+      ...letterStyle
     },
     mobileStyles: `
       /* Desktop and Tablet Default */
@@ -850,10 +863,13 @@ const Home = () => {
         
         .carousel-caption h3 {
           font-size: 1.2rem !important;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+          font-weight: 700 !important;
         }
         
         .carousel-caption p {
           font-size: 0.9rem !important;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
         }
         
         .carousel-indicators {
@@ -866,30 +882,39 @@ const Home = () => {
         
         .form-title {
           font-size: 1.4rem !important;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+          font-weight: 700 !important;
         }
         
         .form-label {
           font-size: 0.9rem !important;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
         }
         
         .form-input {
           font-size: 0.95rem !important;
           padding: 0.5rem 0.7rem !important;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
         }
         
         .trip-type-box {
           padding: 0.5rem !important;
           font-size: 0.9rem !important;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+          font-weight: 700 !important;
         }
         
         .fare-box {
           padding: 0.7rem !important;
           font-size: 0.9rem !important;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
         }
         
         .submit-button {
           font-size: 1rem !important;
           padding: 0.6rem !important;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+          font-weight: 700 !important;
         }
         
         .row {
@@ -904,6 +929,22 @@ const Home = () => {
         
         h2 {
           font-size: 1.8rem !important;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+          font-weight: 700 !important;
+        }
+        
+        h3 {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+          font-weight: 700 !important;
+        }
+        
+        h4, h5, h6 {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+          font-weight: 700 !important;
+        }
+        
+        p, span, div, small, strong {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
         }
         
         .p-5 {
@@ -967,7 +1008,27 @@ const Home = () => {
         }
       }
       
-      /* Optimized animations with will-change */
+      /* Apply consistent font to all elements */
+      * {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+      }
+      
+      h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+        font-weight: 700 !important;
+        letter-spacing: -0.03em !important;
+      }
+      
+      p, span, div, small, strong, li {
+        font-weight: 500 !important;
+        letter-spacing: -0.02em !important;
+        line-height: 1.5 !important;
+      }
+      
+      .text-warning, .text-white, .text-dark, .text-secondary {
+        font-weight: inherit !important;
+      }
+      
+      /* Sparkle animation - only for form, not carousel */
       @keyframes sparkle {
         0%, 100% { 
           opacity: 0.2; 
@@ -1227,7 +1288,8 @@ const Home = () => {
           opacity: 0,
           visibility: 'hidden',
           transition: 'opacity 0.2s ease',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
+          boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
+          ...letterStyle
         }} className="whatsapp-tooltip">
           WhatsApp Us
         </span>
@@ -1283,7 +1345,8 @@ const Home = () => {
           opacity: 0,
           visibility: 'hidden',
           transition: 'opacity 0.2s ease',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
+          boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
+          ...letterStyle
         }} className="phone-tooltip">
           Call Us Now
         </span>
@@ -1307,20 +1370,19 @@ const Home = () => {
                 style={{ 
                   fontSize: 'clamp(2rem, 5vw, 3.5rem)',
                   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                  fontFamily: "'Arial Black', 'Impact', sans-serif",
-                  letterSpacing: '2px'
+                  ...headingStyle,
+                  letterSpacing: '-0.03em'
                 }}
               >
                 Anywhere You Go, <br />
-                <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>We're There</span>
+                <span className="text-warning" style={headingStyle}>We're There</span>
               </h1>
               <p 
                 className="lead mb-5 text-white-50" 
                 style={{ 
                   fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-                  fontFamily: "'Arial', 'Helvetica', sans-serif",
-                  letterSpacing: '1px',
+                  ...letterStyle,
                   lineHeight: '1.6'
                 }}
               >
@@ -1329,7 +1391,7 @@ const Home = () => {
               </p>
             </Col>
 
-            {/* Middle Column - Carousel */}
+            {/* Middle Column - HD Carousel with Clear Images (No Opacity, No Background Color) */}
             <Col lg={6} className="hero-col-carousel">
               <div 
                 className="carousel-container"
@@ -1345,12 +1407,13 @@ const Home = () => {
                       left: 0,
                       opacity: index === currentSlide ? 1 : 0,
                       transition: 'opacity 0.8s ease-in-out',
-                      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${image.url})`,
+                      backgroundImage: `url(${image.url})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                       backgroundRepeat: 'no-repeat',
                       borderRadius: '15px',
-                      willChange: 'opacity'
+                      willChange: 'opacity',
+                      boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
                     }}
                   >
                     <div 
@@ -1361,11 +1424,11 @@ const Home = () => {
                         right: '20px',
                         textAlign: 'left',
                         zIndex: 5,
-                        textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+                        textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
                       }}
                     >
-                      <h3 className="fw-bold mb-2" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>{image.title}</h3>
-                      <p className="mb-0" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>{image.description}</p>
+                      <h3 className="fw-bold mb-2" style={headingStyle}>{image.title}</h3>
+                      <p className="mb-0" style={letterStyle}>{image.description}</p>
                     </div>
                   </div>
                 ))}
@@ -1417,7 +1480,7 @@ const Home = () => {
               </div>
             </Col>
 
-            {/* Right Column - SHINING RED METALLIC FORM */}
+            {/* Right Column - Form */}
             <Col lg={6} className="hero-col-form">
               <Card 
                 className="border-0 shadow-lg form-card" 
@@ -1432,8 +1495,8 @@ const Home = () => {
                 
                 <Card.Body className="form-card-body" style={formStyles.cardBody}>
                   <h3 className="text-center fw-bold mb-4 form-title" style={formStyles.title}>
-                    <span style={{ color: '#FFFFFF', fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Lexus-Drop</span>{' '}
-                    <span style={{ color: '#FFD700', fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Taxi</span>
+                    <span style={{ color: '#FFFFFF', ...headingStyle }}>Lexus-Drop</span>{' '}
+                    <span style={{ color: '#FFD700', ...headingStyle }}>Taxi</span>
                   </h3>
 
                   <form onSubmit={handleSubmit}>
@@ -1449,16 +1512,15 @@ const Home = () => {
                             backgroundColor: formData.tripType === 'one-way' ? '#ffe69b' : 'rgba(255, 255, 255, 0.98)',
                             borderColor: formData.tripType === 'one-way' ? '#FFD700' : 'rgba(255, 215, 0, 0.5)',
                             boxShadow: formData.tripType === 'one-way' ? '0 0 15px rgba(255,215,0,0.3)' : '0 4px 10px rgba(0,0,0,0.2)',
-                            fontFamily: "'Impact', 'Arial Black', sans-serif"
                           }}
                           onClick={() => {
                             setFormData({...formData, tripType: 'one-way'});
                             if (formData.carType) selectCar(formData.carType);
                           }}
                         >
-                          <strong style={{ fontSize: '1.1rem', letterSpacing: '1px' }}>ONE WAY</strong>
+                          <strong style={{ fontSize: '1.1rem', letterSpacing: '0px', ...boldStyle }}>ONE WAY</strong>
                           <br />
-                          <small className="text-muted" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>(Min 130KM)</small>
+                          <small className="text-muted" style={letterStyle}>(Min 130KM)</small>
                         </div>
                         <div 
                           className={`flex-fill border rounded text-center trip-type-box ${formData.tripType === 'round-trip' ? 'border-warning bg-warning bg-opacity-10' : ''}`}
@@ -1468,14 +1530,13 @@ const Home = () => {
                             backgroundColor: formData.tripType === 'round-trip' ? '#ffe69b' : 'rgba(255, 255, 255, 0.98)',
                             borderColor: formData.tripType === 'round-trip' ? '#FFD700' : 'rgba(255, 215, 0, 0.5)',
                             boxShadow: formData.tripType === 'round-trip' ? '0 0 15px rgba(255,215,0,0.3)' : '0 4px 10px rgba(0,0,0,0.2)',
-                            fontFamily: "'Impact', 'Arial Black', sans-serif"
                           }}
                           onClick={() => {
                             setFormData({...formData, tripType: 'round-trip'});
                             if (formData.carType) selectCar(formData.carType);
                           }}
                         >
-                          <strong style={{ fontSize: '1.1rem', letterSpacing: '1px' }}>ROUND TRIP</strong>
+                          <strong style={{ fontSize: '1.1rem', letterSpacing: '0px', ...boldStyle }}>ROUND TRIP</strong>
                         </div>
                       </div>
                     </div>
@@ -1589,7 +1650,7 @@ const Home = () => {
                       </Col>
                     </Row>
  
-                    {/* SELECT CAR TYPE - TURNS FULL GOLD WHEN SELECTED */}
+                    {/* SELECT CAR TYPE */}
                     <div className="mb-3">
                       <label className="fw-bold form-label mb-3" style={{ ...formStyles.label, fontSize: '1.1rem' }}>
                         Select Car Type *
@@ -1606,9 +1667,9 @@ const Home = () => {
                               padding: '12px',
                               cursor: 'pointer',
                               transition: 'all 0.2s ease',
-                              backgroundColor: formData.carType === 'SEDAN' ? '#FFD700' : 'white',
+                              backgroundColor: formData.carType === 'SEDAN' ? '#1388e9dd' : 'white',
                               height: '100%',
-                              boxShadow: formData.carType === 'SEDAN' ? '0 8px 20px rgba(255,215,0,0.4), 0 0 10px rgba(255,215,0,0.3) inset' : '0 4px 12px rgba(0,0,0,0.1)',
+                              boxShadow: formData.carType === 'SEDAN' ? '0 8px 20px rgba(250, 250, 9, 0.4), 0 0 10px rgba(211, 245, 43, 0.3) inset' : '0 4px 12px rgba(0,0,0,0.1)',
                               transform: formData.carType === 'SEDAN' ? 'translateY(-2px)' : 'none'
                             }}
                             onClick={() => selectCar('SEDAN')}
@@ -1621,7 +1682,7 @@ const Home = () => {
                             }}
                             onMouseLeave={(e) => {
                               if (formData.carType !== 'SEDAN') {
-                                e.currentTarget.style.borderColor = '#dee2e6';
+                                e.currentTarget.style.borderColor = '#151618ff';
                                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
                                 e.currentTarget.style.transform = 'none';
                               }
@@ -1642,16 +1703,15 @@ const Home = () => {
                               loading="lazy"
                             />
                             <div className="fw-bold text-center car-name" style={{ 
-                              color: formData.carType === 'SEDAN' ? '#8B0000' : '#333333',
-                              fontFamily: "'Impact', 'Arial Black', sans-serif",
-                              fontSize: '1.1rem',
-                              letterSpacing: '1px'
+                              color: formData.carType === 'SEDAN' ? '#f7f4f4ff' : '#333333',
+                              ...boldStyle,
+                              fontSize: '1.1rem'
                             }}>
                               SEDAN
                             </div>
                             <div className="fw-bold text-center car-price" style={{ 
                               color: formData.carType === 'SEDAN' ? '#8B0000' : '#8B0000',
-                              fontFamily: "'Courier New', monospace",
+                              ...boldStyle,
                               fontSize: '1rem'
                             }}>
                               ₹<OptimizedNumber num={14} />/km
@@ -1669,7 +1729,7 @@ const Home = () => {
                               padding: '12px',
                               cursor: 'pointer',
                               transition: 'all 0.2s ease',
-                              backgroundColor: formData.carType === 'ETIOS' ? '#FFD700' : 'white',
+                              backgroundColor: formData.carType === 'ETIOS' ? '#1388e9dd' : 'white',
                               height: '100%',
                               boxShadow: formData.carType === 'ETIOS' ? '0 8px 20px rgba(255,215,0,0.4), 0 0 10px rgba(255,215,0,0.3) inset' : '0 4px 12px rgba(0,0,0,0.1)',
                               transform: formData.carType === 'ETIOS' ? 'translateY(-2px)' : 'none'
@@ -1705,16 +1765,15 @@ const Home = () => {
                               loading="lazy"
                             />
                             <div className="fw-bold text-center car-name" style={{ 
-                              color: formData.carType === 'ETIOS' ? '#8B0000' : '#333333',
-                              fontFamily: "'Impact', 'Arial Black', sans-serif",
-                              fontSize: '1.1rem',
-                              letterSpacing: '1px'
+                              color: formData.carType === 'ETIOS' ? '#f7f4f4ff' : '#333333',
+                              ...boldStyle,
+                              fontSize: '1.1rem'
                             }}>
                               ETIOS
                             </div>
                             <div className="fw-bold text-center car-price" style={{ 
-                              color: formData.carType === 'ETIOS' ? '#8B0000' : '#8B0000',
-                              fontFamily: "'Courier New', monospace",
+                              color: formData.carType === 'ETIOS' ? '#ea2e2eff' : '#8B0000',
+                              ...boldStyle,
                               fontSize: '1rem'
                             }}>
                               ₹<OptimizedNumber num={15} />/km
@@ -1732,7 +1791,7 @@ const Home = () => {
                               padding: '12px',
                               cursor: 'pointer',
                               transition: 'all 0.2s ease',
-                              backgroundColor: formData.carType === 'MUV' ? '#FFD700' : 'white',
+                              backgroundColor: formData.carType === 'MUV' ? '#1388e9dd' : 'white',
                               height: '100%',
                               boxShadow: formData.carType === 'MUV' ? '0 8px 20px rgba(255,215,0,0.4), 0 0 10px rgba(255,215,0,0.3) inset' : '0 4px 12px rgba(0,0,0,0.1)',
                               transform: formData.carType === 'MUV' ? 'translateY(-2px)' : 'none'
@@ -1768,16 +1827,15 @@ const Home = () => {
                               loading="lazy"
                             />
                             <div className="fw-bold text-center car-name" style={{ 
-                              color: formData.carType === 'MUV' ? '#8B0000' : '#333333',
-                              fontFamily: "'Impact', 'Arial Black', sans-serif",
-                              fontSize: '1.1rem',
-                              letterSpacing: '1px'
+                              color: formData.carType === 'MUV' ? '#f7f4f4ff' : '#333333',
+                              ...boldStyle,
+                              fontSize: '1.1rem'
                             }}>
                               MUV
                             </div>
                             <div className="fw-bold text-center car-price" style={{ 
                               color: formData.carType === 'MUV' ? '#8B0000' : '#8B0000',
-                              fontFamily: "'Courier New', monospace",
+                              ...boldStyle,
                               fontSize: '1rem'
                             }}>
                               ₹<OptimizedNumber num={19} />/km
@@ -1795,7 +1853,7 @@ const Home = () => {
                               padding: '12px',
                               cursor: 'pointer',
                               transition: 'all 0.2s ease',
-                              backgroundColor: formData.carType === 'INNOVA' ? '#FFD700' : 'white',
+                              backgroundColor: formData.carType === 'INNOVA' ? '#1388e9dd' : 'white',
                               height: '100%',
                               boxShadow: formData.carType === 'INNOVA' ? '0 8px 20px rgba(255,215,0,0.4), 0 0 10px rgba(255,215,0,0.3) inset' : '0 4px 12px rgba(0,0,0,0.1)',
                               transform: formData.carType === 'INNOVA' ? 'translateY(-2px)' : 'none'
@@ -1825,22 +1883,21 @@ const Home = () => {
                                 objectFit: 'cover',
                                 borderRadius: '8px',
                                 marginBottom: '8px',
-                                border: formData.carType === 'INNOVA' ? '2px solid #B8860B' : 'none'
+                                border: formData.carType === 'INNOVA' ? '2px solid #ecae33ff' : 'none'
                               }}
                               className="car-image"
                               loading="lazy"
                             />
                             <div className="fw-bold text-center car-name" style={{ 
-                              color: formData.carType === 'INNOVA' ? '#8B0000' : '#333333',
-                              fontFamily: "'Impact', 'Arial Black', sans-serif",
-                              fontSize: '1.1rem',
-                              letterSpacing: '1px'
+                              color: formData.carType === 'INNOVA' ? '#f7f4f4ff' : '#333333',
+                              ...boldStyle,
+                              fontSize: '1.1rem'
                             }}>
                               INNOVA
                             </div>
                             <div className="fw-bold text-center car-price" style={{ 
                               color: formData.carType === 'INNOVA' ? '#8B0000' : '#8B0000',
-                              fontFamily: "'Courier New', monospace",
+                              ...boldStyle,
                               fontSize: '1rem'
                             }}>
                               ₹<OptimizedNumber num={20} />/km
@@ -1854,19 +1911,19 @@ const Home = () => {
                     {fareEstimate && (
                       <div className="bg-light rounded mb-3 fare-box" style={formStyles.fareBox}>
                         <div className="d-flex justify-content-between mb-1">
-                          <span style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", fontWeight: 'bold' }}>Base Fare (Min <OptimizedNumber num={fareEstimate.minDistance} />km):</span>
-                          <span className="fw-bold" style={{ color: '#8B0000', fontFamily: "'Courier New', monospace" }}>₹<OptimizedNumber num={fareEstimate.baseFare} /></span>
+                          <span style={letterStyle}>Base Fare (Min <OptimizedNumber num={fareEstimate.minDistance} />km):</span>
+                          <span className="fw-bold" style={{ color: '#8B0000', ...boldStyle }}>₹<OptimizedNumber num={fareEstimate.baseFare} /></span>
                         </div>
                         <div className="d-flex justify-content-between mb-1">
-                          <span style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", fontWeight: 'bold' }}>Driver Bata:</span>
-                          <span className="fw-bold" style={{ color: '#8B0000', fontFamily: "'Courier New', monospace" }}>₹<OptimizedNumber num={fareEstimate.driverBata} /></span>
+                          <span style={letterStyle}>Driver Bata:</span>
+                          <span className="fw-bold" style={{ color: '#8B0000', ...boldStyle }}>₹<OptimizedNumber num={fareEstimate.driverBata} /></span>
                         </div>
                         <hr className="my-1" />
                         <div className="d-flex justify-content-between">
-                          <span className="fw-bold" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Estimated Total:</span>
-                          <span className="fw-bold" style={{ color: '#8B0000', fontFamily: "'Courier New', monospace", fontSize: '1.1rem' }}>₹<OptimizedNumber num={fareEstimate.total} /></span>
+                          <span className="fw-bold" style={boldStyle}>Estimated Total:</span>
+                          <span className="fw-bold" style={{ color: '#8B0000', ...boldStyle, fontSize: '1.1rem' }}>₹<OptimizedNumber num={fareEstimate.total} /></span>
                         </div>
-                        <small className="text-muted d-block mt-1" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
+                        <small className="text-muted d-block mt-1" style={letterStyle}>
                           *Toll, permit & hill charges extra
                         </small>
                       </div>
@@ -1898,7 +1955,7 @@ const Home = () => {
                     </Button>
                     
                     {/* WhatsApp Info */}
-                    <p className="text-center mt-2 mb-0 small" style={{ color: '#FFFFFF', fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
+                    <p className="text-center mt-2 mb-0 small" style={{ color: '#FFFFFF', ...letterStyle }}>
                       <FaWhatsapp className="me-1" style={{ color: '#25d366' }} size={12} />
                       Notification sent to admin
                     </p>
@@ -1924,14 +1981,14 @@ const Home = () => {
           </div>
           <h2 className="fw-bold mb-3" style={{ 
             color: '#28a745',
-            fontFamily: "'Arial Black', 'Impact', sans-serif",
+            ...headingStyle,
             fontSize: '2rem'
           }}>
             Your Booking Confirmed!
           </h2>
           <p className="mb-4" style={{ 
             fontSize: '1.1rem',
-            fontFamily: "'Arial', 'Helvetica', sans-serif",
+            ...letterStyle,
             color: '#666'
           }}>
             Thank you for choosing Leo Drop Taxi. Your booking has been successfully confirmed.
@@ -1942,7 +1999,7 @@ const Home = () => {
             onClick={handlePopupClose}
             className="px-5 rounded-pill"
             style={{
-              fontFamily: "'Arial Black', 'Impact', sans-serif",
+              ...boldStyle,
               fontSize: '1.2rem'
             }}
           >
@@ -1955,10 +2012,9 @@ const Home = () => {
       <Container className="my-5" ref={statsRef}>
         <h2 className="text-center mb-5" style={{ 
           fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-          fontFamily: "'Arial Black', 'Impact', sans-serif",
-          letterSpacing: '2px'
+          ...headingStyle
         }}>
-          Our <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Achievements</span>
+          Our <span className="text-warning" style={headingStyle}>Achievements</span>
         </h2>
         <Row>
           {stats.map((stat, index) => (
@@ -1967,15 +2023,15 @@ const Home = () => {
                 <div className="display-1 mb-3" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>{stat.icon}</div>
                 <h2 className="text-warning fw-bold" style={{ 
                   fontSize: 'clamp(1.5rem, 4vw, 2.2rem)',
-                  fontFamily: "'Courier New', monospace"
+                  ...boldStyle
                 }}>
                   {stat.isDecimal ? <OptimizedNumber num={stat.value.toFixed(1)} /> : <OptimizedNumber num={Math.round(stat.value).toLocaleString()} />}
                   {stat.suffix && <OptimizedNumber num={stat.suffix} />}
                 </h2>
                 <p className="text-secondary" style={{ 
                   fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
-                  fontFamily: "'Arial', 'Helvetica', sans-serif",
-                  fontWeight: 'bold'
+                  ...letterStyle,
+                  fontWeight: '500'
                 }}>{stat.label}</p>
               </Card>
             </Col>
@@ -1988,10 +2044,9 @@ const Home = () => {
         <Container>
           <h2 className="text-center mb-5" style={{ 
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-            fontFamily: "'Arial Black', 'Impact', sans-serif",
-            letterSpacing: '2px'
+            ...headingStyle
           }}>
-            <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Outstation</span> Tariff
+            <span className="text-warning" style={headingStyle}>Outstation</span> Tariff
           </h2>
           
           <Row>
@@ -2029,8 +2084,8 @@ const Home = () => {
                             loading="lazy"
                           />
                           <Carousel.Caption style={{ bottom: '0', left: '0', right: '0', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', textAlign: 'left' }}>
-                            <h5 className="fw-bold mb-0" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>{car.name}</h5>
-                            <p className="mb-0 small" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>{car.model}</p>
+                            <h5 className="fw-bold mb-0" style={headingStyle}>{car.name}</h5>
+                            <p className="mb-0 small" style={letterStyle}>{car.model}</p>
                           </Carousel.Caption>
                         </Carousel.Item>
                       ))}
@@ -2038,51 +2093,51 @@ const Home = () => {
 
                     <Card.Body className="p-4">
                       <div className="mb-4">
-                        <h6 className="fw-bold mb-3" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif", fontSize: '1.1rem' }}>TARIFF</h6>
+                        <h6 className="fw-bold mb-3" style={{ ...headingStyle, fontSize: '1.1rem' }}>TARIFF</h6>
                         <Row className="g-3">
                           <Col xs={6}>
                             <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
-                              <h6 className="fw-bold mb-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>ONE WAY</h6>
-                              <h5 className="text-warning fw-bold mb-1" style={{ fontFamily: "'Courier New', monospace" }}>
+                              <h6 className="fw-bold mb-2" style={boldStyle}>ONE WAY</h6>
+                              <h5 className="text-warning fw-bold mb-1" style={boldStyle}>
                                 <FaRupeeSign className="me-1" /> <OptimizedNumber num={car.oneWayRate} />/KM
                               </h5>
-                              <small className="text-muted" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>(Min <OptimizedNumber num={car.minKmOneWay} /> KM)</small>
+                              <small className="text-muted" style={letterStyle}>(Min <OptimizedNumber num={car.minKmOneWay} /> KM)</small>
                             </div>
                           </Col>
                           <Col xs={6}>
                             <div className="p-3 rounded text-center" style={{ backgroundColor: '#fff3cd', border: '1px solid #ffc107' }}>
-                              <h6 className="fw-bold mb-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>ROUND TRIP</h6>
-                              <h5 className="text-warning fw-bold mb-1" style={{ fontFamily: "'Courier New', monospace" }}>
+                              <h6 className="fw-bold mb-2" style={boldStyle}>ROUND TRIP</h6>
+                              <h5 className="text-warning fw-bold mb-1" style={boldStyle}>
                                 <FaRupeeSign className="me-1" /> <OptimizedNumber num={car.roundTripRate} />/KM
                               </h5>
-                              <small className="text-muted" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>(Min <OptimizedNumber num={car.minKmRoundTrip} /> KM)</small>
+                              <small className="text-muted" style={letterStyle}>(Min <OptimizedNumber num={car.minKmRoundTrip} /> KM)</small>
                             </div>
                           </Col>
                         </Row>
                       </div>
 
                       <div>
-                        <h6 className="fw-bold mb-3" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}><FaInfoCircle className="text-warning me-2" />INCLUDE WITH</h6>
+                        <h6 className="fw-bold mb-3" style={headingStyle}><FaInfoCircle className="text-warning me-2" />INCLUDE WITH</h6>
                         <Row>
                           <Col xs={6}>
                             <ul className="list-unstyled">
-                              <li className="mb-2 d-flex align-items-center" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
+                              <li className="mb-2 d-flex align-items-center" style={letterStyle}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Driver Bata <strong className="ms-1" style={{ fontFamily: "'Courier New', monospace" }}>₹<OptimizedNumber num={car.driverBata} /></strong>
+                                Driver Bata <strong className="ms-1" style={boldStyle}>₹<OptimizedNumber num={car.driverBata} /></strong>
                               </li>
-                              <li className="mb-2 d-flex align-items-center" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
+                              <li className="mb-2 d-flex align-items-center" style={letterStyle}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Hillstation Charges <strong className="ms-1" style={{ fontFamily: "'Courier New', monospace" }}>₹<OptimizedNumber num={car.hillCharges} /></strong>
+                                Hillstation Charges <strong className="ms-1" style={boldStyle}>₹<OptimizedNumber num={car.hillCharges} /></strong>
                               </li>
                             </ul>
                           </Col>
                           <Col xs={6}>
                             <ul className="list-unstyled">
-                              <li className="mb-2 d-flex align-items-center" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
+                              <li className="mb-2 d-flex align-items-center" style={letterStyle}>
                                 <span className="text-warning me-2 fw-bold">•</span>
-                                Other State Permit <strong className="ms-1" style={{ fontFamily: "'Courier New', monospace" }}>₹<OptimizedNumber num={car.permitCharge} />/KM</strong>
+                                Other State Permit <strong className="ms-1" style={boldStyle}>₹<OptimizedNumber num={car.permitCharge} />/KM</strong>
                               </li>
-                              <li className="mb-2 d-flex align-items-center" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>
+                              <li className="mb-2 d-flex align-items-center" style={letterStyle}>
                                 <span className="text-warning me-2 fw-bold">•</span>
                                 Tolls & Parking
                               </li>
@@ -2098,7 +2153,7 @@ const Home = () => {
           </Row>
           
           <div className="text-center mt-4">
-            <Button variant="warning" onClick={() => navigate('/tariff')} style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>View All Tariffs</Button>
+            <Button variant="warning" onClick={() => navigate('/tariff')} style={boldStyle}>View All Tariffs</Button>
           </div>
         </Container>
       </section>
@@ -2108,10 +2163,9 @@ const Home = () => {
         <Container>
           <h2 className="text-center mb-5" style={{ 
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-            fontFamily: "'Arial Black', 'Impact', sans-serif",
-            letterSpacing: '2px'
+            ...headingStyle
           }}>
-            <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Popular</span> Routes
+            <span className="text-warning" style={headingStyle}>Popular</span> Routes
           </h2>
           <Row>
             {popularRoutes.map((route, index) => (
@@ -2126,8 +2180,8 @@ const Home = () => {
                       loading="lazy"
                     />
                     <div className="position-absolute bottom-0 start-0 w-100 p-3" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: 'white' }}>
-                      <h5 className="fw-bold mb-1" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>{route.from} to {route.to}</h5>
-                      <p className="mb-0 small" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>{route.description}</p>
+                      <h5 className="fw-bold mb-1" style={headingStyle}>{route.from} to {route.to}</h5>
+                      <p className="mb-0 small" style={letterStyle}>{route.description}</p>
                     </div>
                   </div>
                   <Card.Body className="p-4">
@@ -2136,16 +2190,16 @@ const Home = () => {
                         <span className="fs-5">{route.icon}</span>
                       </div>
                       <div>
-                        <h6 className="fw-bold mb-1" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>{route.from} → {route.to}</h6>
-                        <small className="text-secondary" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>Distance: {route.distance}</small>
+                        <h6 className="fw-bold mb-1" style={headingStyle}>{route.from} → {route.to}</h6>
+                        <small className="text-secondary" style={letterStyle}>Distance: {route.distance}</small>
                       </div>
                     </div>
-                    <div className="small mb-3" style={{ fontFamily: "'Courier New', monospace" }}>
-                      <span className="fw-bold me-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>SEDAN:</span> ₹<OptimizedNumber num={route.cars[0].oneWay} />/km | 
-                      <span className="fw-bold ms-2 me-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>SUV:</span> ₹<OptimizedNumber num={route.cars[2].oneWay} />/km
+                    <div className="small mb-3" style={boldStyle}>
+                      <span className="fw-bold me-2" style={boldStyle}>SEDAN:</span> ₹<OptimizedNumber num={route.cars[0].oneWay} />/km | 
+                      <span className="fw-bold ms-2 me-2" style={boldStyle}>SUV:</span> ₹<OptimizedNumber num={route.cars[2].oneWay} />/km
                     </div>
                     <div className="mt-3">
-                      <Button variant="outline-warning" size="sm" className="w-100" onClick={() => navigate('/popular-routes')} style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>
+                      <Button variant="outline-warning" size="sm" className="w-100" onClick={() => navigate('/popular-routes')} style={boldStyle}>
                         View Details
                       </Button>
                     </div>
@@ -2155,7 +2209,7 @@ const Home = () => {
             ))}
           </Row>
           <div className="text-center mt-4">
-            <Button variant="warning" onClick={() => navigate('/popular-routes')} style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>View All Routes</Button>
+            <Button variant="warning" onClick={() => navigate('/popular-routes')} style={boldStyle}>View All Routes</Button>
           </div>
         </Container>
       </section>
@@ -2165,10 +2219,9 @@ const Home = () => {
         <Container>
           <h2 className="text-center mb-5" style={{ 
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-            fontFamily: "'Arial Black', 'Impact', sans-serif",
-            letterSpacing: '2px'
+            ...headingStyle
           }}>
-            About <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Us</span>
+            About <span className="text-warning" style={headingStyle}>Us</span>
           </h2>
           <Row className="align-items-center">
             <Col lg={6} className="mb-4 mb-lg-0">
@@ -2180,11 +2233,11 @@ const Home = () => {
               />
             </Col>
             <Col lg={6}>
-              <h3 className="text-warning mb-4" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>OUR COMPANY</h3>
-              <p className="lead mb-4" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", lineHeight: '1.6' }}>
-                At <strong style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>Lexus DROP TAXI</strong>, we believe every journey should be safe, comfortable, and on time.
+              <h3 className="text-warning mb-4" style={headingStyle}>OUR COMPANY</h3>
+              <p className="lead mb-4" style={letterStyle}>
+                At <strong style={boldStyle}>Lexus DROP TAXI</strong>, we believe every journey should be safe, comfortable, and on time.
               </p>
-              <p className="mb-4" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", lineHeight: '1.6' }}>
+              <p className="mb-4" style={letterStyle}>
                 Since 2023, we've been proudly serving Tamilnadu, Kerala, Andhra Pradesh, Karnataka, and Pondicherry with reliable taxi services.
               </p>
               <Row className="g-3">
@@ -2192,14 +2245,14 @@ const Home = () => {
                   <Col xs={6} key={idx}>
                     <Card className="border-0 shadow-sm p-3 text-center">
                       <div className="text-warning h3 mb-2">{stat.icon}</div>
-                      <h5 className="fw-bold mb-1" style={{ fontFamily: "'Courier New', monospace" }}>{stat.value}</h5>
-                      <small className="text-secondary" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", fontWeight: 'bold' }}>{stat.label}</small>
+                      <h5 className="fw-bold mb-1" style={boldStyle}>{stat.value}</h5>
+                      <small className="text-secondary" style={letterStyle}>{stat.label}</small>
                     </Card>
                   </Col>
                 ))}
               </Row>
               <div className="mt-4">
-                <Button variant="warning" onClick={() => navigate('/about')} style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Read More</Button>
+                <Button variant="warning" onClick={() => navigate('/about')} style={boldStyle}>Read More</Button>
               </div>
             </Col>
           </Row>
@@ -2211,10 +2264,9 @@ const Home = () => {
         <Container>
           <h2 className="text-center mb-5" style={{ 
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-            fontFamily: "'Arial Black', 'Impact', sans-serif",
-            letterSpacing: '2px'
+            ...headingStyle
           }}>
-            Customer <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Reviews</span>
+            Customer <span className="text-warning" style={headingStyle}>Reviews</span>
           </h2>
           <Row>
             {testimonials.map((testimonial, index) => (
@@ -2225,10 +2277,10 @@ const Home = () => {
                       <FaQuoteLeft className="me-1" size={16} />
                       <FaQuoteRight className="ms-1" size={16} />
                     </div>
-                    <p className="mb-3 small" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif", lineHeight: '1.6' }}>"{testimonial.text}"</p>
+                    <p className="mb-3 small" style={letterStyle}>"{testimonial.text}"</p>
                     <div className="d-flex justify-content-between align-items-center">
-                      <strong className="small" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>{testimonial.name}</strong>
-                      <div className="text-warning" style={{ fontFamily: "'Courier New', monospace" }}>
+                      <strong className="small" style={boldStyle}>{testimonial.name}</strong>
+                      <div className="text-warning" style={boldStyle}>
                         {'★'.repeat(testimonial.rating)}
                         {'☆'.repeat(5 - testimonial.rating)}
                       </div>
@@ -2246,10 +2298,9 @@ const Home = () => {
         <Container>
           <h2 className="text-center mb-5" style={{ 
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-            fontFamily: "'Arial Black', 'Impact', sans-serif",
-            letterSpacing: '2px'
+            ...headingStyle
           }}>
-            Why <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Choose Us</span>
+            Why <span className="text-warning" style={headingStyle}>Choose Us</span>
           </h2>
           <Row>
             {[
@@ -2263,8 +2314,8 @@ const Home = () => {
               <Col md={4} sm={6} key={index} className="mb-4">
                 <Card className="border-0 shadow-sm p-4 text-center h-100">
                   <div className="display-3 mb-3">{item.icon}</div>
-                  <h5 className="fw-bold mb-2" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>{item.title}</h5>
-                  <p className="text-secondary small mb-0" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>{item.desc}</p>
+                  <h5 className="fw-bold mb-2" style={boldStyle}>{item.title}</h5>
+                  <p className="text-secondary small mb-0" style={letterStyle}>{item.desc}</p>
                 </Card>
               </Col>
             ))}
@@ -2277,10 +2328,9 @@ const Home = () => {
         <Container>
           <h2 className="text-center mb-5" style={{ 
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-            fontFamily: "'Arial Black', 'Impact', sans-serif",
-            letterSpacing: '2px'
+            ...headingStyle
           }}>
-            Contact <span className="text-warning" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Us</span>
+            Contact <span className="text-warning" style={headingStyle}>Us</span>
           </h2>
           <Row>
             <Col lg={4} md={6} className="mb-4">
@@ -2289,9 +2339,9 @@ const Home = () => {
                   <div className="bg-warning rounded-circle d-inline-flex p-3 mb-3">
                     <FaMapMarkerAlt size={24} className="text-dark" />
                   </div>
-                  <h5 className="fw-bold mb-3" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>Visit Us</h5>
-                  <p className="text-secondary mb-1" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>No.71, 18th Block A Type Thiru,</p>
-                  <p className="text-secondary mb-1" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>Avadi, Chennai - 600054</p>
+                  <h5 className="fw-bold mb-3" style={boldStyle}>Visit Us</h5>
+                  <p className="text-secondary mb-1" style={letterStyle}>No.71, 18th Block A Type Thiru,</p>
+                  <p className="text-secondary mb-1" style={letterStyle}>Avadi, Chennai - 600054</p>
                 </Card.Body>
               </Card>
             </Col>
@@ -2301,9 +2351,9 @@ const Home = () => {
                   <div className="bg-warning rounded-circle d-inline-flex p-3 mb-3">
                     <FaPhone size={24} className="text-dark" />
                   </div>
-                  <h5 className="fw-bold mb-3" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>Call Us</h5>
-                  <p className="text-secondary mb-1" style={{ fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>+91 <OptimizedNumber num={63810} /> <OptimizedNumber num={95854} /></p>
-                  <p className="text-secondary mb-1" style={{ fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>+91 <OptimizedNumber num={72003} /> <OptimizedNumber num={43435} /></p>
+                  <h5 className="fw-bold mb-3" style={boldStyle}>Call Us</h5>
+                  <p className="text-secondary mb-1" style={boldStyle}>+91 <OptimizedNumber num={63810} /> <OptimizedNumber num={95854} /></p>
+                  <p className="text-secondary mb-1" style={boldStyle}>+91 <OptimizedNumber num={72003} /> <OptimizedNumber num={43435} /></p>
                 </Card.Body>
               </Card>
             </Col>
@@ -2313,15 +2363,15 @@ const Home = () => {
                   <div className="bg-warning rounded-circle d-inline-flex p-3 mb-3">
                     <FaEnvelope size={24} className="text-dark" />
                   </div>
-                  <h5 className="fw-bold mb-3" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>Email Us</h5>
-                  <p className="text-secondary mb-1" style={{ fontFamily: "'Courier New', monospace" }}>info@lexusdroptaxi.com</p>
-                  <p className="text-secondary mb-1" style={{ fontFamily: "'Courier New', monospace" }}>nagarajan16052001@gmail.com</p>
+                  <h5 className="fw-bold mb-3" style={boldStyle}>Email Us</h5>
+                  <p className="text-secondary mb-1" style={letterStyle}>info@lexusdroptaxi.com</p>
+                  <p className="text-secondary mb-1" style={letterStyle}>nagarajan16052001@gmail.com</p>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
           <div className="text-center mt-4">
-            <Button variant="warning" onClick={() => navigate('/contact')} style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>Contact Us</Button>
+            <Button variant="warning" onClick={() => navigate('/contact')} style={boldStyle}>Contact Us</Button>
           </div>
         </Container>
       </section>
@@ -2331,22 +2381,21 @@ const Home = () => {
         <Container className="text-center">
           <h2 className="fw-bold mb-3" style={{ 
             fontSize: 'clamp(1.5rem, 4vw, 2rem)',
-            fontFamily: "'Arial Black', 'Impact', sans-serif",
-            letterSpacing: '2px'
+            ...headingStyle
           }}>Ready to travel?</h2>
-          <p className="lead mb-4" style={{ fontFamily: "'Arial', 'Helvetica', sans-serif" }}>Book your cab now and get <OptimizedNumber num={10} />% off on first ride!</p>
+          <p className="lead mb-4" style={letterStyle}>Book your cab now and get <OptimizedNumber num={10} />% off on first ride!</p>
           <div className="d-flex justify-content-center gap-3 flex-wrap">
             <Button 
               variant="dark" 
               size="lg"
               className="rounded-pill px-5"
               onClick={() => document.querySelector('.card').scrollIntoView({ behavior: 'smooth' })}
-              style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}
+              style={boldStyle}
             >
               Book Now
             </Button>
             <a href="tel:+916381095854">
-              <Button variant="outline-dark" size="lg" className="rounded-pill px-5" style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}>
+              <Button variant="outline-dark" size="lg" className="rounded-pill px-5" style={boldStyle}>
                 <FaPhone className="me-2" /> Call Us
               </Button>
             </a>
