@@ -44,9 +44,9 @@ const Footer = () => {
               𝓛𝓮𝔁𝓾𝓼 𝓓𝓻𝓸𝓹 𝓣𝓪𝔁𝓲
             </h4>
             <p className="text-light">
-              𝓐𝓽 <strong>𝓛𝓮𝔁𝓾𝓼 𝓓𝓡𝓞𝓟 𝓣𝓐𝓧𝓘</strong>, 𝔀𝓮 𝓫𝓮𝓵𝓲𝓮𝓿𝓮 𝓮𝓿𝓮𝓻𝔂 𝓳𝓸𝓾𝓻𝓷𝓮𝔂 𝓼𝓱𝓸𝓾𝓵𝓭 𝓫𝓮 𝓼𝓪𝓯𝓮, 
-              𝓬𝓸𝓶𝓯𝓸𝓻𝓽𝓪𝓫𝓵𝓮, 𝓪𝓷𝓭 𝓸𝓷 𝓽𝓲𝓶𝓮. 𝓢𝓲𝓷𝓬𝓮 2023, 𝔀𝓮'𝓿𝓮 𝓫𝓮𝓮𝓷 𝓹𝓻𝓸𝓾𝓭𝓵𝔂 𝓼𝓮𝓻𝓿𝓲𝓷𝓰 𝓣𝓪𝓶𝓲𝓵𝓷𝓪𝓭𝓾, 
-              𝓚𝓮𝓻𝓪𝓵𝓪, 𝓐𝓷𝓭𝓱𝓻𝓪 𝓟𝓻𝓪𝓭𝓮𝓼𝓱, 𝓚𝓪𝓻𝓷𝓪𝓽𝓪𝓴𝓪, 𝓪𝓷𝓭 𝓟𝓸𝓷𝓭𝓲𝓬𝓱𝓮𝓻𝓻𝔂.
+              At <strong>Lexus DROP TAXI</strong>, we believe every journey should be safe, 
+              comfortable, and on time. Since 2023, we've been proudly serving Tamilnadu, 
+              Kerala, Andhra Pradesh, Karnataka, and Pondicherry.
             </p>
             
             {/* Social Links with valid href */}
@@ -83,60 +83,60 @@ const Footer = () => {
           </Col>
 
           <Col lg={2} md={6}>
-            <h4 className="text-white mb-4">𝓠𝓾𝓲𝓬𝓴 𝓛𝓲𝓷𝓴𝓼</h4>
+            <h4 className="text-white mb-4">Quick Links</h4>
             <ul className="list-unstyled">
               <li className="mb-2">
-                <Link to="/" className="text-light text-decoration-none hover-warning">𝓗𝓸𝓶𝓮</Link>
+                <Link to="/" className="text-light text-decoration-none hover-warning">Home</Link>
               </li>
               <li className="mb-2">
-                <Link to="/tariff" className="text-light text-decoration-none hover-warning">𝓣𝓪𝓻𝓲𝓯𝓯</Link>
+                <Link to="/tariff" className="text-light text-decoration-none hover-warning">Tariff</Link>
               </li>
               <li className="mb-2">
-                <Link to="/popular-routes" className="text-light text-decoration-none hover-warning">𝓟𝓸𝓹𝓾𝓵𝓪𝓻 𝓡𝓸𝓾𝓽𝓮𝓼</Link>
+                <Link to="/popular-routes" className="text-light text-decoration-none hover-warning">Popular Routes</Link>
               </li>
               <li className="mb-2">
-                <Link to="/customer-info" className="text-light text-decoration-none hover-warning">𝓒𝓾𝓼𝓽𝓸𝓶𝓮𝓻 𝓘𝓷𝓯𝓸</Link>
+                <Link to="/customer-info" className="text-light text-decoration-none hover-warning">Customer Info</Link>
               </li>
               <li className="mb-2">
-                <Link to="/about" className="text-light text-decoration-none hover-warning">𝓐𝓫𝓸𝓾𝓽</Link>
+                <Link to="/about" className="text-light text-decoration-none hover-warning">About Us</Link>
               </li>
               <li className="mb-2">
-                <Link to="/contact" className="text-light text-decoration-none hover-warning">𝓒𝓸𝓷𝓽𝓪𝓬𝓽</Link>
+                <Link to="/contact" className="text-light text-decoration-none hover-warning">Contact</Link>
               </li>
             </ul>
           </Col>
 
           <Col lg={3} md={6}>
-            <h4 className="text-white mb-4">𝓞𝓾𝓻 𝓢𝓮𝓻𝓿𝓲𝓬𝓮𝓼</h4>
+            <h4 className="text-white mb-4">Our Services</h4>
             <ul className="list-unstyled">
               <li className="mb-2 text-light">
-                <span className="text-warning me-2">🚗</span> 𝓞𝓷𝓮 𝓦𝓪𝔂 𝓣𝓻𝓲𝓹𝓼
+                <span className="text-warning me-2">🚗</span> One Way Trips
               </li>
               <li className="mb-2 text-light">
-                <span className="text-warning me-2">🔄</span> 𝓡𝓸𝓾𝓷𝓭 𝓣𝓻𝓲𝓹𝓼
+                <span className="text-warning me-2">🔄</span> Round Trips
               </li>
               <li className="mb-2 text-light">
-                <span className="text-warning me-2">🏔️</span> 𝓗𝓲𝓵𝓵 𝓢𝓽𝓪𝓽𝓲𝓸𝓷 𝓣𝓻𝓲𝓹𝓼
+                <span className="text-warning me-2">🏔️</span> Hill Station Trips
               </li>
               <li className="mb-2 text-light">
-                <span className="text-warning me-2">✈️</span> 𝓐𝓲𝓻𝓹𝓸𝓻𝓽 𝓣𝓻𝓪𝓷𝓼𝓯𝓮𝓻𝓼
+                <span className="text-warning me-2">✈️</span> Airport Transfers
               </li>
               <li className="mb-2 text-light">
-                <span className="text-warning me-2">🚐</span> 𝓒𝓸𝓻𝓹𝓸𝓻𝓪𝓽𝓮 𝓣𝓻𝓪𝓿𝓮𝓵
+                <span className="text-warning me-2">🚐</span> Corporate Travel
               </li>
               <li className="mb-2 text-light">
-                <span className="text-warning me-2">👨‍👩‍👧</span> 𝓕𝓪𝓶𝓲𝓵𝔂 𝓣𝓸𝓾𝓻𝓼
+                <span className="text-warning me-2">👨‍👩‍👧</span> Family Tours
               </li>
             </ul>
           </Col>
 
           <Col lg={3} md={6}>
-            <h4 className="text-white mb-4">𝓒𝓸𝓷𝓽𝓪𝓬𝓽 𝓘𝓷𝓯𝓸</h4>
+            <h4 className="text-white mb-4">Contact Info</h4>
             <div className="d-flex mb-3">
               <FaMapMarkerAlt className="text-warning me-3 mt-1" size={20} />
               <span className="text-light">
-                𝓝𝓸.71, 18𝓽𝓱 𝓑𝓵𝓸𝓬𝓴 𝓐 𝓣𝔂𝓹𝓮 𝓣𝓱𝓲𝓻𝓾,<br />
-                𝓐𝓿𝓪𝓭𝓲, 𝓒𝓱𝓮𝓷𝓷𝓪𝓲-600054
+                No.71, 18th Block A Type Thiru,<br />
+                Avadi, Chennai-600054
               </span>
             </div>
             <div className="d-flex mb-3">
@@ -154,10 +154,10 @@ const Footer = () => {
               <FaEnvelope className="text-warning me-3 mt-1" size={20} />
               <span className="text-light">
                 <a href="mailto:info@leodroptaxi.com" className="text-light text-decoration-none hover-warning d-block">
-                  𝓲𝓷𝓯𝓸@𝓛𝓮𝔁𝓾𝓼𝓭𝓻𝓸𝓹𝓽𝓪𝔁𝓲.𝓬𝓸𝓶
+                  info@Lexusdroptaxi.com
                 </a>
                 <a href="mailto:support@leodroptaxi.com" className="text-light text-decoration-none hover-warning d-block">
-                  𝓼𝓾𝓹𝓹𝓸𝓻𝓽@𝓛𝓮𝔁𝓾𝓼𝓭𝓻𝓸𝓹𝓽𝓪𝔁𝓲.𝓬𝓸𝓶
+                  support@Lexusdroptaxi.com
                 </a>
               </span>
             </div>
@@ -169,8 +169,8 @@ const Footer = () => {
         <Row>
           <Col className="text-center">
             <p className="text-light mb-0 small">
-              &copy; {currentYear} 𝓛𝓮𝔁𝓾𝓼 𝓓𝓻𝓸𝓹 𝓣𝓪𝔁𝓲. 𝓐𝓵𝓵 𝓻𝓲𝓰𝓱𝓽𝓼 𝓻𝓮𝓼𝓮𝓻𝓿𝓮𝓭. | 
-              <span className="text-warning ms-2">15000+ 𝓣𝓡𝓘𝓟𝓢 𝓒𝓞𝓜𝓟𝓛𝓔𝓣𝓔𝓓</span>
+              &copy; {currentYear} Lexus Drop Taxi. All rights reserved. | 
+              <span className="text-warning ms-2">15000+ TRIPS COMPLETED</span>
             </p>
           </Col>
         </Row>

@@ -40,14 +40,14 @@ const Navbar = () => {
 
         <BSNavbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto" style={{ alignItems: 'center' }}>
-            <Nav.Link as={Link} to="/" className="text-white mx-2 px-3 py-2">𝓗𝓸𝓶𝓮</Nav.Link>
-            <Nav.Link as={Link} to="/tariff" className="text-white mx-2 px-3 py-2">𝓣𝓪𝓻𝓲𝓯𝓯</Nav.Link>
-            <Nav.Link as={Link} to="/popular-routes" className="text-white mx-2 px-3 py-2">𝓡𝓸𝓾𝓽𝓮𝓼</Nav.Link>
+            <Nav.Link as={Link} to="/" className="text-white mx-2 px-3 py-2">Home</Nav.Link>
+            <Nav.Link as={Link} to="/tariff" className="text-white mx-2 px-3 py-2">Tariff</Nav.Link>
+            <Nav.Link as={Link} to="/popular-routes" className="text-white mx-2 px-3 py-2">Routes</Nav.Link>
             <Nav.Link as={Link} to="/customer-info" className="text-white mx-2 px-3 py-2">
-              <FaInfoCircle className="me-1" /> 𝓒𝓾𝓼𝓽𝓸𝓶𝓮𝓻 𝓘𝓷𝓯𝓸
+              <FaInfoCircle className="me-1" /> Customer Info
             </Nav.Link>
-            <Nav.Link as={Link} to="/about" className="text-white mx-2 px-3 py-2">𝓐𝓫𝓸𝓾𝓽</Nav.Link>
-            <Nav.Link as={Link} to="/contact" className="text-white mx-2 px-3 py-2">𝓒𝓸𝓷𝓽𝓪𝓬𝓽</Nav.Link>
+            <Nav.Link as={Link} to="/about" className="text-white mx-2 px-3 py-2">About</Nav.Link>
+            <Nav.Link as={Link} to="/contact" className="text-white mx-2 px-3 py-2">Contact</Nav.Link>
           </Nav>
 
           <Nav className="align-items-center">
