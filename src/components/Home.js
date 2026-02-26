@@ -29,7 +29,7 @@ import {
   FaEnvelope
 } from 'react-icons/fa';
 
-const API_URL = 'https://leo-drop-taxi.onrender.com/api';
+const API_URL = '';
 
 // Client WhatsApp number
 const CLIENT_WHATSAPP_NUMBER = '916381095854';
@@ -115,22 +115,22 @@ const Home = () => {
   // Background carousel images
   const carouselImages = useMemo(() => [
     {
-      url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg',
+      url: 'images/image1.jpg',
       title: 'Luxury Sedans',
       description: 'Comfortable and stylish sedans for your journey'
     },
     {
-      url: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg',
+      url: 'images/image2.jpg',
       title: 'Spacious SUVs',
       description: 'Perfect for family trips and group travel'
     },
     {
-      url: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg',
+      url: 'images/image3.jpg',
       title: 'Premium INNOVA',
       description: 'Experience luxury with our premium fleet'
     },
     {
-      url: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg',
+      url: 'images/image4.jpg',
       title: 'Hill Station Trips',
       description: 'Special packages for mountain getaways'
     }
@@ -971,7 +971,7 @@ const Home = () => {
       
       @media (max-width: 480px) {
         .carousel-container {
-          height: 300px !important;
+          height: 310px !important;
         }
         
         .carousel-caption h3 {
@@ -1372,20 +1372,20 @@ const Home = () => {
                   letterSpacing: '-0.03em'
                 }}
               >
-                Anywhere You Go, <br />
-                <span className="text-warning" style={headingStyle}>We're There</span>
+                𝘼𝙣𝙮𝙬𝙝𝙚𝙧𝙚 𝙔𝙤𝙪 𝙂𝙤,<br />
+                <span className="text-warning" style={headingStyle}>𝙒𝙚'𝙧𝙚 𝙏𝙝𝙚𝙧𝙚 </span>
               </h1>
               <p 
                 className="lead mb-5 text-white-50" 
                 style={{ 
-                  fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+                  fontSize: 'clamp(1.2rem, 2vw, 2.1rem)',
+                  textShadow: '1px 1px 2px rgba(242, 240, 240, 0.97)',
                   ...letterStyle,
                   lineHeight: '1.6'
                 }}
               >
-                Safe, comfortable, and on-time taxi service across Tamilnadu, 
-                Kerala, Andhra Pradesh, Karnataka, and Pondicherry.
+                𝘚𝘢𝘧𝘦, 𝘤𝘰𝘮𝘧𝘰𝘳𝘵𝘢𝘣𝘭𝘦, 𝘢𝘯𝘥 𝘰𝘯-𝘵𝘪𝘮𝘦 𝘵𝘢𝘹𝘪 𝘴𝘦𝘳𝘷𝘪𝘤𝘦 𝘢𝘤𝘳𝘰𝘴𝘴 𝘛𝘢𝘮𝘪𝘭𝘯𝘢𝘥𝘶, 
+                𝘒𝘦𝘳𝘢𝘭𝘢, 𝘈𝘯𝘥𝘩𝘳𝘢 𝘗𝘳𝘢𝘥𝘦𝘴𝘩, 𝘒𝘢𝘳𝘯𝘢𝘵𝘢𝘬𝘢, 𝘢𝘯𝘥 𝘗𝘰𝘯𝘥𝘪𝘤𝘩𝘦𝘳𝘳𝘺.
               </p>
             </Col>
 
@@ -1421,7 +1421,7 @@ const Home = () => {
                         right: '20px',
                         textAlign: 'left',
                         zIndex: 5,
-                        textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+                        textShadow: '2px 2px 4px rgba(11, 11, 11, 0.5)'
                       }}
                     >
                       <h3 className="fw-bold mb-2" style={headingStyle}>{image.title}</h3>
