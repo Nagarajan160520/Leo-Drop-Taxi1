@@ -264,8 +264,8 @@ const Home = () => {
           setCars([
             { name: 'SEDAN', displayName: 'SEDAN', oneWayRate: 14, roundTripRate: 13, driverBata: 400 },
             { name: 'ETIOS', displayName: 'ETIOS', oneWayRate: 15, roundTripRate: 14, driverBata: 400 },
-            { name: 'MUV', displayName: 'MUV', oneWayRate: 19, roundTripRate: 18, driverBata: 500 },
-            { name: 'INNOVA', displayName: 'INNOVA', oneWayRate: 20, roundTripRate: 19, driverBata: 500 }
+            { name: 'MUV', displayName: 'MUV', oneWayRate: 19, roundTripRate: 18, driverBata: 400 },
+            { name: 'INNOVA', displayName: 'INNOVA', oneWayRate: 25, roundTripRate: 19, driverBata: 400 }
           ]);
         }
       } catch (error) {
@@ -273,8 +273,8 @@ const Home = () => {
         setCars([
           { name: 'SEDAN', displayName: 'SEDAN', oneWayRate: 14, roundTripRate: 13, driverBata: 400 },
           { name: 'ETIOS', displayName: 'ETIOS', oneWayRate: 15, roundTripRate: 14, driverBata: 400 },
-          { name: 'MUV', displayName: 'MUV', oneWayRate: 19, roundTripRate: 18, driverBata: 500 },
-          { name: 'INNOVA', displayName: 'INNOVA', oneWayRate: 20, roundTripRate: 19, driverBata: 500 }
+          { name: 'MUV', displayName: 'MUV', oneWayRate: 19, roundTripRate: 18, driverBata: 400 },
+          { name: 'INNOVA', displayName: 'INNOVA', oneWayRate: 25, roundTripRate: 19, driverBata: 400 }
         ]);
       }
     };
@@ -548,11 +548,11 @@ const Home = () => {
     { name: 'Rajesh K.', text: 'The driver was polite and knew the best route to avoid traffic.', rating: 5 }
   ];
 
-  // Tariff Data
+  // Tariff Data with proper image objects containing url and model name
   const tariffCars = useMemo(() => [
     {
       name: 'SEDAN',
-      model: 'TATA ZEST',
+      
       oneWayRate: 14,
       roundTripRate: 13,
       minKmOneWay: 130,
@@ -560,14 +560,15 @@ const Home = () => {
       driverBata: 400,
       hillCharges: 300,
       permitCharge: 14,
-      image: 'https://i.pinimg.com/736x/0e/0d/a2/0e0da2818b70f0eed5f478bd4a893b13.jpg',
-      image2: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=2064&auto=format&fit=crop',
-      image3: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg',
-      image4: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg'
+      images: [
+        { url: 'https://i.pinimg.com/736x/0e/0d/a2/0e0da2818b70f0eed5f478bd4a893b13.jpg', model: 'TATA ZEST' },
+        { url: 'https://i.pinimg.com/736x/0e/0d/a2/0e0da2818b70f0eed5f478bd4a893b13.jpg', model: 'SWIFT DZIRE' },
+        { url: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg', model: 'HYNDAI AURA' }
+      ]
     },
     {
       name: 'SEDAN',
-      model: 'MARUTI CIAZ',
+     
       oneWayRate: 15,
       roundTripRate: 14,
       minKmOneWay: 130,
@@ -575,40 +576,43 @@ const Home = () => {
       driverBata: 400,
       hillCharges: 300,
       permitCharge: 14,
-      image: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg',
-      image2: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2070&auto=format&fit=crop',
-      image3: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg',
-      image4: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg'
+      images: [
+        { url: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg', model: 'NISSIAN SUNNY' },
+        { url: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg', model: 'TOYOTA ETIOS' },
+        { url: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg', model: 'MARUTI CIAZ' }
+      ]
     },
     {
       name: 'SUV',
-      model: 'MARUTI ERTIGA',
+      
       oneWayRate: 19,
       roundTripRate: 18,
       minKmOneWay: 130,
       minKmRoundTrip: 250,
-      driverBata: 500,
+      driverBata: 400,
       hillCharges: 500,
       permitCharge: 14,
-      image: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg',
-      image2: 'https://images.unsplash.com/photo-1556189250-72ba954cfc2b?q=80&w=2070&auto=format&fit=crop',
-      image3: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg',
-      image4: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg'
+      images: [
+        { url: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg', model: 'XYLO' },
+        { url: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg', model: 'MARUTI ERTIGA' },
+        { url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg', model: 'MARAZZO' }
+      ]
     },
     {
       name: 'INNOVA',
-      model: 'INNOVA',
+  
       oneWayRate: 20,
       roundTripRate: 19,
       minKmOneWay: 130,
       minKmRoundTrip: 250,
-      driverBata: 500,
+      driverBata: 400,
       hillCharges: 500,
       permitCharge: 14,
-      image: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg',
-      image2: 'https://images.unsplash.com/photo-1556189250-72ba954cfc2b?q=80&w=2070&auto=format&fit=crop',
-      image3: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg',
-      image4: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg'
+      images: [
+        { url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg', model: 'INNOVA ' },
+        { url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg', model: 'INNOVA CRYSTA' },
+        { url: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg', model: 'INNOVA VEHICLE' }
+      ]
     }
   ], []);
 
@@ -625,7 +629,7 @@ const Home = () => {
         { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
         { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
         { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: 'INNOVA', oneWay: 25, roundTrip: 18 }
       ]
     },
     {
@@ -1534,6 +1538,8 @@ const Home = () => {
                           }}
                         >
                           <strong style={{ fontSize: '1.1rem', letterSpacing: '0px', ...boldStyle }}>ROUND TRIP</strong>
+                          <br />
+                          <small className="text-muted" style={letterStyle}>(Min 250KM)</small>
                         </div>
                       </div>
                     </div>
@@ -1897,7 +1903,7 @@ const Home = () => {
                               ...boldStyle,
                               fontSize: '1rem'
                             }}>
-                              ₹<OptimizedNumber num={20} />/km
+                              ₹<OptimizedNumber num={19} />/km
                             </div>
                           </div>
                         </Col>
@@ -2036,7 +2042,7 @@ const Home = () => {
         </Row>
       </Container>
 
-      {/* TARIFF SECTION */}
+      {/* TARIFF SECTION - FIXED WITH PROPER MODEL NAMES FOR EACH IMAGE */}
       <section className="py-5 bg-light">
         <Container>
           <h2 className="text-center mb-5" style={{ 
@@ -2048,16 +2054,13 @@ const Home = () => {
           
           <Row>
             {tariffCars.map((car, index) => {
-              const carCarouselImages = [
-                car.image,
-                car.image2,
-                car.image3,
-                car.image4
-              ];
+              // Use the images array with proper model names
+              const carImages = car.images;
               
               return (
                 <Col lg={6} md={6} key={index} className="mb-4">
                   <Card className="border-0 shadow h-100" style={{ borderRadius: '20px', overflow: 'hidden' }}>
+                    {/* Carousel with proper model names for each image */}
                     <Carousel 
                       interval={3000}
                       indicators={true}
@@ -2066,12 +2069,12 @@ const Home = () => {
                       style={{ height: '280px' }}
                       className="carousel-container"
                     >
-                      {carCarouselImages.map((imgUrl, imgIndex) => (
+                      {carImages.map((imageObj, imgIndex) => (
                         <Carousel.Item key={imgIndex}>
                           <img
                             className="d-block w-100"
-                            src={imgUrl}
-                            alt={`${car.name} - ${car.model} - View ${imgIndex + 1}`}
+                            src={imageObj.url}
+                            alt={`${car.name} - ${car.mainModel} - ${imageObj.model}`}
                             style={{
                               width: '100%',
                               height: '280px',
@@ -2080,9 +2083,28 @@ const Home = () => {
                             }}
                             loading="lazy"
                           />
-                          <Carousel.Caption style={{ bottom: '0', left: '0', right: '0', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', textAlign: 'left' }}>
-                            <h5 className="fw-bold mb-0" style={headingStyle}>{car.name}</h5>
-                            <p className="mb-0 small" style={letterStyle}>{car.model}</p>
+                          <Carousel.Caption style={{ 
+                            bottom: '0', 
+                            left: '0', 
+                            right: '0', 
+                            background: 'linear-gradient(to top, rgba(199, 238, 24, 0.9), transparent)', 
+                            textAlign: 'left',
+                            padding: '15px'
+                          }}>
+                            <h5 className="fw-bold mb-1" style={{ 
+                              ...headingStyle, 
+                              fontSize: '1.1rem',
+                              color: '#191719ff'
+                            }}>
+                              {car.name}  {car.mainModel}
+                            </h5>
+                            <p className="mb-0 small" style={{ 
+                              ...letterStyle, 
+                              color: '#0e0e0fff',
+                              fontSize: '0.9rem'
+                            }}>
+                              {imageObj.model}
+                            </p>
                           </Carousel.Caption>
                         </Carousel.Item>
                       ))}
@@ -2149,9 +2171,9 @@ const Home = () => {
             })}
           </Row>
           
-          <div className="text-center mt-4">
+          {/*<div className="text-center mt-4">
             <Button variant="warning" onClick={() => navigate('/tariff')} style={boldStyle}>View All Tariffs</Button>
-          </div>
+          </div> */}
         </Container>
       </section>
 

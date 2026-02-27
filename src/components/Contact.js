@@ -467,11 +467,6 @@ const Contact = () => {
                 <div className="d-flex justify-content-center gap-3 flex-wrap">
                   <a href="tel:+916381095854">
                     <Button variant="dark" size="lg" className="rounded-pill px-5 py-3">
-                      <FaPhone className="me-2" /> Call Client
-                    </Button>
-                  </a>
-                  <a href="tel:+916381095854">
-                    <Button variant="dark" size="lg" className="rounded-pill px-5 py-3">
                       <FaPhone className="me-2" /> Call Driver
                     </Button>
                   </a>

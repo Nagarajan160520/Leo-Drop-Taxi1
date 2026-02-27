@@ -41,7 +41,7 @@ const Footer = () => {
           <Col lg={4} md={6}>
             <h4 className="text-white mb-4">
               <FaCar className="text-warning me-2" />
-              𝓛𝓮𝔁𝓾𝓼 𝓓𝓻𝓸𝓹 𝓣𝓪𝔁𝓲
+              Lexus Drop Taxi
             </h4>
             <p className="text-light">
               At <strong>Lexus DROP TAXI</strong>, we believe every journey should be safe, 
@@ -166,14 +166,12 @@ const Footer = () => {
 
         <hr className="bg-secondary" />
 
-        <Row>
-          <Col className="text-center">
-            <p className="text-light mb-0 small">
-              &copy; {currentYear} Lexus Drop Taxi. All rights reserved. | 
-              <span className="text-warning ms-2">15000+ TRIPS COMPLETED</span>
-            </p>
-          </Col>
-        </Row>
+        <Row> <Col className="text-center" > <p className="text-light mb-0 small"> &copy; {currentYear} Lexus Drop Taxi. All rights reserved. | 
+          <span className="text-warning ms-2"> 
+            Developed by{' '} <a href="tel:+916381095854" 
+            className="text-warning text-decoration-none hover-warning" style={{ cursor: 'pointer' }} >
+               Nagarajan (6381095854) </a> </span> 
+               </p> </Col> </Row>
       </Container>
 
       {/* Custom CSS for hover effects */}

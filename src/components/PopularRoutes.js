@@ -197,7 +197,7 @@ const PopularRoutes = () => {
 
                   {/* Book Now Button */}
                   <div className="mt-4">
-                    <a href="/booking" className="text-decoration-none">
+                    <a href="/" className="text-decoration-none">
                       <button className="btn btn-warning w-100 fw-bold py-2" style={{ borderRadius: '10px' }}>
                         Book This Route
                       </button>
