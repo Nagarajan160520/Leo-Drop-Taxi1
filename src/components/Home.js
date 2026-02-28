@@ -1994,7 +1994,7 @@ const Home = () => {
             ...letterStyle,
             color: '#666'
           }}>
-            Thank you for choosing Leo Drop Taxi. Your booking has been successfully confirmed.
+            Thank you for choosing Lexus Drop Taxi Taxi. Your booking has been successfully confirmed.
           </p>
           <Button 
             variant="success" 
