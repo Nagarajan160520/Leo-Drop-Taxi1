@@ -2123,8 +2123,8 @@ const Home = () => {
                           }}>
                             <h5 className="fw-bold mb-1" style={{ 
                               ...headingStyle, 
-                              fontSize: '1.5rem',
-                              color: '#5f0f0fff' // red text
+                              fontSize: '1.2rem',
+                              color: '#052a62ff' // red text
                             }}>
                               {car.name} {imageObj.model}
                             </h5>
