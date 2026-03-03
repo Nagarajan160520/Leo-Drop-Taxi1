@@ -3,73 +3,6 @@ import { Container, Row, Col, Card, Carousel } from 'react-bootstrap';
 import { FaRupeeSign, FaInfoCircle } from 'react-icons/fa';
 
 const Tariff = () => {
-  const cars = [
-    {
-      name: 'SEDAN',
-      
-      oneWayRate: 14,
-      roundTripRate: 13,
-      minKmOneWay: 130,
-      minKmRoundTrip: 250,
-      driverBata: 400,
-      hillCharges: 300,
-      permitCharge: 14,
-      images: [
-        { url: 'https://i.pinimg.com/736x/0e/0d/a2/0e0da2818b70f0eed5f478bd4a893b13.jpg', model: 'TATA ZEST' },
-        { url: 'https://i.pinimg.com/736x/0e/0d/a2/0e0da2818b70f0eed5f478bd4a893b13.jpg', model: 'SWIFT DZIRE' },
-        { url: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg', model: 'HYNDAI AURA' }
-      ]
-    },
-    {
-      name: 'SEDAN',
-      
-      oneWayRate: 15,
-      roundTripRate: 14,
-      minKmOneWay: 130,
-      minKmRoundTrip: 250,
-      driverBata: 400,
-      hillCharges: 300,
-      permitCharge: 14,
-      images: [
-               { url: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg', model: 'NISSIAN SUNNY' },
-        { url: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg', model: 'TOYOTA ETIOS' },
-        { url: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg', model: 'MARUTI CIAZ' }
-      ]
-    },
-    {
-      name: 'SUV',
-     
-      oneWayRate: 19,
-      roundTripRate: 18,
-      minKmOneWay: 130,
-      minKmRoundTrip: 250,
-      driverBata: 500,
-      hillCharges: 500,
-      permitCharge: 14,
-      images: [
-       { url: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg', model: 'XYLO' },
-        { url: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg', model: 'MARUTI ERTIGA' },
-        { url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg', model: 'MARAZZO' }
-      ]
-    },
-    {
-      name: 'INNOVA',
-      
-      oneWayRate: 20,
-      roundTripRate: 19,
-      minKmOneWay: 130,
-      minKmRoundTrip: 250,
-      driverBata: 500,
-      hillCharges: 500,
-      permitCharge: 14,
-      images: [
-        { url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg', model: 'INNOVA ' },
-        { url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg', model: 'INNOVA CRYSTA' },
-        { url: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg', model: 'INNOVA VEHICLE' }
-      ]
-    }
-  ];
-
   // Letter styling for consistent fonts
   const letterStyle = {
     fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
@@ -91,6 +24,94 @@ const Tariff = () => {
     letterSpacing: '-0.02em'
   };
 
+  // Tariff Data with GOLD BACKGROUND for images (same as Home page)
+  const cars = [
+    {
+      name: 'SEDAN',
+      oneWayRate: 14,
+      roundTripRate: 13,
+      minKmOneWay: 130,
+      minKmRoundTrip: 250,
+      driverBata: 400,
+      hillCharges: 300,
+      permitCharge: 14,
+      images: [
+        { url: '/images/sedan/tata-zest-1.jpg', 
+          model: 'TATA ZEST', 
+          bgColor: '#FFD700' },
+        { url: '/images/sedan/swift-dzire-1.jpg', 
+          model: 'SWIFT DZIRE', 
+          bgColor: '#FFD700' },
+        { url: '/images/sedan/hyundai-aura-1.jpg', 
+          model: 'HYNDAI AURA', 
+          bgColor: '#FFD700' }
+      ]
+    },
+    {
+      name: 'SEDAN',
+      oneWayRate: 15,
+      roundTripRate: 14,
+      minKmOneWay: 130,
+      minKmRoundTrip: 250,
+      driverBata: 400,
+      hillCharges: 300,
+      permitCharge: 14,
+      images: [
+        { url: '/images/sedan2/nissan-1.jpg', 
+          model: 'NISSIAN SUNNY', 
+          bgColor: '#FFD700' },
+        { url: '/images/sedan2/etios-2.jpg', 
+          model: 'TOYOTA ETIOS', 
+          bgColor: '#FFD700' },
+        { url: '/images/sedan2/ciaz-1.jpg', 
+          model: 'MARUTI CIAZ', 
+          bgColor: '#FFD700' }
+      ]
+    },
+    {
+      name: 'SUV',
+      oneWayRate: 19,
+      roundTripRate: 18,
+      minKmOneWay: 130,
+      minKmRoundTrip: 250,
+      driverBata: 500,
+      hillCharges: 500,
+      permitCharge: 14,
+      images: [
+        { url: '/images/suv/xylo-1.jpg', 
+          model: 'XYLO', 
+          bgColor: '#FFD700' },
+        { url: '/images/suv/ertiga-1.jpg', 
+          model: 'MARUTI ERTIGA', 
+          bgColor: '#FFD700' },
+        { url: '/images/suv/marazzo-1.jpg', 
+          model: 'MARAZZO', 
+          bgColor: '#FFD700' }
+      ]
+    },
+    {
+      name: 'INNOVA',
+      oneWayRate: 20,
+      roundTripRate: 19,
+      minKmOneWay: 130,
+      minKmRoundTrip: 250,
+      driverBata: 500,
+      hillCharges: 500,
+      permitCharge: 14,
+      images: [
+        { url: '/images/innova/innova-1.jpg', 
+          model: 'INNOVA', 
+          bgColor: '#FFD700' },
+        { url: '/images/innova/innova-crysta-1.jpg', 
+          model: 'INNOVA CRYSTA', 
+          bgColor: '#FFD700' },
+        { url: '/images/innova/innova-vehicle-1.jpg', 
+          model: 'INNOVA VEHICLE', 
+          bgColor: '#FFD700' }
+      ]
+    }
+  ];
+
   return (
     <div className="fade-in py-5">
       <Container>
@@ -105,7 +126,7 @@ const Tariff = () => {
           {cars.map((car, index) => (
             <Col lg={6} md={6} key={index} className="mb-5">
               <Card className="border-0 shadow h-100" style={{ borderRadius: '20px', overflow: 'hidden' }}>
-                {/* Carousel Image Section */}
+                {/* Carousel with GOLD BACKGROUND for each image - EXACTLY LIKE HOME PAGE */}
                 <Carousel 
                   interval={3000}
                   indicators={true}
@@ -116,40 +137,43 @@ const Tariff = () => {
                 >
                   {car.images.map((imageObj, imgIndex) => (
                     <Carousel.Item key={imgIndex}>
-                      <img
-                        className="d-block w-100"
-                        src={imageObj.url}
-                        alt={`${car.name} - ${car.mainModel} - ${imageObj.model}`}
-                        style={{
-                          width: '100%',
-                          height: '280px',
-                          objectFit: 'cover',
-                          objectPosition: 'center'
-                        }}
-                        loading="lazy"
-                      />
+                      {/* Container with GOLD background - SAME AS HOME PAGE */}
+                      <div style={{
+                        width: '100%',
+                        height: '280px',
+                        backgroundColor: imageObj.bgColor || '#FFD700',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
+                        <img
+                          src={imageObj.url}
+                          alt={`${car.name} - ${imageObj.model}`}
+                          style={{
+                            maxWidth: '100%',
+                            maxHeight: '260px',
+                            width: 'auto',
+                            height: 'auto',
+                            objectFit: 'contain'
+                          }}
+                          loading="lazy"
+                        />
+                      </div>
                       <Carousel.Caption style={{ 
                         bottom: '0', 
                         left: '0', 
                         right: '0', 
-                        background: 'linear-gradient(to top, rgba(228, 242, 36, 0.9), transparent)', 
+                        background: 'linear-gradient(to top, #FFD700, transparent)', 
                         textAlign: 'left',
                         padding: '15px'
                       }}>
                         <h5 className="fw-bold mb-1" style={{ 
                           ...headingStyle, 
                           fontSize: '1.1rem',
-                          color: '#FFD700'
+                          color: '#6f3b1fff'
                         }}>
-                          {car.name} {car.mainModel}  {/* DASH REMOVED - NOW JUST A SPACE */}
+                          {car.name} {imageObj.model}
                         </h5>
-                        <p className="mb-0 small" style={{ 
-                          ...letterStyle, 
-                          color: '#FFFFFF',
-                          fontSize: '0.9rem'
-                        }}>
-                          {imageObj.model}
-                        </p>
                       </Carousel.Caption>
                     </Carousel.Item>
                   ))}
@@ -184,7 +208,7 @@ const Tariff = () => {
                           className="p-3 rounded text-center" 
                           style={{ 
                             backgroundColor: '#fff3cd',
-                            border: '1px solid #ffc107'
+                            border: '1px solid #ff0707ff'
                           }}
                         >
                           <h6 className="fw-bold mb-2" style={boldStyle}>ROUND TRIP</h6>

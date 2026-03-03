@@ -185,8 +185,8 @@ const Home = () => {
         customers: 5000
       };
 
-      const duration = 1500; // Reduced from 2000ms for faster animation
-      const steps = 30; // Reduced steps for better performance
+      const duration = 1500;
+      const steps = 30;
       const interval = duration / steps;
 
       let currentStep = 0;
@@ -548,11 +548,12 @@ const Home = () => {
     { name: 'Rajesh K.', text: 'The driver was polite and knew the best route to avoid traffic.', rating: 5 }
   ];
 
-  // Tariff Data with proper image objects containing url and model name
+  // ============================================
+  // TARIFF DATA WITH GOLD BACKGROUND FOR CAR IMAGES
+  // ============================================
   const tariffCars = useMemo(() => [
     {
       name: 'SEDAN',
-      
       oneWayRate: 14,
       roundTripRate: 13,
       minKmOneWay: 130,
@@ -561,14 +562,19 @@ const Home = () => {
       hillCharges: 300,
       permitCharge: 14,
       images: [
-        { url: 'https://i.pinimg.com/736x/0e/0d/a2/0e0da2818b70f0eed5f478bd4a893b13.jpg', model: 'TATA ZEST' },
-        { url: 'https://i.pinimg.com/736x/0e/0d/a2/0e0da2818b70f0eed5f478bd4a893b13.jpg', model: 'SWIFT DZIRE' },
-        { url: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg', model: 'HYNDAI AURA' }
+        { url: '/images/sedan/tata-zest-1.jpg', 
+          model: 'TATA ZEST', 
+          bgColor: '#FFD700' },
+        { url: '/images/sedan/swift-dzire-1.jpg', 
+          model: 'SWIFT DZIRE', 
+          bgColor: '#FFD700' },
+        { url: '/images/sedan/hyundai-aura-1.jpg', 
+          model: 'HYNDAI AURA', 
+          bgColor: '#FFD700' }
       ]
     },
     {
       name: 'SEDAN',
-     
       oneWayRate: 15,
       roundTripRate: 14,
       minKmOneWay: 130,
@@ -577,14 +583,19 @@ const Home = () => {
       hillCharges: 300,
       permitCharge: 14,
       images: [
-        { url: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg', model: 'NISSIAN SUNNY' },
-        { url: 'https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg', model: 'TOYOTA ETIOS' },
-        { url: 'https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg', model: 'MARUTI CIAZ' }
+        { url: '/images/sedan2/nissan-1.jpg', 
+          model: 'NISSIAN SUNNY', 
+          bgColor: '#FFD700' },
+        { url: '/images/sedan2/etios-2.jpg', 
+          model: 'TOYOTA ETIOS', 
+          bgColor: '#FFD700' },
+        { url: '/images/sedan2/ciaz-1.jpg', 
+          model: 'MARUTI CIAZ', 
+          bgColor: '#FFD700' }
       ]
     },
     {
       name: 'SUV',
-      
       oneWayRate: 19,
       roundTripRate: 18,
       minKmOneWay: 130,
@@ -593,14 +604,19 @@ const Home = () => {
       hillCharges: 500,
       permitCharge: 14,
       images: [
-        { url: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg', model: 'XYLO' },
-        { url: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg', model: 'MARUTI ERTIGA' },
-        { url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg', model: 'MARAZZO' }
+        { url: '/images/suv/xylo-1.jpg', 
+          model: 'XYLO', 
+          bgColor: '#FFD700' },
+        { url: '/images/suv/ertiga-1.jpg', 
+          model: 'MARUTI ERTIGA', 
+          bgColor: '#FFD700' },
+        { url: '/images/suv/marazzo-1.jpg', 
+          model: 'MARAZZO', 
+          bgColor: '#FFD700' }
       ]
     },
     {
       name: 'INNOVA',
-  
       oneWayRate: 20,
       roundTripRate: 19,
       minKmOneWay: 130,
@@ -609,9 +625,15 @@ const Home = () => {
       hillCharges: 500,
       permitCharge: 14,
       images: [
-        { url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg', model: 'INNOVA ' },
-        { url: 'https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg', model: 'INNOVA CRYSTA' },
-        { url: 'https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg', model: 'INNOVA VEHICLE' }
+        { url: '/images/innova/innova-1.jpg', 
+          model: 'INNOVA', 
+          bgColor: '#FFD700' },
+        { url: '/images/innova/innova-crysta-1.jpg', 
+          model: 'INNOVA CRYSTA', 
+          bgColor: '#FFD700' },
+        { url: '/images/innova/innova-vehicle-1.jpg', 
+          model: 'INNOVA VEHICLE', 
+          bgColor: '#FFD700' }
       ]
     }
   ], []);
@@ -686,7 +708,6 @@ const Home = () => {
 
   // Optimized sparkles - reduced count and simplified
   const generateSparkles = useCallback(() => {
-    // Reduced from 50 to 15 sparkles for better performance
     const sparkles = [];
     for (let i = 0; i < 15; i++) {
       const size = Math.random() * 3 + 1;
@@ -703,7 +724,7 @@ const Home = () => {
         animationDelay: `${Math.random() * 3}s`,
         zIndex: 10,
         pointerEvents: 'none',
-        willChange: 'transform, opacity' // Hint browser for optimization
+        willChange: 'transform, opacity'
       };
       sparkles.push(<div key={`sparkle-${i}`} className="sparkle" style={style}></div>);
     }
@@ -735,7 +756,7 @@ const Home = () => {
       position: 'relative',
       overflow: 'hidden',
       transition: 'all 0.5s ease',
-      willChange: 'transform, box-shadow' // Performance optimization
+      willChange: 'transform, box-shadow'
     },
     cardBody: {
       padding: '1.8rem',
@@ -1055,7 +1076,6 @@ const Home = () => {
         }
       }
       
-      /* Simplified pulse animation - less intense */
       @keyframes softPulse {
         0%, 100% {
           box-shadow: 0 30px 60px rgba(139, 0, 0, 0.6), 0 0 0 2px rgba(255, 215, 0, 0.3) inset;
@@ -1097,7 +1117,6 @@ const Home = () => {
         will-change: transform;
       }
       
-      /* Reduce animation intensity on hover */
       .form-card:hover {
         animation: none;
         box-shadow: 0 35px 70px rgba(139, 0, 0, 0.8), 0 0 0 4px rgba(255, 215, 0, 0.5) inset !important;
@@ -1215,7 +1234,6 @@ const Home = () => {
         --bs-gutter-y: 1rem;
       }
       
-      /* Mobile-specific optimizations */
       @keyframes mobile-pulse {
         0%, 100% {
           transform: translateY(-50%) scale(1);
@@ -1236,7 +1254,7 @@ const Home = () => {
       {/* Inject mobile styles */}
       <style>{formStyles.mobileStyles}</style>
 
-      {/* FLOATING WHATSAPP AND PHONE ICONS - MOBILE OPTIMIZED */}
+      {/* FLOATING WHATSAPP AND PHONE ICONS */}
       
       {/* Left Side - WhatsApp Icon */}
       <a 
@@ -1491,7 +1509,6 @@ const Home = () => {
                   overflow: 'hidden'
                 }}
               >
-                {/* Optimized sparkles - fewer for better performance */}
                 {generateSparkles()}
                 
                 <Card.Body className="form-card-body" style={formStyles.cardBody}>
@@ -1878,7 +1895,7 @@ const Home = () => {
                             }}
                           >
                             <img 
-                              src="https://i.pinimg.com/1200x/e1/d6/29/e1d629e06e9cfa85539a54f7cce5de7b.jpg"
+                              src="https://i.pinimg.com/1200x/fe/e6/ee/fee6eea7b191112a744e2bf23a277871.jpg"
                               alt="INNOVA"
                               style={{
                                 width: '100%',
@@ -1970,7 +1987,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* SUCCESS POPUP - Your Booking Confirmed */}
+      {/* SUCCESS POPUP */}
       <Modal 
         show={showSuccessPopup} 
         onHide={handlePopupClose}
@@ -1994,7 +2011,7 @@ const Home = () => {
             ...letterStyle,
             color: '#666'
           }}>
-            Thank you for choosing Lexus Drop Taxi Taxi. Your booking has been successfully confirmed.
+            Thank you for choosing Lexus Drop Taxi. Your booking has been successfully confirmed.
           </p>
           <Button 
             variant="success" 
@@ -2042,7 +2059,9 @@ const Home = () => {
         </Row>
       </Container>
 
-      {/* TARIFF SECTION - FIXED WITH PROPER MODEL NAMES FOR EACH IMAGE */}
+      {/* ============================================ */}
+      {/* TARIFF SECTION - WITH GOLD BACKGROUND */}
+      {/* ============================================ */}
       <section className="py-5 bg-light">
         <Container>
           <h2 className="text-center mb-5" style={{ 
@@ -2060,7 +2079,7 @@ const Home = () => {
               return (
                 <Col lg={6} md={6} key={index} className="mb-4">
                   <Card className="border-0 shadow h-100" style={{ borderRadius: '20px', overflow: 'hidden' }}>
-                    {/* Carousel with proper model names for each image */}
+                    {/* Carousel with GOLD BACKGROUND for each image */}
                     <Carousel 
                       interval={3000}
                       indicators={true}
@@ -2071,40 +2090,43 @@ const Home = () => {
                     >
                       {carImages.map((imageObj, imgIndex) => (
                         <Carousel.Item key={imgIndex}>
-                          <img
-                            className="d-block w-100"
-                            src={imageObj.url}
-                            alt={`${car.name} - ${car.mainModel} - ${imageObj.model}`}
-                            style={{
-                              width: '100%',
-                              height: '280px',
-                              objectFit: 'cover',
-                              objectPosition: 'center'
-                            }}
-                            loading="lazy"
-                          />
+                          {/* Container with GOLD background */}
+                          <div style={{
+                            width: '100%',
+                            height: '280px',
+                            backgroundColor: imageObj.bgColor || '#FFD700', // Gold background
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}>
+                            <img
+                              src={imageObj.url}
+                              alt={`${car.name} - ${car.mainModel} - ${imageObj.model}`}
+                              style={{
+                                maxWidth: '100%',
+                                maxHeight: '260px',
+                                width: 'auto',
+                                height: 'auto',
+                                objectFit: 'contain'
+                              }}
+                              loading="lazy"
+                            />
+                          </div>
                           <Carousel.Caption style={{ 
                             bottom: '0', 
                             left: '0', 
                             right: '0', 
-                            background: 'linear-gradient(to top, rgba(199, 238, 24, 0.9), transparent)', 
+                            background: 'linear-gradient(to top, #FFD700, transparent)', 
                             textAlign: 'left',
                             padding: '15px'
                           }}>
                             <h5 className="fw-bold mb-1" style={{ 
                               ...headingStyle, 
-                              fontSize: '1.1rem',
-                              color: '#191719ff'
+                              fontSize: '1.5rem',
+                              color: '#5f0f0fff' // red text
                             }}>
-                              {car.name}  {car.mainModel}
+                              {car.name} {imageObj.model}
                             </h5>
-                            <p className="mb-0 small" style={{ 
-                              ...letterStyle, 
-                              color: '#0e0e0fff',
-                              fontSize: '0.9rem'
-                            }}>
-                              {imageObj.model}
-                            </p>
                           </Carousel.Caption>
                         </Carousel.Item>
                       ))}
@@ -2170,10 +2192,6 @@ const Home = () => {
               );
             })}
           </Row>
-          
-          {/*<div className="text-center mt-4">
-            <Button variant="warning" onClick={() => navigate('/tariff')} style={boldStyle}>View All Tariffs</Button>
-          </div> */}
         </Container>
       </section>
 
