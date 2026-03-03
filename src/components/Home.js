@@ -1398,12 +1398,13 @@ const Home = () => {
                 <span className="text-warning" style={headingStyle}>𝙒𝙚'𝙧𝙚 𝙏𝙝𝙚𝙧𝙚 </span>
               </h1>
               <p 
-                className="lead mb-5 text-white-50" 
+                className="lead mb-5" 
                 style={{ 
                   fontSize: 'clamp(1.2rem, 2vw, 2.1rem)',
                   textShadow: '1px 1px 2px rgba(242, 240, 240, 0.97)',
                   ...letterStyle,
-                  lineHeight: '1.6'
+                  lineHeight: '1.6',
+                  color: '#FFFFFF'
                 }}
               >
                 𝘚𝘢𝘧𝘦, 𝘤𝘰𝘮𝘧𝘰𝘳𝘵𝘢𝘣𝘭𝘦, 𝘢𝘯𝘥 𝘰𝘯-𝘵𝘪𝘮𝘦 𝘵𝘢𝘹𝘪 𝘴𝘦𝘳𝘷𝘪𝘤𝘦 𝘢𝘤𝘳𝘰𝘴𝘴 𝘛𝘢𝘮𝘪𝘭𝘯𝘢𝘥𝘶, 
