@@ -2432,7 +2432,7 @@ const Home = () => {
             >
               Book Now
             </Button>
-            <a href="tel:+916381095854">
+            <a href="tel:+918148111516">
               <Button variant="outline-dark" size="lg" className="rounded-pill px-5" style={boldStyle}>
                 <FaPhone className="me-2" /> Call Us
               </Button>
