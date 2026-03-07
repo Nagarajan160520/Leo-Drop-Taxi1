@@ -142,23 +142,19 @@ const Footer = () => {
             <div className="d-flex mb-3">
               <FaPhone className="text-warning me-3 mt-1" size={20} />
               <span className="text-light">
-                <a href="tel:+916381095854" className="text-light text-decoration-none hover-warning d-block">
-                  +91 63810 95854
+                <a href="tel:+918148111516" className="text-light text-decoration-none hover-warning d-block">
+                  +91 8148111516
                 </a>
-                <a href="tel:+917200343435" className="text-light text-decoration-none hover-warning d-block">
-                  +91 72003 43435
-                </a>
+                
               </span>
             </div>
             <div className="d-flex mb-3">
               <FaEnvelope className="text-warning me-3 mt-1" size={20} />
               <span className="text-light">
-                <a href="mailto:info@leodroptaxi.com" className="text-light text-decoration-none hover-warning d-block">
-                  info@Lexusdroptaxi.com
+                <a href="mailto:lexusno1taxi@gmail.com" className="text-light text-decoration-none hover-warning d-block">
+                  lexusno1taxi@gmail.com
                 </a>
-                <a href="mailto:support@leodroptaxi.com" className="text-light text-decoration-none hover-warning d-block">
-                  support@Lexusdroptaxi.com
-                </a>
+                
               </span>
             </div>
           </Col>

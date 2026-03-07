@@ -15,8 +15,8 @@ const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
 
   // Client and Driver WhatsApp Numbers
-  const CLIENT_NUMBER = '916381095854'; // 91 (India code) + 6381095854
-  const DRIVER_NUMBER = '917200343435'; // 91 (India code) + 7200343435
+  const CLIENT_NUMBER = '918148111516'; // 91 (India code) + 8148111516
+  const DRIVER_NUMBER = '918148111516'; // 91 (India code) + 8148111516
 
   const handleChange = (e) => {
     setFormData({
@@ -122,8 +122,8 @@ const Contact = () => {
       icon: <FaPhone size={24} />,
       title: 'Call Us',
       details: [
-        '+91 63810 95854',
-        '+91 63810 95854',
+        '+91 81481 11516',
+        
         '24/7 Support Available'
       ]
     },
@@ -131,9 +131,7 @@ const Contact = () => {
       icon: <FaEnvelope size={24} />,
       title: 'Email Us',
       details: [
-        'info@Lexusdroptaxi.com',
-        'booking@Lexusdroptaxi.com',
-        'support@Lexusdroptaxi.com'
+        'lexusno1taxi@gmail.com'
       ]
     },
     {
@@ -324,8 +322,8 @@ const Contact = () => {
                         <strong>WhatsApp notifications will be sent to:</strong>
                       </p>
                       <div className="d-flex justify-content-between small">
-                        <span>📱 Client: +91 63810 95854</span>
-                        <span>🚖 Driver: +91 72003 43435</span>
+                        <span>📱 Client: +91 81481 11516</span>
+                        <span>🚖 Driver: +91 81481 11516</span>
                       </div>
                     </div>
 
@@ -388,8 +386,8 @@ const Contact = () => {
                     <FaPhone className="text-warning me-3" size={20} />
                     <span>
                       <strong>Client:</strong><br />
-                      <a href="tel:+916381095854" className="text-decoration-none text-dark">
-                        +91 63810 95854
+                      <a href="tel:+918148111516" className="text-decoration-none text-dark">
+                        +91 81481 11516
                       </a>
                     </span>
                   </p>
@@ -397,8 +395,8 @@ const Contact = () => {
                     <FaWhatsapp className="text-warning me-3" size={20} />
                     <span>
                       <strong>Driver:</strong><br />
-                      <a href="https://wa.me/916381095854" target="_blank" rel="noopener noreferrer" className="text-decoration-none text-dark">
-                        +91 63810 95854
+                      <a href="https://wa.me/918148111516" target="_blank" rel="noopener noreferrer" className="text-decoration-none text-dark">
+                        +91 81481 11516
                       </a>
                     </span>
                   </p>
@@ -406,8 +404,8 @@ const Contact = () => {
                     <FaEnvelope className="text-warning me-3" size={20} />
                     <span>
                       <strong>Support:</strong><br />
-                      <a href="mailto:nagarajan16052001@gmail.com" className="text-decoration-none text-dark">
-                        nagarajan16052001@gmail.com
+                      <a href="mailto:lexusno1taxi@gmail.com" className="text-decoration-none text-dark">
+                        lexusno1taxi@gmail.com
                       </a>
                     </span>
                   </p>
@@ -470,7 +468,7 @@ const Contact = () => {
                       <FaPhone className="me-2" /> Call Driver
                     </Button>
                   </a>
-                  <a href="https://wa.me/916381095854" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/918148111516" target="_blank" rel="noopener noreferrer">
                     <Button variant="success" size="lg" className="rounded-pill px-5 py-3">
                       <FaWhatsapp className="me-2" /> WhatsApp Driver
                     </Button>

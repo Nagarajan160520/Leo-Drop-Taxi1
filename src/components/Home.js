@@ -32,8 +32,8 @@ import {
 const API_URL = '';
 
 // Client WhatsApp number
-const CLIENT_WHATSAPP_NUMBER = '916381095854';
-const CLIENT_PHONE_NUMBER = '916381095854';
+const CLIENT_WHATSAPP_NUMBER = '918148111516';
+const CLIENT_PHONE_NUMBER = '918148111516';
 
 // ============================================
 // LETTER STYLING - Exactly matching the photo

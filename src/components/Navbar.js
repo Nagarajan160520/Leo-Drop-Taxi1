@@ -925,7 +925,7 @@ const Navbar = () => {
             <Nav className="align-items-center" style={{ gap: '15px' }}>
               {/* Phone Number - GOLD SHINING */}
               <a 
-                href="tel:+916381095854" 
+                href="tel:+918148111516" 
                 className="text-warning text-decoration-none d-flex align-items-center phone-number"
                 style={{ fontSize: '20px', fontWeight: 'bold' }}
                 onMouseEnter={() => setShowPhoneTooltip(true)}
@@ -933,7 +933,7 @@ const Navbar = () => {
                 onClick={() => setMenuOpen(false)}
               >
                 <FaPhone className="me-2 phone-icon" size={20} /> 
-                <span>+91 63810 95854</span>
+                <span>+91 81481 11516</span>
                 
                 {/* Tooltip Animation */}
                 {showPhoneTooltip && (

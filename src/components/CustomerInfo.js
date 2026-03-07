@@ -320,7 +320,7 @@ const CustomerInfo = () => {
                 </p>
                 <div className="d-flex justify-content-center gap-3 flex-wrap">
                   <a 
-                    href="tel:+917200343435" 
+                    href="tel:+918148111516" 
                     className="btn btn-dark btn-lg rounded-pill px-5 pulse-button"
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'scale(1.1)';
@@ -381,7 +381,7 @@ const CustomerInfo = () => {
                     <FaPhone className="me-2 rotate-icon" /> Call Us
                   </a>
                   <a 
-                    href="https://wa.me/917200343435" 
+                    href="https://wa.me/918148111516" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="btn btn-success rounded-pill px-4 btn-hover"
