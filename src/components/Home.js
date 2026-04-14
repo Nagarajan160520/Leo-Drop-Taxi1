@@ -562,14 +562,8 @@ const Home = () => {
       hillCharges: 300,
       permitCharge: 14,
       images: [
-        { url: '/images/sedan/tata-zest-1.jpg', 
-          model: 'TATA ZEST', 
-          bgColor: '#FFD700' },
-        { url: '/images/sedan/swift-dzire-1.jpg', 
-          model: 'SWIFT DZIRE', 
-          bgColor: '#FFD700' },
         { url: '/images/sedan/hyundai-aura-1.jpg', 
-          model: 'HYNDAI AURA', 
+          model: 'HYUNDAI AURA', 
           bgColor: '#FFD700' }
       ]
     },
@@ -583,12 +577,6 @@ const Home = () => {
       hillCharges: 300,
       permitCharge: 14,
       images: [
-        { url: '/images/sedan2/nissan-1.jpg', 
-          model: 'NISSIAN SUNNY', 
-          bgColor: '#FFD700' },
-        { url: '/images/sedan2/etios-2.jpg', 
-          model: 'TOYOTA ETIOS', 
-          bgColor: '#FFD700' },
         { url: '/images/sedan2/ciaz-1.jpg', 
           model: 'MARUTI CIAZ', 
           bgColor: '#FFD700' }
@@ -604,12 +592,6 @@ const Home = () => {
       hillCharges: 500,
       permitCharge: 14,
       images: [
-        { url: '/images/suv/xylo-1.jpg', 
-          model: 'XYLO', 
-          bgColor: '#FFD700' },
-        { url: '/images/suv/ertiga-1.jpg', 
-          model: 'MARUTI ERTIGA', 
-          bgColor: '#FFD700' },
         { url: '/images/suv/marazzo-1.jpg', 
           model: 'MARAZZO', 
           bgColor: '#FFD700' }
@@ -627,12 +609,6 @@ const Home = () => {
       images: [
         { url: '/images/innova/innova-1.jpg', 
           model: 'INNOVA', 
-          bgColor: '#FFD700' },
-        { url: '/images/innova/innova-crysta-1.jpg', 
-          model: 'INNOVA CRYSTA', 
-          bgColor: '#FFD700' },
-        { url: '/images/innova/innova-vehicle-1.jpg', 
-          model: 'INNOVA VEHICLE', 
           bgColor: '#FFD700' }
       ]
     }
@@ -1710,7 +1686,7 @@ const Home = () => {
                             }}
                           >
                             <img 
-                              src="https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg"
+                              src="/images/sedan/hyundai-aura-1.jpg"
                               alt="SEDAN"
                               style={{
                                 width: '100%',
@@ -1772,7 +1748,7 @@ const Home = () => {
                             }}
                           >
                             <img 
-                              src="https://i.pinimg.com/736x/b9/2a/2e/b92a2e7f7a93315f337daffcbb0f76d1.jpg"
+                              src="/images/sedan2/ciaz-1.jpg"
                               alt="ETIOS"
                               style={{
                                 width: '100%',
@@ -1834,7 +1810,7 @@ const Home = () => {
                             }}
                           >
                             <img 
-                              src="https://i.pinimg.com/736x/41/22/c1/4122c1500586bffc01010a1b1611e3a1.jpg"
+                              src="/images/suv/marazzo-1.jpg"
                               alt="MUV"
                               style={{
                                 width: '100%',
@@ -1896,7 +1872,7 @@ const Home = () => {
                             }}
                           >
                             <img 
-                              src="https://i.pinimg.com/1200x/fe/e6/ee/fee6eea7b191112a744e2bf23a277871.jpg"
+                              src="/images/innova/innova-1.jpg"
                               alt="INNOVA"
                               style={{
                                 width: '100%',
@@ -2102,7 +2078,7 @@ const Home = () => {
                           }}>
                             <img
                               src={imageObj.url}
-                              alt={`${car.name} - ${car.mainModel} - ${imageObj.model}`}
+                              alt={`${car.name} - ${imageObj.model}`}
                               style={{
                                 maxWidth: '100%',
                                 maxHeight: '260px',

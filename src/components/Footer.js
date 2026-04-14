@@ -49,7 +49,7 @@ const Footer = () => {
               Kerala, Andhra Pradesh, Karnataka, and Pondicherry.
             </p>
             
-            {/* Social Links with valid href
+            {/* Social Links with valid href */}
             <div className="d-flex gap-3 mt-3">
               {socialLinks.map((social, index) => (
                 <a
@@ -79,7 +79,7 @@ const Footer = () => {
                   {social.icon}
                 </a>
               ))}
-            </div> */}
+            </div>
           </Col>
 
           <Col lg={2} md={6}>
