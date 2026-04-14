@@ -285,7 +285,7 @@ const About = () => {
 
         /* Hero Section with Gradient Animation */
         .hero-section {
-          background: linear-gradient(135deg, #ffc107, #ff9800, #ff5722);
+          background: linear-gradient(135deg, #ebde26, #eff552, #dcf349);
           background-size: 200% 200%;
           animation: gradientBG 8s ease infinite;
           position: relative;
@@ -338,7 +338,7 @@ const About = () => {
 
         .stat-card:hover .stat-icon {
           transform: scale(1.2) rotate(360deg);
-          color: #ffc107;
+          color: #f5f840;
         }
 
         /* Content Image Animation */
@@ -387,7 +387,7 @@ const About = () => {
           left: 0;
           width: 100%;
           height: 4px;
-          background: linear-gradient(90deg, #ffc107, #ff9800, #ff5722);
+          background: linear-gradient(90deg, #f9f46d, #e5fb52, #fbea4d);
           transform: scaleX(0);
           transition: transform 0.5s ease;
         }
@@ -405,7 +405,7 @@ const About = () => {
 
         .list-item:hover {
           transform: translateX(10px);
-          color: #ffc107;
+          color: #e5f350;
         }
 
         .list-item::before {
@@ -428,14 +428,14 @@ const About = () => {
 
         .handshake-icon:hover {
           transform: rotate(360deg) scale(1.2);
-          color: #ffc107;
+          color: #f7fd4d;
         }
 
         /* Counter Number Animation */
         .counter-number {
           display: inline-block;
           transition: all 0.3s ease;
-          background: linear-gradient(135deg, #ffc107, #ff9800);
+          background: linear-gradient(135deg, #f57474, #e87777);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-size: 200% 200%;
@@ -447,6 +447,11 @@ const About = () => {
         .stat-card:nth-child(2) { animation-delay: 0.2s; }
         .stat-card:nth-child(3) { animation-delay: 0.3s; }
         .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Hover opacity effect */
+        .hover-opacity-100:hover {
+          opacity: 1 !important;
+        }
       `}</style>
 
       {/* Hero Section with Animated Gradient */}
@@ -456,7 +461,7 @@ const About = () => {
             className="display-4 fw-bold mb-3 text-white fade-in"
             style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}
           >
-            About Lexus Drop Taxi
+            About King Drop Taxi
           </h1>
           <p 
             className="lead text-white slide-in-left"
@@ -505,22 +510,24 @@ const About = () => {
           ))}
         </Row>
 
-        {/* About Content with Advanced Animations */}
+        {/* About Content with Advanced Animations - CHANGED IMAGE TO LOCAL */}
         <Row className="mb-5 align-items-center">
           <Col lg={6} className="mb-4 mb-lg-0">
             <div className="content-image position-relative">
               <img 
-                src="https://i.pinimg.com/1200x/65/c3/63/65c3636ca6b81584e53084c105c7a54d.jpg"
+                src="/images/sedan/swift-dzire-1.jpg"
                 alt="Our Fleet"
                 className="img-fluid rounded-3 shadow"
                 style={{ transition: 'all 0.5s ease' }}
               />
-              <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 hover-opacity-100" 
+              <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0" 
                    style={{ 
                      background: 'rgba(255,193,7,0.2)',
                      transition: 'opacity 0.5s ease',
                      borderRadius: '15px'
-                   }}>
+                   }}
+                   onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+                   onMouseLeave={(e) => e.currentTarget.style.opacity = '0'}>
                 <span className="text-white fw-bold">Premium Fleet</span>
               </div>
             </div>
@@ -528,7 +535,7 @@ const About = () => {
           <Col lg={6} className="slide-in-right">
             <h2 className="text-warning mb-4">OUR COMPANY</h2>
             <p className="lead mb-4">
-              At <strong className="text-warning">Lexus DROP TAXI</strong>, we believe every journey should be safe, 
+              At <strong className="text-warning">KING DROP TAXI</strong>, we believe every journey should be safe, 
               comfortable, and on time.
             </p>
             <p className="mb-4">
