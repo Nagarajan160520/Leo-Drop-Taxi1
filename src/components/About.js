@@ -515,7 +515,7 @@ const About = () => {
           <Col lg={6} className="mb-4 mb-lg-0">
             <div className="content-image position-relative">
               <img 
-                src="/images/sedan/swift-dzire-1.jpg"
+                src="/images/sedan/swift-dzire-2.jpg"
                 alt="Our Fleet"
                 className="img-fluid rounded-3 shadow"
                 style={{ transition: 'all 0.5s ease' }}
