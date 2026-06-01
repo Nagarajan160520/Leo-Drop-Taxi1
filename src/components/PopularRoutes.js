@@ -12,10 +12,10 @@ const PopularRoutes = () => {
       description: 'Princess of Hill Stations - Scenic beauty & pleasant climate',
       distance: '520 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
+        { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
+        { type: 'MUV', oneWay: 20, roundTrip: 19 },
+        { type: 'INNOVA', oneWay: 21, roundTrip: 20 }
       ]
     },
     {
@@ -26,10 +26,10 @@ const PopularRoutes = () => {
       description: 'Famous waterfalls & natural spa - The Spa of South India',
       distance: '650 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
+        { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
+        { type: 'MUV', oneWay: 20, roundTrip: 19 },
+        { type: 'INNOVA', oneWay: 21, roundTrip: 20 }
       ]
     },
     {
@@ -40,10 +40,10 @@ const PopularRoutes = () => {
       description: 'Southernmost tip of India - Sunrise & sunset view',
       distance: '720 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
+        { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
+        { type: 'MUV', oneWay: 20, roundTrip: 19 },
+        { type: 'INNOVA', oneWay: 21, roundTrip: 20 }
       ]
     },
     {
@@ -54,10 +54,10 @@ const PopularRoutes = () => {
       description: 'Temple town to Metropolitan city - Comfortable journey',
       distance: '580 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
+        { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
+        { type: 'MUV', oneWay: 20, roundTrip: 19 },
+        { type: 'INNOVA', oneWay: 21, roundTrip: 20 }
       ]
     },
     {
@@ -68,10 +68,10 @@ const PopularRoutes = () => {
       description: 'Explore the beauty of Karnataka - Mysore, Coorg & more',
       distance: '680 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
+        { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
+        { type: 'MUV', oneWay: 20, roundTrip: 19 },
+        { type: 'INNOVA', oneWay: 21, roundTrip: 20 }
       ]
     },
     {
@@ -82,10 +82,10 @@ const PopularRoutes = () => {
       description: 'Queen of Hill Stations - Tea gardens & misty mountains',
       distance: '570 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
+        { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
+        { type: 'MUV', oneWay: 20, roundTrip: 19 },
+        { type: 'INNOVA', oneWay: 21, roundTrip: 20 }
       ]
     }
   ];
@@ -144,7 +144,7 @@ const PopularRoutes = () => {
                     </div>
                   </div>
 
-                  {/* Tariff Table - Exactly like screenshot */}
+                  {/* Tariff Table - With UPDATED RATES */}
                   <Table striped bordered hover responsive className="mb-4">
                     <thead className="bg-warning">
                       <tr>
@@ -170,7 +170,7 @@ const PopularRoutes = () => {
                     </tbody>
                   </Table>
 
-                  {/* Included With Section - Exactly like screenshot */}
+                  {/* Included With Section */}
                   <div className="mt-3">
                     <h6 className="fw-bold mb-3" style={{ color: '#333' }}>INCLUDED WITH</h6>
                     <Row>
@@ -240,7 +240,7 @@ const PopularRoutes = () => {
                 <ul className="list-unstyled">
                   <li className="mb-3 d-flex">
                     <span className="text-warning me-2 fw-bold">•</span>
-                    <span>Driver bata: Sedan ₹400, SUV/INNOVA ₹500 per day</span>
+                    <span>Driver bata: Sedan ₹400, MUV/INNOVA ₹400 per day</span>
                   </li>
                   <li className="mb-3 d-flex">
                     <span className="text-warning me-2 fw-bold">•</span>

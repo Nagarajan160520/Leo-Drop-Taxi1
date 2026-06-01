@@ -248,7 +248,7 @@ const Home = () => {
     return `${hours}:${minutes}`;
   };
 
-  // Fetch cars
+  // Fetch cars with UPDATED RATES
   useEffect(() => {
     setFormData(prev => ({
       ...prev,
@@ -261,20 +261,22 @@ const Home = () => {
         if (response.data.data && response.data.data.length > 0) {
           setCars(response.data.data);
         } else {
+          // UPDATED RATES as per client request
           setCars([
-            { name: 'SEDAN', displayName: 'SEDAN', oneWayRate: 14, roundTripRate: 13, driverBata: 400 },
-            { name: 'ETIOS', displayName: 'ETIOS', oneWayRate: 15, roundTripRate: 14, driverBata: 400 },
-            { name: 'MUV', displayName: 'MUV', oneWayRate: 19, roundTripRate: 18, driverBata: 400 },
-            { name: 'INNOVA', displayName: 'INNOVA', oneWayRate: 25, roundTripRate: 19, driverBata: 400 }
+            { name: 'SEDAN', displayName: 'SEDAN', oneWayRate: 15, roundTripRate: 14, driverBata: 400, hillCharges: 300 },
+            { name: 'ETIOS', displayName: 'ETIOS', oneWayRate: 16, roundTripRate: 15, driverBata: 400, hillCharges: 300 },
+            { name: 'MUV', displayName: 'MUV', oneWayRate: 20, roundTripRate: 19, driverBata: 400, hillCharges: 300 },
+            { name: 'INNOVA', displayName: 'INNOVA', oneWayRate: 21, roundTripRate: 20, driverBata: 400, hillCharges: 300 }
           ]);
         }
       } catch (error) {
         console.error('Error fetching cars:', error);
+        // UPDATED RATES as per client request
         setCars([
-          { name: 'SEDAN', displayName: 'SEDAN', oneWayRate: 14, roundTripRate: 13, driverBata: 400 },
-          { name: 'ETIOS', displayName: 'ETIOS', oneWayRate: 15, roundTripRate: 14, driverBata: 400 },
-          { name: 'MUV', displayName: 'MUV', oneWayRate: 19, roundTripRate: 18, driverBata: 400 },
-          { name: 'INNOVA', displayName: 'INNOVA', oneWayRate: 25, roundTripRate: 19, driverBata: 400 }
+          { name: 'SEDAN', displayName: 'SEDAN', oneWayRate: 15, roundTripRate: 14, driverBata: 400, hillCharges: 300 },
+          { name: 'ETIOS', displayName: 'ETIOS', oneWayRate: 16, roundTripRate: 15, driverBata: 400, hillCharges: 300 },
+          { name: 'MUV', displayName: 'MUV', oneWayRate: 20, roundTripRate: 19, driverBata: 400, hillCharges: 300 },
+          { name: 'INNOVA', displayName: 'INNOVA', oneWayRate: 21, roundTripRate: 20, driverBata: 400, hillCharges: 300 }
         ]);
       }
     };
@@ -331,6 +333,7 @@ const Home = () => {
       const rate = formData.tripType === 'one-way' ? selectedCar.oneWayRate : selectedCar.roundTripRate;
       const baseFare = rate * minDistance;
       const driverBata = selectedCar.driverBata || 400;
+      const hillCharges = selectedCar.hillCharges || 300;
       
       setFareEstimate({
         carName: selectedCar.name,
@@ -338,24 +341,27 @@ const Home = () => {
         minDistance: minDistance,
         baseFare: baseFare,
         driverBata: driverBata,
+        hillCharges: hillCharges,
         total: baseFare + driverBata
       });
       
       toast.success(`${carName} selected - Fare calculated!`);
     } else {
+      // UPDATED default rates as per client request
       const defaultRates = {
-        'SEDAN': { rate: 14, bata: 400 },
-        'ETIOS': { rate: 15, bata: 400 },
-        'MUV': { rate: 19, bata: 500 },
-        'INNOVA': { rate: 20, bata: 500 }
+        'SEDAN': { oneWay: 15, roundTrip: 14, bata: 400, hillCharges: 300 },
+        'ETIOS': { oneWay: 16, roundTrip: 15, bata: 400, hillCharges: 300 },
+        'MUV': { oneWay: 20, roundTrip: 19, bata: 400, hillCharges: 300 },
+        'INNOVA': { oneWay: 21, roundTrip: 20, bata: 400, hillCharges: 300 }
       };
       
       const carInfo = defaultRates[carName];
       if (carInfo) {
         const minDistance = formData.tripType === 'one-way' ? 130 : 250;
-        const rate = formData.tripType === 'one-way' ? carInfo.rate : carInfo.rate - 1;
+        const rate = formData.tripType === 'one-way' ? carInfo.oneWay : carInfo.roundTrip;
         const baseFare = rate * minDistance;
         const driverBata = carInfo.bata;
+        const hillCharges = carInfo.hillCharges;
         
         setFareEstimate({
           carName: carName,
@@ -363,6 +369,7 @@ const Home = () => {
           minDistance: minDistance,
           baseFare: baseFare,
           driverBata: driverBata,
+          hillCharges: hillCharges,
           total: baseFare + driverBata
         });
         
@@ -398,7 +405,8 @@ const Home = () => {
       `• Driver Bata: ₹${booking.fareEstimate.driverBata}\n` +
       `• *Total Fare: ₹${booking.fareEstimate.total}*\n` +
       `━━━━━━━━━━━━━━━━━━━━━\n` +
-      `⚠️ *Note:* Toll, state permit & hill charges extra if applicable\n\n` +
+      `⚠️ *Note:* Toll, state permit & hill charges extra if applicable\n` +
+      `🏔️ *Hill Station Charges:* ₹${booking.fareEstimate.hillCharges || 300} (if applicable)\n\n` +
       `📞 *Contact Customer:* ${booking.mobile}\n` +
       `Please confirm this booking with the customer.`
     );
@@ -549,13 +557,13 @@ const Home = () => {
   ];
 
   // ============================================
-  // TARIFF DATA WITH GOLD BACKGROUND FOR CAR IMAGES
+  // TARIFF DATA WITH UPDATED RATES FOR CAR IMAGES
   // ============================================
   const tariffCars = useMemo(() => [
     {
       name: 'SEDAN',
-      oneWayRate: 14,
-      roundTripRate: 13,
+      oneWayRate: 15,
+      roundTripRate: 14,
       minKmOneWay: 130,
       minKmRoundTrip: 250,
       driverBata: 400,
@@ -574,9 +582,9 @@ const Home = () => {
       ]
     },
     {
-      name: 'SEDAN',
-      oneWayRate: 15,
-      roundTripRate: 14,
+      name: 'ETIOS',
+      oneWayRate: 16,
+      roundTripRate: 15,
       minKmOneWay: 130,
       minKmRoundTrip: 250,
       driverBata: 400,
@@ -595,13 +603,13 @@ const Home = () => {
       ]
     },
     {
-      name: 'SUV',
-      oneWayRate: 19,
-      roundTripRate: 18,
+      name: 'MUV',
+      oneWayRate: 20,
+      roundTripRate: 19,
       minKmOneWay: 130,
       minKmRoundTrip: 250,
       driverBata: 400,
-      hillCharges: 500,
+      hillCharges: 300,
       permitCharge: 14,
       images: [
         { url: '/images/suv/xylo-1.jpg', 
@@ -617,12 +625,12 @@ const Home = () => {
     },
     {
       name: 'INNOVA',
-      oneWayRate: 20,
-      roundTripRate: 19,
+      oneWayRate: 21,
+      roundTripRate: 20,
       minKmOneWay: 130,
       minKmRoundTrip: 250,
       driverBata: 400,
-      hillCharges: 500,
+      hillCharges: 300,
       permitCharge: 14,
       images: [
         { url: '/images/innova/innova-1.jpg', 
@@ -638,7 +646,7 @@ const Home = () => {
     }
   ], []);
 
-  // Popular Routes Data - CHANGED IMAGES TO USE LOCAL ROUTES FOLDER
+  // Popular Routes Data - UPDATED RATES
   const popularRoutes = useMemo(() => [
     {
       from: 'Chennai',
@@ -648,10 +656,10 @@ const Home = () => {
       description: 'Princess of Hill Stations - Scenic beauty & pleasant climate',
       distance: '520 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 25, roundTrip: 18 }
+        { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
+        { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
+        { type: 'MUV', oneWay: 20, roundTrip: 19 },
+        { type: 'INNOVA', oneWay: 21, roundTrip: 20 }
       ]
     },
     {
@@ -662,10 +670,10 @@ const Home = () => {
       description: 'Famous waterfalls & natural spa - The Spa of South India',
       distance: '650 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
+        { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
+        { type: 'MUV', oneWay: 20, roundTrip: 19 },
+        { type: 'INNOVA', oneWay: 21, roundTrip: 20 }
       ]
     },
     {
@@ -676,10 +684,10 @@ const Home = () => {
       description: 'Southernmost tip of India - Sunrise & sunset view',
       distance: '720 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
+        { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
+        { type: 'MUV', oneWay: 20, roundTrip: 19 },
+        { type: 'INNOVA', oneWay: 21, roundTrip: 20 }
       ]
     },
     {
@@ -690,10 +698,10 @@ const Home = () => {
       description: 'Temple town to Metropolitan city - Comfortable journey',
       distance: '580 km',
       cars: [
-        { type: 'SEDAN', oneWay: 14, roundTrip: 13 },
-        { type: 'ETIOS', oneWay: 15, roundTrip: 14 },
-        { type: 'SUV', oneWay: 19, roundTrip: 18 },
-        { type: 'INNOVA', oneWay: 20, roundTrip: 18 }
+        { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
+        { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
+        { type: 'MUV', oneWay: 20, roundTrip: 19 },
+        { type: 'INNOVA', oneWay: 21, roundTrip: 20 }
       ]
     }
   ], []);
@@ -1111,7 +1119,7 @@ const Home = () => {
         );
         transform: rotate(25deg);
         animation: shineMove 8s infinite;
-        pointer-events: none;
+        pointerEvents: none;
         z-index: 5;
         opacity: 0.4;
         will-change: transform;
@@ -1155,7 +1163,7 @@ const Home = () => {
         );
         transform: rotate(45deg);
         animation: buttonShine 4s infinite;
-        pointer-events: none;
+        pointerEvents: none;
         will-change: transform;
       }
       
@@ -1671,14 +1679,14 @@ const Home = () => {
                       </Col>
                     </Row>
  
-                    {/* SELECT CAR TYPE - Using local images */}
+                    {/* SELECT CAR TYPE - Using local images with UPDATED PRICES */}
                     <div className="mb-3">
                       <label className="fw-bold form-label mb-3" style={{ ...formStyles.label, fontSize: '1.1rem' }}>
                         Select Car Type *
                       </label>
                       
                       <Row className="g-3">
-                        {/* SEDAN - Using local image from sedan folder */}
+                        {/* SEDAN - Updated price ₹15/km one way */}
                         <Col xs={6}>
                           <div 
                             className={`car-option ${formData.carType === 'SEDAN' ? 'selected' : ''}`}
@@ -1735,12 +1743,12 @@ const Home = () => {
                               ...boldStyle,
                               fontSize: '1rem'
                             }}>
-                              ₹<OptimizedNumber num={14} />/km
+                              ₹<OptimizedNumber num={15} />/km
                             </div>
                           </div>
                         </Col>
 
-                        {/* ETIOS - Using local image from sedan2 folder */}
+                        {/* ETIOS - Updated price ₹16/km one way */}
                         <Col xs={6}>
                           <div 
                             className={`car-option ${formData.carType === 'ETIOS' ? 'selected' : ''}`}
@@ -1797,12 +1805,12 @@ const Home = () => {
                               ...boldStyle,
                               fontSize: '1rem'
                             }}>
-                              ₹<OptimizedNumber num={15} />/km
+                              ₹<OptimizedNumber num={16} />/km
                             </div>
                           </div>
                         </Col>
 
-                        {/* SUV (MUV) - Using local image from suv folder */}
+                        {/* MUV - Updated price ₹20/km one way */}
                         <Col xs={6}>
                           <div 
                             className={`car-option ${formData.carType === 'MUV' ? 'selected' : ''}`}
@@ -1859,12 +1867,12 @@ const Home = () => {
                               ...boldStyle,
                               fontSize: '1rem'
                             }}>
-                              ₹<OptimizedNumber num={19} />/km
+                              ₹<OptimizedNumber num={20} />/km
                             </div>
                           </div>
                         </Col>
 
-                        {/* INNOVA - Using local image from innova folder */}
+                        {/* INNOVA - Updated price ₹21/km one way */}
                         <Col xs={6}>
                           <div 
                             className={`car-option ${formData.carType === 'INNOVA' ? 'selected' : ''}`}
@@ -1921,7 +1929,7 @@ const Home = () => {
                               ...boldStyle,
                               fontSize: '1rem'
                             }}>
-                              ₹<OptimizedNumber num={19} />/km
+                              ₹<OptimizedNumber num={21} />/km
                             </div>
                           </div>
                         </Col>
@@ -1945,7 +1953,7 @@ const Home = () => {
                           <span className="fw-bold" style={{ color: '#8B0000', ...boldStyle, fontSize: '1.1rem' }}>₹<OptimizedNumber num={fareEstimate.total} /></span>
                         </div>
                         <small className="text-muted d-block mt-1" style={letterStyle}>
-                          *Toll, permit & hill charges extra
+                          *Toll, permit & hill charges (₹300) extra
                         </small>
                       </div>
                     )}
@@ -2061,7 +2069,7 @@ const Home = () => {
       </Container>
 
       {/* ============================================ */}
-      {/* TARIFF SECTION - WITH GOLD BACKGROUND - UNCHANGED */}
+      {/* TARIFF SECTION - WITH UPDATED RATES */}
       {/* ============================================ */}
       <section className="py-5 bg-light">
         <Container>
@@ -2095,14 +2103,14 @@ const Home = () => {
                           <div style={{
                             width: '100%',
                             height: '280px',
-                            backgroundColor: imageObj.bgColor || '#FFD700', // Gold background
+                            backgroundColor: imageObj.bgColor || '#FFD700',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center'
                           }}>
                             <img
                               src={imageObj.url}
-                              alt={`${car.name} - ${car.mainModel} - ${imageObj.model}`}
+                              alt={`${car.name} - ${imageObj.model}`}
                               style={{
                                 maxWidth: '100%',
                                 maxHeight: '260px',
@@ -2124,7 +2132,7 @@ const Home = () => {
                             <h5 className="fw-bold mb-1" style={{ 
                               ...headingStyle, 
                               fontSize: '1.2rem',
-                              color: '#052a62ff' // red text
+                              color: '#052a62ff'
                             }}>
                               {car.name} {imageObj.model}
                             </h5>
@@ -2196,7 +2204,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* POPULAR ROUTES SECTION - CHANGED IMAGES TO USE LOCAL ROUTES FOLDER */}
+      {/* POPULAR ROUTES SECTION - WITH UPDATED RATES */}
       <section className="py-5">
         <Container>
           <h2 className="text-center mb-5" style={{ 
@@ -2234,7 +2242,7 @@ const Home = () => {
                     </div>
                     <div className="small mb-3" style={boldStyle}>
                       <span className="fw-bold me-2" style={boldStyle}>SEDAN:</span> ₹<OptimizedNumber num={route.cars[0].oneWay} />/km | 
-                      <span className="fw-bold ms-2 me-2" style={boldStyle}>SUV:</span> ₹<OptimizedNumber num={route.cars[2].oneWay} />/km
+                      <span className="fw-bold ms-2 me-2" style={boldStyle}>MUV:</span> ₹<OptimizedNumber num={route.cars[2].oneWay} />/km
                     </div>
                     <div className="mt-3">
                       <Button variant="outline-warning" size="sm" className="w-100" onClick={() => navigate('/popular-routes')} style={boldStyle}>
@@ -2390,7 +2398,7 @@ const Home = () => {
                     <FaPhone size={24} className="text-dark" />
                   </div>
                   <h5 className="fw-bold mb-3" style={boldStyle}>Call Us</h5>
-                  <p className="text-secondary mb-1" style={boldStyle}>+91 <OptimizedNumber num={63810} /> <OptimizedNumber num={95854} /></p>
+                  
                   <p className="text-secondary mb-1" style={boldStyle}>+91 <OptimizedNumber num={72003} /> <OptimizedNumber num={43435} /></p>
                 </Card.Body>
               </Card>
@@ -2403,7 +2411,7 @@ const Home = () => {
                   </div>
                   <h5 className="fw-bold mb-3" style={boldStyle}>Email Us</h5>
                   <p className="text-secondary mb-1" style={letterStyle}>info@lexusdroptaxi.com</p>
-                  <p className="text-secondary mb-1" style={letterStyle}>nagarajan16052001@gmail.com</p>
+                
                 </Card.Body>
               </Card>
             </Col>
@@ -2432,7 +2440,7 @@ const Home = () => {
             >
               Book Now
             </Button>
-            <a href="tel:+918148111516">
+            <a href="tel:+917200343435">
               <Button variant="outline-dark" size="lg" className="rounded-pill px-5" style={boldStyle}>
                 <FaPhone className="me-2" /> Call Us
               </Button>

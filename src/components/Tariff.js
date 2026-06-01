@@ -24,12 +24,12 @@ const Tariff = () => {
     letterSpacing: '-0.02em'
   };
 
-  // Tariff Data with GOLD BACKGROUND for images (same as Home page)
+  // Tariff Data with UPDATED RATES
   const cars = [
     {
       name: 'SEDAN',
-      oneWayRate: 14,
-      roundTripRate: 13,
+      oneWayRate: 15,
+      roundTripRate: 14,
       minKmOneWay: 130,
       minKmRoundTrip: 250,
       driverBata: 400,
@@ -48,9 +48,9 @@ const Tariff = () => {
       ]
     },
     {
-      name: 'SEDAN',
-      oneWayRate: 15,
-      roundTripRate: 14,
+      name: 'ETIOS',
+      oneWayRate: 16,
+      roundTripRate: 15,
       minKmOneWay: 130,
       minKmRoundTrip: 250,
       driverBata: 400,
@@ -69,13 +69,13 @@ const Tariff = () => {
       ]
     },
     {
-      name: 'SUV',
-      oneWayRate: 19,
-      roundTripRate: 18,
+      name: 'MUV',
+      oneWayRate: 20,
+      roundTripRate: 19,
       minKmOneWay: 130,
       minKmRoundTrip: 250,
-      driverBata: 500,
-      hillCharges: 500,
+      driverBata: 400,
+      hillCharges: 300,
       permitCharge: 14,
       images: [
         { url: '/images/suv/xylo-1.jpg', 
@@ -91,12 +91,12 @@ const Tariff = () => {
     },
     {
       name: 'INNOVA',
-      oneWayRate: 20,
-      roundTripRate: 19,
+      oneWayRate: 21,
+      roundTripRate: 20,
       minKmOneWay: 130,
       minKmRoundTrip: 250,
-      driverBata: 500,
-      hillCharges: 500,
+      driverBata: 400,
+      hillCharges: 300,
       permitCharge: 14,
       images: [
         { url: '/images/innova/innova-1.jpg', 
@@ -126,7 +126,7 @@ const Tariff = () => {
           {cars.map((car, index) => (
             <Col lg={6} md={6} key={index} className="mb-5">
               <Card className="border-0 shadow h-100" style={{ borderRadius: '20px', overflow: 'hidden' }}>
-                {/* Carousel with GOLD BACKGROUND for each image - EXACTLY LIKE HOME PAGE */}
+                {/* Carousel with GOLD BACKGROUND for each image */}
                 <Carousel 
                   interval={3000}
                   indicators={true}
@@ -137,7 +137,7 @@ const Tariff = () => {
                 >
                   {car.images.map((imageObj, imgIndex) => (
                     <Carousel.Item key={imgIndex}>
-                      {/* Container with GOLD background - SAME AS HOME PAGE */}
+                      {/* Container with GOLD background */}
                       <div style={{
                         width: '100%',
                         height: '280px',
@@ -305,7 +305,7 @@ const Tariff = () => {
                   </li>
                   <li className="mb-3 d-flex" style={letterStyle}>
                     <span className="text-warning me-2 fw-bold">•</span>
-                    <span>Hill station charges - Sedan Rs.400 & SUV Rs.500</span>
+                    <span>Hill station charges - Sedan Rs.300 & SUV Rs.300</span>
                   </li>
                   <li className="mb-3 d-flex" style={letterStyle}>
                     <span className="text-warning me-2 fw-bold">•</span>

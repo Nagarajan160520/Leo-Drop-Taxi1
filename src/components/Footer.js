@@ -142,8 +142,8 @@ const Footer = () => {
             <div className="d-flex mb-3">
               <FaPhone className="text-warning me-3 mt-1" size={20} />
               <span className="text-light">
-                <a href="tel:+918148111516" className="text-light text-decoration-none hover-warning d-block">
-                  +91 8148111516
+                <a href="tel:+917200343435" className="text-light text-decoration-none hover-warning d-block">
+                  +91 7200343435
                 </a>
                 
               </span>
