@@ -179,10 +179,10 @@ const Home = () => {
   useEffect(() => {
     if (statsVisible) {
       const targets = {
-        trips: 15000,
+        trips: 25000,
         rating: 48,
         awards: 10,
-        customers: 5000
+        customers: 30000
       };
 
       const duration = 1500;
@@ -2423,31 +2423,7 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-5 bg-warning">
-        <Container className="text-center">
-          <h2 className="fw-bold mb-3" style={{ 
-            fontSize: 'clamp(1.5rem, 4vw, 2rem)',
-            ...headingStyle
-          }}>Ready to travel?</h2>
-          <p className="lead mb-4" style={letterStyle}>Book your cab now and get <OptimizedNumber num={10} />% off on first ride!</p>
-          <div className="d-flex justify-content-center gap-3 flex-wrap">
-            <Button 
-              variant="dark" 
-              size="lg"
-              className="rounded-pill px-5"
-              onClick={() => document.querySelector('.card').scrollIntoView({ behavior: 'smooth' })}
-              style={boldStyle}
-            >
-              Book Now
-            </Button>
-            <a href="tel:+917200343435">
-              <Button variant="outline-dark" size="lg" className="rounded-pill px-5" style={boldStyle}>
-                <FaPhone className="me-2" /> Call Us
-              </Button>
-            </a>
-          </div>
-        </Container>
-      </section>
+      
     </div>
   );
 };

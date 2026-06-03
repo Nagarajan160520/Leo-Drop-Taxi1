@@ -461,7 +461,7 @@ const About = () => {
             className="display-4 fw-bold mb-3 text-white fade-in"
             style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}
           >
-            About King Drop Taxi
+            About Lexus-Drop Taxi
           </h1>
           <p 
             className="lead text-white slide-in-left"
