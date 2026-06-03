@@ -2272,7 +2272,7 @@ const Home = () => {
           <Row className="align-items-center">
             <Col lg={6} className="mb-4 mb-lg-0">
               <img 
-                src="/images/sedan/swift-dzire-1.jpg"
+                src="/images/sedan/swift-dzire-2.jpg"
                 alt="Our Fleet"
                 className="img-fluid rounded-3 shadow"
                 loading="lazy"
