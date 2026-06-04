@@ -28,8 +28,8 @@ const About = () => {
   const statsRef = useRef(null);
 
   const stats = [
-    { icon: <FaCar />, value: 15000, label: 'Trips Completed', suffix: '+', target: 15000 },
-    { icon: <FaUsers />, value: 5000, label: 'Happy Customers', suffix: '+', target: 5000 },
+    { icon: <FaCar />, value: 15000, label: 'Trips Completed', suffix: '+', target: 30000 },
+    { icon: <FaUsers />, value: 5000, label: 'Happy Customers', suffix: '+', target: 25000 },
     { icon: <FaAward />, value: 10, label: 'Awards', suffix: '+', target: 10 },
     { icon: <FaHeart />, value: 100, label: 'Fleet Size', suffix: '+', target: 100 }
   ];
@@ -63,8 +63,8 @@ const About = () => {
   useEffect(() => {
     if (statsVisible) {
       const targets = {
-        trips: 15000,
-        customers: 5000,
+        trips: 30000,
+        customers: 25000,
         awards: 10,
         fleet: 100
       };

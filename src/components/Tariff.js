@@ -228,7 +228,7 @@ const Tariff = () => {
                   <div>
                     <h6 className="fw-bold mb-3" style={headingStyle}>
                       <FaInfoCircle className="text-warning me-2" />
-                      INCLUDE WITH
+                      EXCLUDE WITH
                     </h6>
                     
                     <Row>

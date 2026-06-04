@@ -15,8 +15,6 @@ import {
   FaCalendarAlt,
   FaChevronLeft,
   FaChevronRight,
-  FaQuoteLeft,
-  FaQuoteRight,
   FaCar,
   FaUsers,
   FaAward,
@@ -26,9 +24,9 @@ import {
   FaMountain,
   FaWater,
   FaSun,
-  FaEnvelope
+  FaEnvelope,
+  FaStar
 } from 'react-icons/fa';
-
 const API_URL = '';
 
 // Client WhatsApp number
@@ -36,8 +34,7 @@ const CLIENT_WHATSAPP_NUMBER = '918148111516';
 const CLIENT_PHONE_NUMBER = '918148111516';
 
 // ============================================
-// LETTER STYLING - Exactly matching the photo
-// Bold, clean, professional font with proper spacing
+// LETTER STYLING
 // ============================================
 const letterStyle = {
   fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
@@ -59,7 +56,7 @@ const boldStyle = {
   letterSpacing: '-0.02em'
 };
 
-// Pre-compute number styles with clean professional look
+// Pre-compute number styles
 const numberStyles = {
   fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
   fontWeight: '700',
@@ -69,7 +66,6 @@ const numberStyles = {
   color: 'inherit'
 };
 
-// Optimized number renderer - memoized to prevent recalculation
 const OptimizedNumber = React.memo(({ num }) => {
   return <span style={numberStyles}>{num}</span>;
 });
@@ -78,13 +74,11 @@ const Home = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   
-  // Carousel state
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
  
   const autoPlayRef = useRef(null);
   
-  // Form state
   const [formData, setFormData] = useState({
     tripType: 'one-way',
     pickupLocation: '',
@@ -101,7 +95,6 @@ const Home = () => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [fareEstimate, setFareEstimate] = useState(null);
 
-  // Counter animation states
   const [counters, setCounters] = useState({
     trips: 0,
     rating: 0,
@@ -112,7 +105,6 @@ const Home = () => {
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef(null);
 
-  // Background carousel images
   const carouselImages = useMemo(() => [
     {
       url: 'images/image1.jpg',
@@ -136,7 +128,50 @@ const Home = () => {
     }
   ], []);
 
-  // Auto-play carousel with cleanup
+  // POPULAR DESTINATIONS DATA - 4 cities in 2x2 grid
+  const popularDestinations = useMemo(() => [
+    {
+      id: 1,
+      name: 'CHENNAI',
+      state: 'Tamil Nadu',
+      description: 'Looking for reliable taxi services in Chennai? Explore the cultural capital of Tamil Nadu with our local and round trip taxi packages.',
+      popularSpots: ['Marina Beach', 'Kapaleeshwar Temple', 'San Thome Cathedral', 'Guindy National Park'],
+      image: '/images/routess/chennai.png',
+      shareLink: 'onewaydroptaxi.in/Chennai-drop-taxi',
+      bgGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+    },
+    {
+      id: 2,
+      name: 'COIMBATORE',
+      state: 'Tamil Nadu',
+      description: 'Explore the Manchester of South India with our premium taxi services. Visit iconic temples and scenic hill stations nearby.',
+      popularSpots: ['Marudamalai Temple', 'Isha Yoga Center', 'VOC Park', 'Siruvani Falls'],
+      image: '/images/routess/coimbator.png',
+      shareLink: 'onewaydroptaxi.in/Coimbatore-drop-taxi',
+      bgGradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+    },
+    {
+      id: 3,
+      name: 'MADURAI',
+      state: 'Tamil Nadu',
+      description: 'Experience the cultural heart of Tamil Nadu! Visit the magnificent Meenakshi Temple and explore ancient traditions.',
+      popularSpots: ['Meenakshi Temple', 'Thirumalai Nayakkar Palace', 'Koodal Azhagar Temple', 'Samanalar Hills'],
+      image: '/images/routess/maadurai1.png',
+      shareLink: 'onewaydroptaxi.in/Madurai-drop-taxi',
+      bgGradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+    },
+    {
+      id: 4,
+      name: 'BENGALURU',
+      state: 'Karnataka',
+      description: 'Discover the Garden City with our comfortable taxi services. Perfect for IT visits, sightseeing, and outstation trips.',
+      popularSpots: ['Cubbon Park', 'Bangalore Palace', 'Lalbagh Garden', 'Wonderla Amusement Park'],
+      image: '/images/routess/bengaluru.png',
+      shareLink: 'onewaydroptaxi.in/Bengaluru-drop-taxi',
+      bgGradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+    }
+  ], []);
+
   useEffect(() => {
     if (isAutoPlaying) {
       autoPlayRef.current = setInterval(() => {
@@ -150,13 +185,12 @@ const Home = () => {
     };
   }, [isAutoPlaying, carouselImages.length]);
 
-  // Intersection Observer for stats animation - optimized
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
           setStatsVisible(true);
-          observer.disconnect(); // Stop observing after animation starts
+          observer.disconnect();
         }
       },
       { threshold: 0.3 }
@@ -175,7 +209,6 @@ const Home = () => {
     };
   }, []);
 
-  // Counter animation when stats become visible - optimized
   useEffect(() => {
     if (statsVisible) {
       const targets = {
@@ -218,11 +251,9 @@ const Home = () => {
     }
   }, [statsVisible]);
 
-  // Pause auto-play on hover
   const handleMouseEnter = () => setIsAutoPlaying(false);
   const handleMouseLeave = () => setIsAutoPlaying(true);
 
-  // Navigate to next/previous slide
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
     setIsAutoPlaying(false);
@@ -248,7 +279,6 @@ const Home = () => {
     return `${hours}:${minutes}`;
   };
 
-  // Fetch cars with UPDATED RATES
   useEffect(() => {
     setFormData(prev => ({
       ...prev,
@@ -261,7 +291,6 @@ const Home = () => {
         if (response.data.data && response.data.data.length > 0) {
           setCars(response.data.data);
         } else {
-          // UPDATED RATES as per client request
           setCars([
             { name: 'SEDAN', displayName: 'SEDAN', oneWayRate: 15, roundTripRate: 14, driverBata: 400, hillCharges: 300 },
             { name: 'ETIOS', displayName: 'ETIOS', oneWayRate: 16, roundTripRate: 15, driverBata: 400, hillCharges: 300 },
@@ -271,7 +300,6 @@ const Home = () => {
         }
       } catch (error) {
         console.error('Error fetching cars:', error);
-        // UPDATED RATES as per client request
         setCars([
           { name: 'SEDAN', displayName: 'SEDAN', oneWayRate: 15, roundTripRate: 14, driverBata: 400, hillCharges: 300 },
           { name: 'ETIOS', displayName: 'ETIOS', oneWayRate: 16, roundTripRate: 15, driverBata: 400, hillCharges: 300 },
@@ -284,7 +312,6 @@ const Home = () => {
     fetchCars();
   }, []);
 
-  // Fetch user's recent bookings
   const fetchRecentBookings = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
@@ -347,7 +374,6 @@ const Home = () => {
       
       toast.success(`${carName} selected - Fare calculated!`);
     } else {
-      // UPDATED default rates as per client request
       const defaultRates = {
         'SEDAN': { oneWay: 15, roundTrip: 14, bata: 400, hillCharges: 300 },
         'ETIOS': { oneWay: 16, roundTrip: 15, bata: 400, hillCharges: 300 },
@@ -509,10 +535,8 @@ const Home = () => {
       const clientMessage = generateWhatsAppMessage(bookingData);
       sendWhatsAppToClient(clientMessage);
       
-      // Show success popup
       setShowSuccessPopup(true);
       
-      // Reset form
       setFormData({
         tripType: 'one-way',
         pickupLocation: '',
@@ -535,10 +559,8 @@ const Home = () => {
     }
   };
 
-  // Function to handle popup close and redirect to home
   const handlePopupClose = () => {
     setShowSuccessPopup(false);
-    // Scroll to top smoothly
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -549,16 +571,6 @@ const Home = () => {
     { icon: '👥', value: counters.customers, label: 'Happy Customers', suffix: '+' }
   ];
 
-  const testimonials = [
-    { name: 'Priya S.', text: 'Driver was on time, car was clean, and the ride was smooth. Will definitely book again!', rating: 5 },
-    { name: 'Anita R.', text: "I've used this service they've always been punctual. Highly recommend for airport transfers.", rating: 5 },
-    { name: 'Vignesh P.', text: 'Affordable prices compared to others, but still excellent service quality.', rating: 4 },
-    { name: 'Rajesh K.', text: 'The driver was polite and knew the best route to avoid traffic.', rating: 5 }
-  ];
-
-  // ============================================
-  // TARIFF DATA WITH UPDATED RATES FOR CAR IMAGES
-  // ============================================
   const tariffCars = useMemo(() => [
     {
       name: 'SEDAN',
@@ -646,14 +658,13 @@ const Home = () => {
     }
   ], []);
 
-  // Popular Routes Data - UPDATED RATES
   const popularRoutes = useMemo(() => [
     {
-      from: 'Chennai',
-      to: 'Kodaikanal',
+      from: 'kanniyakumari',
+      to: 'chennai',
       icon: <FaMountain />,
-      image: '/images/routess/kodaikanal1.jpg',
-      description: 'Princess of Hill Stations - Scenic beauty & pleasant climate',
+      image: '/images/routess/kanniyakumari.jpg',
+      description: 'Princess of Hill Stations - Scenic beauty & pleasant ',
       distance: '520 km',
       cars: [
         { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
@@ -667,7 +678,7 @@ const Home = () => {
       to: 'Coutralam',
       icon: <FaWater />,
       image: '/images/routess/kuththalam.jpg',
-      description: 'Famous waterfalls & natural spa - The Spa of South India',
+      description: 'Famous waterfalls & natural spa - The Spa of South ',
       distance: '650 km',
       cars: [
         { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
@@ -678,9 +689,9 @@ const Home = () => {
     },
     {
       from: 'Chennai',
-      to: 'Kanniyakumari',
+      to: 'madurai',
       icon: <FaSun />,
-      image: '/images/routess/kaniyakumari.jpg',
+      image: '/images/routess/madurai.jpg',
       description: 'Southernmost tip of India - Sunrise & sunset view',
       distance: '720 km',
       cars: [
@@ -706,7 +717,6 @@ const Home = () => {
     }
   ], []);
 
-  // About Stats
   const aboutStats = useMemo(() => [
     { icon: <FaCar />, value: '15000+', label: 'Trips Completed' },
     { icon: <FaUsers />, value: '5000+', label: 'Happy Customers' },
@@ -714,7 +724,6 @@ const Home = () => {
     { icon: <FaHeart />, value: '100+', label: 'Fleet Size' }
   ], []);
 
-  // Optimized sparkles - reduced count and simplified
   const generateSparkles = useCallback(() => {
     const sparkles = [];
     for (let i = 0; i < 15; i++) {
@@ -739,10 +748,6 @@ const Home = () => {
     return sparkles;
   }, []);
 
-  // ============================================
-  // FORM STYLES - Optimized for performance
-  // ============================================
-  
   const formStyles = {
     card: {
       borderRadius: '20px',
@@ -841,6 +846,26 @@ const Home = () => {
         align-items: center;
       }
       
+      .destination-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      
+      .destination-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
+      }
+      
+      .spot-tag {
+        display: inline-block;
+        background: rgba(255,255,255,0.2);
+        border-radius: 20px;
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        margin-right: 8px;
+        margin-bottom: 8px;
+      }
+      
       /* Mobile Breakpoint */
       @media (max-width: 991px) {
         .hero-row {
@@ -894,13 +919,11 @@ const Home = () => {
         
         .carousel-caption h3 {
           font-size: 1.2rem !important;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
           font-weight: 700 !important;
         }
         
         .carousel-caption p {
           font-size: 0.9rem !important;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
         }
         
         .carousel-indicators {
@@ -913,38 +936,32 @@ const Home = () => {
         
         .form-title {
           font-size: 1.4rem !important;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
           font-weight: 700 !important;
         }
         
         .form-label {
           font-size: 0.9rem !important;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
         }
         
         .form-input {
           font-size: 0.95rem !important;
           padding: 0.5rem 0.7rem !important;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
         }
         
         .trip-type-box {
           padding: 0.5rem !important;
           font-size: 0.9rem !important;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
           font-weight: 700 !important;
         }
         
         .fare-box {
           padding: 0.7rem !important;
           font-size: 0.9rem !important;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
         }
         
         .submit-button {
           font-size: 1rem !important;
           padding: 0.6rem !important;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
           font-weight: 700 !important;
         }
         
@@ -960,26 +977,20 @@ const Home = () => {
         
         h2 {
           font-size: 1.8rem !important;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
           font-weight: 700 !important;
         }
         
-        h3 {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
-          font-weight: 700 !important;
+        .destination-card .card-body {
+          padding: 1.2rem !important;
         }
         
-        h4, h5, h6 {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
-          font-weight: 700 !important;
+        .destination-card h4 {
+          font-size: 1.3rem !important;
         }
         
-        p, span, div, small, strong {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
-        }
-        
-        .p-5 {
-          padding: 1.5rem !important;
+        .destination-card .btn {
+          font-size: 0.85rem !important;
+          padding: 8px 12px !important;
         }
         
         .floating-icon {
@@ -1037,6 +1048,15 @@ const Home = () => {
           height: 65px !important;
           font-size: 32px !important;
         }
+        
+        .destination-card .popular-spots {
+          font-size: 0.7rem !important;
+        }
+        
+        .destination-card .spot-tag {
+          font-size: 0.65rem !important;
+          padding: 2px 8px !important;
+        }
       }
       
       /* Apply consistent font to all elements */
@@ -1059,7 +1079,7 @@ const Home = () => {
         font-weight: inherit !important;
       }
       
-      /* Optimized animations with will-change */
+      /* Animations */
       @keyframes sparkle {
         0%, 100% { 
           opacity: 0.2; 
@@ -1119,7 +1139,7 @@ const Home = () => {
         );
         transform: rotate(25deg);
         animation: shineMove 8s infinite;
-        pointerEvents: none;
+        pointer-events: none;
         z-index: 5;
         opacity: 0.4;
         will-change: transform;
@@ -1163,7 +1183,7 @@ const Home = () => {
         );
         transform: rotate(45deg);
         animation: buttonShine 4s infinite;
-        pointerEvents: none;
+        pointer-events: none;
         will-change: transform;
       }
       
@@ -1259,12 +1279,9 @@ const Home = () => {
 
   return (
     <div className="fade-in">
-      {/* Inject mobile styles */}
       <style>{formStyles.mobileStyles}</style>
 
       {/* FLOATING WHATSAPP AND PHONE ICONS */}
-      
-      {/* Left Side - WhatsApp Icon */}
       <a 
         href={`https://wa.me/${CLIENT_WHATSAPP_NUMBER}`}
         target="_blank"
@@ -1302,8 +1319,6 @@ const Home = () => {
         }}
       >
         <FaWhatsapp />
-        
-        {/* Tooltip */}
         <span style={{
           position: 'absolute',
           left: '70px',
@@ -1323,7 +1338,6 @@ const Home = () => {
         </span>
       </a>
 
-      {/* Right Side - Phone Icon */}
       <a 
         href={`tel:+${CLIENT_PHONE_NUMBER}`}
         className="floating-icon phone-icon"
@@ -1359,8 +1373,6 @@ const Home = () => {
         }}
       >
         <FaPhone />
-        
-        {/* Tooltip */}
         <span style={{
           position: 'absolute',
           right: '70px',
@@ -1391,7 +1403,6 @@ const Home = () => {
       >
         <Container>
           <Row className="hero-row">
-            {/* Left Column - Text Content */}
             <Col lg={6} className="hero-col-text">
               <h1 
                 className="display-3 fw-bold mb-4 text-white" 
@@ -1402,8 +1413,8 @@ const Home = () => {
                   letterSpacing: '-0.03em'
                 }}
               >
-                𝘼𝙣𝙮𝙬𝙝𝙚𝙧𝙚 𝙔𝙤𝙪 𝙂𝙤,<br />
-                <span className="text-warning" style={headingStyle}>𝙒𝙚'𝙧𝙚 𝙏𝙝𝙚𝙧𝙚 </span>
+                Anywhere You Go,<br />
+                <span className="text-warning" style={headingStyle}>We're There</span>
               </h1>
               <p 
                 className="lead mb-5" 
@@ -1415,12 +1426,11 @@ const Home = () => {
                   color: '#FFFFFF'
                 }}
               >
-                𝘚𝘢𝘧𝘦, 𝘤𝘰𝘮𝘧𝘰𝘳𝘵𝘢𝘣𝘭𝘦, 𝘢𝘯𝘥 𝘰𝘯-𝘵𝘪𝘮𝘦 𝘵𝘢𝘹𝘪 𝘴𝘦𝘳𝘷𝘪𝘤𝘦 𝘢𝘤𝘳𝘰𝘴𝘴 𝘛𝘢𝘮𝘪𝘭𝘯𝘢𝘥𝘶, 
-                𝘒𝘦𝘳𝘢𝘭𝘢, 𝘈𝘯𝘥𝘩𝘳𝘢 𝘗𝘳𝘢𝘥𝘦𝘴𝘩, 𝘒𝘢𝘳𝘯𝘢𝘵𝘢𝘬𝘢, 𝘢𝘯𝘥 𝘗𝘰𝘯𝘥𝘪𝘤𝘩𝘦𝘳𝘳𝘺.
+                Safe, comfortable, and on-time taxi service across Tamilnadu, 
+                Kerala, Andhra Pradesh, Karnataka, and Pondicherry.
               </p>
             </Col>
 
-            {/* Middle Column - Carousel */}
             <Col lg={6} className="hero-col-carousel">
               <div 
                 className="carousel-container"
@@ -1461,7 +1471,6 @@ const Home = () => {
                   </div>
                 ))}
 
-                {/* Navigation Arrows */}
                 <button
                   onClick={prevSlide}
                   className="position-absolute top-50 start-0 translate-middle-y btn btn-dark bg-opacity-50 border-0 rounded-end-0 carousel-arrow"
@@ -1486,7 +1495,6 @@ const Home = () => {
                   <FaChevronRight size={20} className="text-white" />
                 </button>
 
-                {/* Slide Indicators */}
                 <div 
                   className="position-absolute bottom-0 start-50 translate-middle-x d-flex gap-2 mb-3 carousel-indicators"
                   style={{ zIndex: 10 }}
@@ -1508,7 +1516,6 @@ const Home = () => {
               </div>
             </Col>
 
-            {/* Right Column - Form */}
             <Col lg={6} className="hero-col-form">
               <Card 
                 className="border-0 shadow-lg form-card" 
@@ -1527,7 +1534,6 @@ const Home = () => {
                   </h3>
 
                   <form onSubmit={handleSubmit}>
-                    {/* Trip Type */}
                     <div className="mb-3">
                       <label className="fw-bold form-label" style={formStyles.label}>Trip Type</label>
                       <div className="d-flex gap-3">
@@ -1570,7 +1576,6 @@ const Home = () => {
                       </div>
                     </div>
 
-                    {/* Pickup Location */}
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
                         <FaMapMarkerAlt className="me-1" style={{ color: '#FFD700' }} size={12} />
@@ -1588,7 +1593,6 @@ const Home = () => {
                       />
                     </div>
 
-                    {/* Drop Location */}
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
                         <FaMapMarkerAlt className="me-1" style={{ color: '#FFD700' }} size={12} />
@@ -1606,7 +1610,6 @@ const Home = () => {
                       />
                     </div>
 
-                    {/* Name */}
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
                         <FaUser className="me-1" style={{ color: '#FFD700' }} size={12} />
@@ -1624,7 +1627,6 @@ const Home = () => {
                       />
                     </div>
 
-                    {/* Mobile */}
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
                         <FaPhone className="me-1" style={{ color: '#FFD700' }} size={12} />
@@ -1644,7 +1646,6 @@ const Home = () => {
                       />
                     </div>
 
-                    {/* Pickup Date & Time */}
                     <Row className="mb-2">
                       <Col xs={6}>
                         <label className="fw-bold form-label" style={formStyles.label}>
@@ -1679,14 +1680,12 @@ const Home = () => {
                       </Col>
                     </Row>
  
-                    {/* SELECT CAR TYPE - Using local images with UPDATED PRICES */}
                     <div className="mb-3">
                       <label className="fw-bold form-label mb-3" style={{ ...formStyles.label, fontSize: '1.1rem' }}>
                         Select Car Type *
                       </label>
                       
                       <Row className="g-3">
-                        {/* SEDAN - Updated price ₹15/km one way */}
                         <Col xs={6}>
                           <div 
                             className={`car-option ${formData.carType === 'SEDAN' ? 'selected' : ''}`}
@@ -1702,20 +1701,6 @@ const Home = () => {
                               transform: formData.carType === 'SEDAN' ? 'translateY(-2px)' : 'none'
                             }}
                             onClick={() => selectCar('SEDAN')}
-                            onMouseEnter={(e) => {
-                              if (formData.carType !== 'SEDAN') {
-                                e.currentTarget.style.borderColor = '#FFD700';
-                                e.currentTarget.style.boxShadow = '0 8px 20px rgba(255,215,0,0.2)';
-                                e.currentTarget.style.transform = 'translateY(-1px)';
-                              }
-                            }}
-                            onMouseLeave={(e) => {
-                              if (formData.carType !== 'SEDAN') {
-                                e.currentTarget.style.borderColor = '#151618ff';
-                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
-                                e.currentTarget.style.transform = 'none';
-                              }
-                            }}
                           >
                             <img 
                               src="/images/sedan/hyundai-aura-1.jpg"
@@ -1748,7 +1733,6 @@ const Home = () => {
                           </div>
                         </Col>
 
-                        {/* ETIOS - Updated price ₹16/km one way */}
                         <Col xs={6}>
                           <div 
                             className={`car-option ${formData.carType === 'ETIOS' ? 'selected' : ''}`}
@@ -1764,20 +1748,6 @@ const Home = () => {
                               transform: formData.carType === 'ETIOS' ? 'translateY(-2px)' : 'none'
                             }}
                             onClick={() => selectCar('ETIOS')}
-                            onMouseEnter={(e) => {
-                              if (formData.carType !== 'ETIOS') {
-                                e.currentTarget.style.borderColor = '#FFD700';
-                                e.currentTarget.style.boxShadow = '0 8px 20px rgba(255,215,0,0.2)';
-                                e.currentTarget.style.transform = 'translateY(-1px)';
-                              }
-                            }}
-                            onMouseLeave={(e) => {
-                              if (formData.carType !== 'ETIOS') {
-                                e.currentTarget.style.borderColor = '#dee2e6';
-                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
-                                e.currentTarget.style.transform = 'none';
-                              }
-                            }}
                           >
                             <img 
                               src="/images/sedan2/ciaz-1.jpg"
@@ -1810,7 +1780,6 @@ const Home = () => {
                           </div>
                         </Col>
 
-                        {/* MUV - Updated price ₹20/km one way */}
                         <Col xs={6}>
                           <div 
                             className={`car-option ${formData.carType === 'MUV' ? 'selected' : ''}`}
@@ -1826,20 +1795,6 @@ const Home = () => {
                               transform: formData.carType === 'MUV' ? 'translateY(-2px)' : 'none'
                             }}
                             onClick={() => selectCar('MUV')}
-                            onMouseEnter={(e) => {
-                              if (formData.carType !== 'MUV') {
-                                e.currentTarget.style.borderColor = '#FFD700';
-                                e.currentTarget.style.boxShadow = '0 8px 20px rgba(255,215,0,0.2)';
-                                e.currentTarget.style.transform = 'translateY(-1px)';
-                              }
-                            }}
-                            onMouseLeave={(e) => {
-                              if (formData.carType !== 'MUV') {
-                                e.currentTarget.style.borderColor = '#dee2e6';
-                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
-                                e.currentTarget.style.transform = 'none';
-                              }
-                            }}
                           >
                             <img 
                               src="/images/suv/marazzo-1.jpg"
@@ -1872,7 +1827,6 @@ const Home = () => {
                           </div>
                         </Col>
 
-                        {/* INNOVA - Updated price ₹21/km one way */}
                         <Col xs={6}>
                           <div 
                             className={`car-option ${formData.carType === 'INNOVA' ? 'selected' : ''}`}
@@ -1888,20 +1842,6 @@ const Home = () => {
                               transform: formData.carType === 'INNOVA' ? 'translateY(-2px)' : 'none'
                             }}
                             onClick={() => selectCar('INNOVA')}
-                            onMouseEnter={(e) => {
-                              if (formData.carType !== 'INNOVA') {
-                                e.currentTarget.style.borderColor = '#FFD700';
-                                e.currentTarget.style.boxShadow = '0 8px 20px rgba(255,215,0,0.2)';
-                                e.currentTarget.style.transform = 'translateY(-1px)';
-                              }
-                            }}
-                            onMouseLeave={(e) => {
-                              if (formData.carType !== 'INNOVA') {
-                                e.currentTarget.style.borderColor = '#dee2e6';
-                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
-                                e.currentTarget.style.transform = 'none';
-                              }
-                            }}
                           >
                             <img 
                               src="/images/innova/innova-1.jpg"
@@ -1936,7 +1876,6 @@ const Home = () => {
                       </Row>
                     </div>
 
-                    {/* Fare Estimate */}
                     {fareEstimate && (
                       <div className="bg-light rounded mb-3 fare-box" style={formStyles.fareBox}>
                         <div className="d-flex justify-content-between mb-1">
@@ -1958,7 +1897,6 @@ const Home = () => {
                       </div>
                     )}
 
-                    {/* Book Your Cab Button */}
                     <Button
                       type="submit"
                       disabled={loading}
@@ -1983,7 +1921,6 @@ const Home = () => {
                       {loading ? 'Booking...' : 'Book Your Cab'}
                     </Button>
                     
-                    {/* WhatsApp Info */}
                     <p className="text-center mt-2 mb-0 small" style={{ color: '#FFFFFF', ...letterStyle }}>
                       <FaWhatsapp className="me-1" style={{ color: '#25d366' }} size={12} />
                       Notification sent to admin
@@ -2068,9 +2005,7 @@ const Home = () => {
         </Row>
       </Container>
 
-      {/* ============================================ */}
-      {/* TARIFF SECTION - WITH UPDATED RATES */}
-      {/* ============================================ */}
+      {/* TARIFF SECTION */}
       <section className="py-5 bg-light">
         <Container>
           <h2 className="text-center mb-5" style={{ 
@@ -2082,13 +2017,11 @@ const Home = () => {
           
           <Row>
             {tariffCars.map((car, index) => {
-              // Use the images array with proper model names
               const carImages = car.images;
               
               return (
                 <Col lg={6} md={6} key={index} className="mb-4">
                   <Card className="border-0 shadow h-100" style={{ borderRadius: '20px', overflow: 'hidden' }}>
-                    {/* Carousel with GOLD BACKGROUND for each image */}
                     <Carousel 
                       interval={3000}
                       indicators={true}
@@ -2099,7 +2032,6 @@ const Home = () => {
                     >
                       {carImages.map((imageObj, imgIndex) => (
                         <Carousel.Item key={imgIndex}>
-                          {/* Container with GOLD background */}
                           <div style={{
                             width: '100%',
                             height: '280px',
@@ -2167,7 +2099,7 @@ const Home = () => {
                       </div>
 
                       <div>
-                        <h6 className="fw-bold mb-3" style={headingStyle}><FaInfoCircle className="text-warning me-2" />INCLUDE WITH</h6>
+                        <h6 className="fw-bold mb-3" style={headingStyle}><FaInfoCircle className="text-warning me-2" />EXCLUDE WITH</h6>
                         <Row>
                           <Col xs={6}>
                             <ul className="list-unstyled">
@@ -2204,7 +2136,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* POPULAR ROUTES SECTION - WITH UPDATED RATES */}
+      {/* POPULAR ROUTES SECTION */}
       <section className="py-5">
         <Container>
           <h2 className="text-center mb-5" style={{ 
@@ -2226,7 +2158,7 @@ const Home = () => {
                       loading="lazy"
                     />
                     <div className="position-absolute bottom-0 start-0 w-100 p-3" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: 'white' }}>
-                      <h5 className="fw-bold mb-1" style={headingStyle}>{route.from} to {route.to}</h5>
+                      
                       <p className="mb-0 small" style={letterStyle}>{route.description}</p>
                     </div>
                   </div>
@@ -2244,11 +2176,7 @@ const Home = () => {
                       <span className="fw-bold me-2" style={boldStyle}>SEDAN:</span> ₹<OptimizedNumber num={route.cars[0].oneWay} />/km | 
                       <span className="fw-bold ms-2 me-2" style={boldStyle}>MUV:</span> ₹<OptimizedNumber num={route.cars[2].oneWay} />/km
                     </div>
-                    <div className="mt-3">
-                      <Button variant="outline-warning" size="sm" className="w-100" onClick={() => navigate('/popular-routes')} style={boldStyle}>
-                        View Details
-                      </Button>
-                    </div>
+                   
                   </Card.Body>
                 </Card>
               </Col>
@@ -2260,7 +2188,138 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* ABOUT SECTION - CHANGED CAR IMAGE TO USE swift-dzire-1.jpg */}
+            <section className="py-5">
+        <Container>
+          <h2 className="text-center mb-5" style={{ 
+            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+            ...headingStyle
+          }}>
+            Popular <span className="text-warning" style={headingStyle}>Destinations</span>
+          </h2>
+          
+          <Row className="g-4">
+            {popularDestinations.map((destination) => (
+              <Col lg={6} md={6} key={destination.id}>
+                <Card className="border-0 shadow-lg h-100 destination-card" style={{ 
+                  borderRadius: '20px', 
+                  overflow: 'hidden',
+                  transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                }}>
+                  {/* Image Section with Gradient Overlay */}
+                  <div className="position-relative" style={{ height: '220px', overflow: 'hidden' }}>
+                    <img 
+                      src={destination.image}
+                      alt={destination.name}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        transition: 'transform 0.5s ease'
+                      }}
+                      className="destination-img"
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/600x400?text=' + destination.name;
+                      }}
+                    />
+                    <div 
+                      className="position-absolute top-0 start-0 w-100 h-100"
+                      style={{
+                        background: `linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%)`,
+                      }}
+                    ></div>
+                    <div 
+                      className="position-absolute bottom-0 start-0 w-100 p-4"
+                      style={{
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)',
+                      }}
+                    >
+                      <h3 className="fw-bold text-white mb-0" style={{ ...headingStyle, fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>
+                        {destination.name}
+                      </h3>
+                      <p className="text-warning fw-semibold mb-0" style={letterStyle}>
+                        {destination.state}
+                      </p>
+                    </div>
+                  </div>
+
+                  <Card.Body className="p-4">
+                    {/* Description */}
+                    <p className="mb-3" style={letterStyle}>
+                      {destination.description}
+                    </p>
+
+                    {/* Popular Spots */}
+                    <div className="mb-3">
+                      <h6 className="fw-bold mb-2" style={{ ...boldStyle, fontSize: '0.85rem', color: '#666' }}>
+                        <FaStar className="text-warning me-1" size={12} />
+                        POPULAR SPOTS:
+                      </h6>
+                      <div className="popular-spots">
+                        {destination.popularSpots.map((spot, idx) => (
+                          <span key={idx} className="spot-tag" style={{
+                            display: 'inline-block',
+                            backgroundColor: '#f0f0f0',
+                            borderRadius: '20px',
+                            padding: '4px 12px',
+                            fontSize: '0.75rem',
+                            marginRight: '8px',
+                            marginBottom: '8px',
+                            ...letterStyle
+                          }}>
+                            {spot}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="d-flex gap-2 mt-3">
+                      <Button 
+                        variant="warning" 
+                        size="sm" 
+                        className="flex-grow-1 fw-bold"
+                        style={{ borderRadius: '10px', ...boldStyle }}
+                        onClick={() => {
+                          setFormData(prev => ({
+                            ...prev,
+                            pickupLocation: destination.name,
+                            dropLocation: ''
+                          }));
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                      >
+                        VIEW DETAILS
+                      </Button>
+                      <Button 
+                        variant="outline-warning" 
+                        size="sm"
+                        style={{ borderRadius: '10px', ...boldStyle }}
+                        onClick={() => window.location.href = `tel:+${CLIENT_PHONE_NUMBER}`}
+                      >
+                        <FaPhone /> CALL
+                      </Button>
+                      <Button 
+                        variant="success" 
+                        size="sm"
+                        style={{ borderRadius: '10px', backgroundColor: '#25d366', borderColor: '#25d366', ...boldStyle }}
+                        onClick={() => window.open(`https://wa.me/${CLIENT_WHATSAPP_NUMBER}?text=Hi! I'm interested in taxi service to ${destination.name}`, '_blank')}
+                      >
+                        <FaWhatsapp /> WHATSAPP
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+          
+          <div className="text-center mt-5">
+            
+          </div>
+        </Container>
+      </section>
+
+      {/* ABOUT SECTION */}
       <section className="py-5 bg-light">
         <Container>
           <h2 className="text-center mb-5" style={{ 
@@ -2305,39 +2364,8 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* CUSTOMER REVIEWS */}
-      <section className="py-5">
-        <Container>
-          <h2 className="text-center mb-5" style={{ 
-            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-            ...headingStyle
-          }}>
-            Customer <span className="text-warning" style={headingStyle}>Reviews</span>
-          </h2>
-          <Row>
-            {testimonials.map((testimonial, index) => (
-              <Col lg={3} md={6} key={index} className="mb-4">
-                <Card className="border-0 shadow h-100">
-                  <Card.Body className="p-4">
-                    <div className="text-warning mb-2">
-                      <FaQuoteLeft className="me-1" size={16} />
-                      <FaQuoteRight className="ms-1" size={16} />
-                    </div>
-                    <p className="mb-3 small" style={letterStyle}>"{testimonial.text}"</p>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <strong className="small" style={boldStyle}>{testimonial.name}</strong>
-                      <div className="text-warning" style={boldStyle}>
-                        {'★'.repeat(testimonial.rating)}
-                        {'☆'.repeat(5 - testimonial.rating)}
-                      </div>
-                    </div>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </section>
+      
+
 
       {/* WHY CHOOSE US */}
       <section className="py-5 bg-light">
@@ -2398,8 +2426,7 @@ const Home = () => {
                     <FaPhone size={24} className="text-dark" />
                   </div>
                   <h5 className="fw-bold mb-3" style={boldStyle}>Call Us</h5>
-                  
-                  <p className="text-secondary mb-1" style={boldStyle}>+91 <OptimizedNumber num={72003} /> <OptimizedNumber num={43435} /></p>
+                  <p className="text-secondary mb-1" style={boldStyle}>+91 72003 43435</p>
                 </Card.Body>
               </Card>
             </Col>
@@ -2411,7 +2438,6 @@ const Home = () => {
                   </div>
                   <h5 className="fw-bold mb-3" style={boldStyle}>Email Us</h5>
                   <p className="text-secondary mb-1" style={letterStyle}>info@lexusdroptaxi.com</p>
-                
                 </Card.Body>
               </Card>
             </Col>
@@ -2421,9 +2447,6 @@ const Home = () => {
           </div>
         </Container>
       </section>
-
-      {/* CTA Section */}
-      
     </div>
   );
 };

@@ -34,9 +34,9 @@ const PopularRoutes = () => {
     },
     {
       from: 'Chennai',
-      to: 'Kanniyakumari',
+      to: 'madurai',
       icon: <FaSun />,
-      image: '/images/routess/kaniyakumari.jpg',
+      image: '/images/routess/madurai.jpg',
       description: 'Southernmost tip of India - Sunrise & sunset view',
       distance: '720 km',
       cars: [
@@ -75,10 +75,10 @@ const PopularRoutes = () => {
       ]
     },
     {
-      from: 'Chennai',
-      to: 'Ooty',
+      from: 'kanniyakumari',
+      to: 'Chennai',
       icon: <FaCloudSun />,
-      image: '/images/routess/ooty.jpg',
+      image: '/images/routess/kanniyakumari.jpg',
       description: 'Queen of Hill Stations - Tea gardens & misty mountains',
       distance: '570 km',
       cars: [

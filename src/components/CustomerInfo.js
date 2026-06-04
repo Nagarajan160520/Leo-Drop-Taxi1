@@ -50,8 +50,8 @@ const CustomerInfo = () => {
   useEffect(() => {
     if (isVisible) {
       const targets = {
-        trips: 15000,
-        customers: 5000,
+        trips: 30000,
+        customers: 25000,
         years: 2,
         satisfaction: 98
       };
@@ -310,7 +310,7 @@ const CustomerInfo = () => {
             >
               <Card.Body className="p-5 text-center">
                 <div className="achievement-badge mb-4">
-                  <span className="badge-number">15,000+</span>
+                  <span className="badge-number">30,000+</span>
                 </div>
                 <h2 className="fw-bold mb-3">TRIPS COMPLETED</h2>
                 <p className="mb-4 fs-5">
