@@ -27,11 +27,214 @@ import {
   FaEnvelope,
   FaStar
 } from 'react-icons/fa';
-const API_URL = '';
 
-// Client WhatsApp number
+// ============================================
+// CONFIGURATION - UPDATE THIS WITH YOUR BACKEND URL
+// ============================================
+const API_URL = 'http://localhost:5000/api';
 const CLIENT_WHATSAPP_NUMBER = '918148111516';
 const CLIENT_PHONE_NUMBER = '918148111516';
+
+// ============================================
+// TAMIL NADU CITIES AND DISTANCES DATABASE
+// ============================================
+const tamilNaduCities = [
+  { name: 'Chennai', lat: 13.0827, lng: 80.2707, district: 'Chennai' },
+  { name: 'Coimbatore', lat: 11.0168, lng: 76.9558, district: 'Coimbatore' },
+  { name: 'Madurai', lat: 9.9252, lng: 78.1198, district: 'Madurai' },
+  { name: 'Tiruchirappalli', lat: 10.7905, lng: 78.7047, district: 'Tiruchirappalli' },
+  { name: 'Tiruppur', lat: 11.1085, lng: 77.3411, district: 'Tiruppur' },
+  { name: 'Salem', lat: 11.6643, lng: 78.1460, district: 'Salem' },
+  { name: 'Erode', lat: 11.3410, lng: 77.7172, district: 'Erode' },
+  { name: 'Tirunelveli', lat: 8.7139, lng: 77.7567, district: 'Tirunelveli' },
+  { name: 'Vellore', lat: 12.9165, lng: 79.1325, district: 'Vellore' },
+  { name: 'Thoothukkudi', lat: 8.7642, lng: 78.1348, district: 'Thoothukkudi' },
+  { name: 'Dindigul', lat: 10.3624, lng: 77.9695, district: 'Dindigul' },
+  { name: 'Thanjavur', lat: 10.7870, lng: 79.1378, district: 'Thanjavur' },
+  { name: 'Ranipet', lat: 12.9235, lng: 79.3242, district: 'Ranipet' },
+  { name: 'Krishnagiri', lat: 12.5187, lng: 78.2173, district: 'Krishnagiri' },
+  { name: 'Karaikudi', lat: 10.0733, lng: 78.7798, district: 'Sivaganga' },
+  { name: 'Kancheepuram', lat: 12.8222, lng: 79.7034, district: 'Kancheepuram' },
+  { name: 'Cuddalore', lat: 11.7468, lng: 79.7643, district: 'Cuddalore' },
+  { name: 'Nagapattinam', lat: 10.7650, lng: 79.8425, district: 'Nagapattinam' },
+  { name: 'Kumbakonam', lat: 10.9562, lng: 79.3900, district: 'Thanjavur' },
+  { name: 'Pudukkottai', lat: 10.3796, lng: 78.8211, district: 'Pudukkottai' },
+  { name: 'Hosur', lat: 12.7409, lng: 77.8253, district: 'Krishnagiri' },
+  { name: 'Nagercoil', lat: 8.1760, lng: 77.4295, district: 'Kanyakumari' },
+  { name: 'Kanyakumari', lat: 8.0883, lng: 77.5385, district: 'Kanyakumari' },
+  { name: 'Tiruvannamalai', lat: 12.2256, lng: 79.0745, district: 'Tiruvannamalai' },
+  { name: 'Villupuram', lat: 11.9386, lng: 79.4898, district: 'Villupuram' },
+  { name: 'Namakkal', lat: 11.2185, lng: 78.1748, district: 'Namakkal' },
+  { name: 'Karur', lat: 10.9574, lng: 78.0767, district: 'Karur' },
+  { name: 'Sivakasi', lat: 9.4500, lng: 77.8000, district: 'Virudhunagar' },
+  { name: 'Rajapalayam', lat: 9.4500, lng: 77.5667, district: 'Virudhunagar' },
+  { name: 'Pollachi', lat: 10.6583, lng: 77.0067, district: 'Coimbatore' },
+  { name: 'Ooty', lat: 11.4069, lng: 76.6932, district: 'Nilgiris' },
+  { name: 'Kodaikanal', lat: 10.2381, lng: 77.4892, district: 'Dindigul' },
+  { name: 'Mettupalayam', lat: 11.3000, lng: 76.9333, district: 'Coimbatore' },
+  { name: 'Avinashi', lat: 11.2000, lng: 77.2667, district: 'Tiruppur' },
+  { name: 'Palladam', lat: 10.9833, lng: 77.3000, district: 'Tiruppur' },
+  { name: 'Udumalpet', lat: 10.5833, lng: 77.2500, district: 'Tiruppur' },
+  { name: 'Gobichettipalayam', lat: 11.4333, lng: 77.4500, district: 'Erode' },
+  { name: 'Sathyamangalam', lat: 11.5000, lng: 77.2333, district: 'Erode' },
+  { name: 'Bhavani', lat: 11.4500, lng: 77.6833, district: 'Erode' },
+  { name: 'Rasipuram', lat: 11.4667, lng: 78.1667, district: 'Namakkal' },
+  { name: 'Tiruchengode', lat: 11.3800, lng: 77.9000, district: 'Namakkal' },
+  { name: 'Komarapalayam', lat: 11.4500, lng: 77.7000, district: 'Namakkal' },
+  { name: 'Mettur', lat: 11.8000, lng: 77.8000, district: 'Salem' },
+  { name: 'Edappadi', lat: 11.5667, lng: 77.6167, district: 'Salem' },
+  { name: 'Attur', lat: 11.6000, lng: 78.6000, district: 'Salem' },
+  { name: 'Vazhapadi', lat: 11.7333, lng: 78.4000, district: 'Salem' },
+  { name: 'Palani', lat: 10.4500, lng: 77.5167, district: 'Dindigul' },
+  { name: 'Oddanchatram', lat: 10.5000, lng: 77.7500, district: 'Dindigul' },
+  { name: 'Vedasandur', lat: 10.5333, lng: 77.9500, district: 'Dindigul' },
+  { name: 'Aruppukkottai', lat: 9.5167, lng: 78.1000, district: 'Virudhunagar' },
+  { name: 'Virudhunagar', lat: 9.5833, lng: 77.9500, district: 'Virudhunagar' },
+  { name: 'Srivilliputhur', lat: 9.5167, lng: 77.6333, district: 'Virudhunagar' },
+  { name: 'Tenkasi', lat: 8.9667, lng: 77.3167, district: 'Tenkasi' },
+  { name: 'Sankarankovil', lat: 9.2667, lng: 77.2000, district: 'Tenkasi' },
+  { name: 'Ambasamudram', lat: 8.7000, lng: 77.4667, district: 'Tirunelveli' },
+  { name: 'Valliyoor', lat: 8.4000, lng: 77.6167, district: 'Tirunelveli' },
+  { name: 'Kallakurichi', lat: 11.7333, lng: 78.9500, district: 'Kallakurichi' },
+  { name: 'Tindivanam', lat: 12.2333, lng: 79.6500, district: 'Villupuram' },
+  { name: 'Gingee', lat: 12.2500, lng: 79.4167, district: 'Villupuram' },
+  { name: 'Arakkonam', lat: 13.0833, lng: 79.6667, district: 'Ranipet' },
+  { name: 'Walajapet', lat: 12.9333, lng: 79.3833, district: 'Ranipet' },
+  { name: 'Melvisharam', lat: 13.0000, lng: 79.5833, district: 'Ranipet' },
+  { name: 'Kovilpatti', lat: 9.1667, lng: 77.8667, district: 'Thoothukkudi' },
+  { name: 'Ramanathapuram', lat: 9.3667, lng: 78.8333, district: 'Ramanathapuram' },
+  { name: 'Paramakudi', lat: 9.5333, lng: 78.5833, district: 'Ramanathapuram' },
+  { name: 'Mudukulathur', lat: 9.3333, lng: 78.5000, district: 'Ramanathapuram' },
+  { name: 'Sivaganga', lat: 9.8667, lng: 78.4833, district: 'Sivaganga' },
+  { name: 'Devakottai', lat: 9.9500, lng: 78.8333, district: 'Sivaganga' },
+  { name: 'Manamadurai', lat: 9.7000, lng: 78.4833, district: 'Sivaganga' },
+  // Courtallam / Kutralam added
+  { name: 'Courtallam', lat: 8.9333, lng: 77.2667, district: 'Tenkasi' },
+  { name: 'Kutralam', lat: 8.9333, lng: 77.2667, district: 'Tenkasi' },
+  { name: 'Courtalam', lat: 8.9333, lng: 77.2667, district: 'Tenkasi' }
+];
+
+// Distance matrix between cities
+const distanceMatrix = {
+  'Chennai': { 'Coimbatore': 510, 'Madurai': 460, 'Salem': 340, 'Tiruchirappalli': 330, 'Vellore': 145, 'Kanchipuram': 70, 'Cuddalore': 185, 'Tirunelveli': 620, 'Kanyakumari': 710, 'Ooty': 540, 'Kodaikanal': 520, 'Rameswaram': 560, 'Kumbakonam': 280, 'Thanjavur': 320, 'Courtallam': 650, 'Kutralam': 650, 'Tenkasi': 640 },
+  'Coimbatore': { 'Chennai': 510, 'Madurai': 210, 'Salem': 160, 'Tiruchirappalli': 220, 'Ooty': 90, 'Kodaikanal': 190, 'Palani': 110, 'Erode': 90, 'Tiruppur': 55, 'Courtallam': 370, 'Kutralam': 370, 'Tenkasi': 360 },
+  'Madurai': { 'Chennai': 460, 'Coimbatore': 210, 'Salem': 260, 'Tiruchirappalli': 140, 'Kanyakumari': 250, 'Rameswaram': 170, 'Kodaikanal': 120, 'Tirunelveli': 160, 'Courtallam': 180, 'Kutralam': 180, 'Tenkasi': 170 },
+  'Salem': { 'Chennai': 340, 'Coimbatore': 160, 'Madurai': 260, 'Tiruchirappalli': 140, 'Erode': 75, 'Bangalore': 210, 'Courtallam': 360, 'Kutralam': 360 },
+  'Tiruchirappalli': { 'Chennai': 330, 'Coimbatore': 220, 'Madurai': 140, 'Salem': 140, 'Kumbakonam': 70, 'Thanjavur': 60, 'Courtallam': 310, 'Kutralam': 310 },
+  'Vellore': { 'Chennai': 145, 'Bangalore': 220, 'Salem': 200, 'Tiruppur': 320, 'Courtallam': 520 },
+  'Tirunelveli': { 'Chennai': 620, 'Madurai': 160, 'Kanyakumari': 90, 'Nagercoil': 85, 'Tenkasi': 75, 'Courtallam': 70, 'Kutralam': 70 },
+  'Kanyakumari': { 'Chennai': 710, 'Madurai': 250, 'Tirunelveli': 90, 'Nagercoil': 20, 'Courtallam': 140, 'Kutralam': 140 },
+  'Erode': { 'Coimbatore': 90, 'Salem': 75, 'Tiruppur': 55, 'Chennai': 420, 'Courtallam': 380 },
+  'Tiruppur': { 'Coimbatore': 55, 'Erode': 55, 'Chennai': 465, 'Salem': 130, 'Courtallam': 350 },
+  'Ooty': { 'Coimbatore': 90, 'Mettupalayam': 40, 'Salem': 240, 'Courtallam': 430 },
+  'Kodaikanal': { 'Madurai': 120, 'Coimbatore': 190, 'Palani': 50, 'Courtallam': 230 },
+  'Thanjavur': { 'Tiruchirappalli': 60, 'Kumbakonam': 45, 'Chennai': 320, 'Courtallam': 350 },
+  'Kumbakonam': { 'Thanjavur': 45, 'Tiruchirappalli': 70, 'Chennai': 280, 'Courtallam': 390 },
+  'Tenkasi': { 'Tirunelveli': 75, 'Madurai': 170, 'Courtallam': 12, 'Kutralam': 12, 'Chennai': 640, 'Coimbatore': 360 },
+  'Courtallam': { 'Tenkasi': 12, 'Tirunelveli': 70, 'Madurai': 180, 'Chennai': 650, 'Coimbatore': 370, 'Kanyakumari': 140, 'Salem': 360, 'Tiruchirappalli': 310, 'Kodaikanal': 230 },
+  'Kutralam': { 'Tenkasi': 12, 'Tirunelveli': 70, 'Madurai': 180, 'Chennai': 650, 'Coimbatore': 370, 'Kanyakumari': 140 }
+};
+
+// Function to calculate distance between two cities
+const calculateDistance = (from, to) => {
+  if (!from || !to) return 0;
+  
+  // Normalize city names
+  let fromCity = from.trim().toLowerCase();
+  let toCity = to.trim().toLowerCase();
+  
+  // Special handling for Courtallam variations
+  if (fromCity === 'courtallam' || fromCity === 'kutralam' || fromCity === 'courtalam') {
+    fromCity = 'Courtallam';
+  } else if (toCity === 'courtallam' || toCity === 'kutralam' || toCity === 'courtalam') {
+    toCity = 'Courtallam';
+  }
+  
+  // Find matching cities from database
+  const fromMatch = tamilNaduCities.find(city => city.name.toLowerCase() === fromCity);
+  const toMatch = tamilNaduCities.find(city => city.name.toLowerCase() === toCity);
+  
+  if (!fromMatch || !toMatch) {
+    // Try to find partial matches
+    const fromPartial = tamilNaduCities.find(city => fromCity.includes(city.name.toLowerCase()) || city.name.toLowerCase().includes(fromCity));
+    const toPartial = tamilNaduCities.find(city => toCity.includes(city.name.toLowerCase()) || city.name.toLowerCase().includes(toCity));
+    
+    if (fromPartial && toPartial) {
+      return calculateDistanceFromMatrix(fromPartial.name, toPartial.name);
+    }
+    return 50; // Default distance if city not found
+  }
+  
+  return calculateDistanceFromMatrix(fromMatch.name, toMatch.name);
+};
+
+const calculateDistanceFromMatrix = (fromName, toName) => {
+  // Check direct distance
+  if (distanceMatrix[fromName] && distanceMatrix[fromName][toName]) {
+    return distanceMatrix[fromName][toName];
+  }
+  
+  if (distanceMatrix[toName] && distanceMatrix[toName][fromName]) {
+    return distanceMatrix[toName][fromName];
+  }
+  
+  // If Chennai to any city not in matrix, estimate based on known distances
+  if (fromName === 'Chennai') {
+    const approximations = {
+      'Kanchipuram': 70, 'Cuddalore': 185, 'Villupuram': 160, 'Nagapattinam': 320,
+      'Pudukkottai': 380, 'Sivaganga': 450, 'Virudhunagar': 540, 'Karur': 370,
+      'Namakkal': 410, 'Dindigul': 420, 'Hosur': 335, 'Krishnagiri': 280,
+      'Ranipet': 105, 'Arakkonam': 80, 'Tiruvannamalai': 190, 'Tindivanam': 125,
+      'Courtallam': 650, 'Kutralam': 650
+    };
+    if (approximations[toName]) return approximations[toName];
+  }
+  
+  // If Coimbatore to any city
+  if (fromName === 'Coimbatore') {
+    const approximations = {
+      'Palani': 110, 'Dindigul': 200, 'Karur': 160, 'Namakkal': 130, 'Pollachi': 40,
+      'Courtallam': 370, 'Kutralam': 370
+    };
+    if (approximations[toName]) return approximations[toName];
+  }
+  
+  // If Madurai to any city
+  if (fromName === 'Madurai') {
+    const approximations = {
+      'Courtallam': 180, 'Kutralam': 180, 'Tenkasi': 170
+    };
+    if (approximations[toName]) return approximations[toName];
+  }
+  
+  // Default return using Haversine formula for approximate distance
+  const fromCity = tamilNaduCities.find(c => c.name === fromName);
+  const toCity = tamilNaduCities.find(c => c.name === toName);
+  
+  if (fromCity && toCity) {
+    const R = 6371; // Earth's radius in km
+    const dLat = (toCity.lat - fromCity.lat) * Math.PI / 180;
+    const dLon = (toCity.lng - fromCity.lng) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(fromCity.lat * Math.PI / 180) * Math.cos(toCity.lat * Math.PI / 180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const distance = Math.round(R * c);
+    return Math.max(distance, 10); // Minimum 10km for very close locations
+  }
+  
+  return 50;
+};
+
+// Auto-suggest function for city names
+const getCitySuggestions = (input) => {
+  if (!input || input.length < 2) return [];
+  const inputLower = input.toLowerCase();
+  return tamilNaduCities
+    .filter(city => city.name.toLowerCase().includes(inputLower))
+    .slice(0, 5)
+    .map(city => city.name);
+};
 
 // ============================================
 // LETTER STYLING
@@ -56,7 +259,6 @@ const boldStyle = {
   letterSpacing: '-0.02em'
 };
 
-// Pre-compute number styles
 const numberStyles = {
   fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
   fontWeight: '700',
@@ -90,10 +292,17 @@ const Home = () => {
     carType: ''
   });
 
+  const [pickupSuggestions, setPickupSuggestions] = useState([]);
+  const [dropSuggestions, setDropSuggestions] = useState([]);
+  const [showPickupSuggestions, setShowPickupSuggestions] = useState(false);
+  const [showDropSuggestions, setShowDropSuggestions] = useState(false);
+  const [calculatedDistance, setCalculatedDistance] = useState(0);
+
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [fareEstimate, setFareEstimate] = useState(null);
+  const [bookingInProgress, setBookingInProgress] = useState(false);
 
   const [counters, setCounters] = useState({
     trips: 0,
@@ -128,7 +337,6 @@ const Home = () => {
     }
   ], []);
 
-  // POPULAR DESTINATIONS DATA - 4 cities in 2x2 grid
   const popularDestinations = useMemo(() => [
     {
       id: 1,
@@ -167,10 +375,91 @@ const Home = () => {
       description: 'Discover the Garden City with our comfortable taxi services. Perfect for IT visits, sightseeing, and outstation trips.',
       popularSpots: ['Cubbon Park', 'Bangalore Palace', 'Lalbagh Garden', 'Wonderla Amusement Park'],
       image: '/images/routess/bengaluru.png',
-      shareLink: 'onewaydroptaxi.in/Bengaluru-drop-taxi',
-      bgGradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+      shareLink: 'onewaydroptaxi.in/bengaluru-drop-taxi',
+      bgGradient: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)'
     }
   ], []);
+
+  // Function to update fare based on distance - NO MINIMUM KM
+  const updateFareWithDistance = useCallback((distance) => {
+    if (!formData.carType) return;
+    
+    const selectedCar = cars.find(c => c.name === formData.carType);
+    if (!selectedCar) return;
+    
+    // Use actual distance directly - NO MINIMUM
+    const actualDistance = Math.max(distance, 1); // Just ensure at least 1km
+    const rate = formData.tripType === 'one-way' ? selectedCar.oneWayRate : selectedCar.roundTripRate;
+    const baseFare = rate * actualDistance;
+    const driverBata = selectedCar.driverBata || 400;
+    const hillCharges = selectedCar.hillCharges || 300;
+    
+    setCalculatedDistance(actualDistance);
+    setFareEstimate({
+      carName: selectedCar.name,
+      rate: rate,
+      actualDistance: actualDistance,
+      baseFare: baseFare,
+      driverBata: driverBata,
+      hillCharges: hillCharges,
+      total: baseFare + driverBata
+    });
+  }, [formData.carType, formData.tripType, cars]);
+
+  // Calculate distance when pickup or drop location changes
+  useEffect(() => {
+    if (formData.pickupLocation && formData.dropLocation) {
+      const distance = calculateDistance(formData.pickupLocation, formData.dropLocation);
+      updateFareWithDistance(distance);
+    } else {
+      setFareEstimate(null);
+      setCalculatedDistance(0);
+    }
+  }, [formData.pickupLocation, formData.dropLocation, formData.tripType, formData.carType, updateFareWithDistance]);
+
+  // Handle pickup location change with suggestions
+  const handlePickupChange = (e) => {
+    const value = e.target.value;
+    setFormData(prev => ({ ...prev, pickupLocation: value }));
+    
+    if (value.length >= 2) {
+      const suggestions = getCitySuggestions(value);
+      setPickupSuggestions(suggestions);
+      setShowPickupSuggestions(true);
+    } else {
+      setPickupSuggestions([]);
+      setShowPickupSuggestions(false);
+    }
+  };
+
+  // Handle drop location change with suggestions
+  const handleDropChange = (e) => {
+    const value = e.target.value;
+    setFormData(prev => ({ ...prev, dropLocation: value }));
+    
+    if (value.length >= 2) {
+      const suggestions = getCitySuggestions(value);
+      setDropSuggestions(suggestions);
+      setShowDropSuggestions(true);
+    } else {
+      setDropSuggestions([]);
+      setShowDropSuggestions(false);
+    }
+  };
+
+  // Select suggestion for pickup
+  const selectPickupSuggestion = (city) => {
+    setFormData(prev => ({ ...prev, pickupLocation: city }));
+    setPickupSuggestions([]);
+    setShowPickupSuggestions(false);
+  };
+
+  // Select suggestion for drop
+  const selectDropSuggestion = (city) => {
+    setFormData(prev => ({ ...prev, dropLocation: city }));
+    setDropSuggestions([]);
+    setShowDropSuggestions(false);
+  };
 
   useEffect(() => {
     if (isAutoPlaying) {
@@ -355,17 +644,37 @@ const Home = () => {
 
     const selectedCar = cars.find(c => c.name === carName);
     
-    if (selectedCar) {
-      const minDistance = formData.tripType === 'one-way' ? 130 : 250;
+    if (selectedCar && calculatedDistance > 0) {
+      // Use actual distance - NO MINIMUM
+      const actualDistance = Math.max(calculatedDistance, 1);
       const rate = formData.tripType === 'one-way' ? selectedCar.oneWayRate : selectedCar.roundTripRate;
-      const baseFare = rate * minDistance;
+      const baseFare = rate * actualDistance;
       const driverBata = selectedCar.driverBata || 400;
       const hillCharges = selectedCar.hillCharges || 300;
       
       setFareEstimate({
         carName: selectedCar.name,
         rate: rate,
-        minDistance: minDistance,
+        actualDistance: actualDistance,
+        baseFare: baseFare,
+        driverBata: driverBata,
+        hillCharges: hillCharges,
+        total: baseFare + driverBata
+      });
+      
+      toast.success(`${carName} selected - Fare calculated!`);
+    } else if (selectedCar && formData.pickupLocation && formData.dropLocation) {
+      const distance = calculateDistance(formData.pickupLocation, formData.dropLocation);
+      const actualDistance = Math.max(distance, 1);
+      const rate = formData.tripType === 'one-way' ? selectedCar.oneWayRate : selectedCar.roundTripRate;
+      const baseFare = rate * actualDistance;
+      const driverBata = selectedCar.driverBata || 400;
+      const hillCharges = selectedCar.hillCharges || 300;
+      
+      setFareEstimate({
+        carName: selectedCar.name,
+        rate: rate,
+        actualDistance: actualDistance,
         baseFare: baseFare,
         driverBata: driverBata,
         hillCharges: hillCharges,
@@ -374,33 +683,7 @@ const Home = () => {
       
       toast.success(`${carName} selected - Fare calculated!`);
     } else {
-      const defaultRates = {
-        'SEDAN': { oneWay: 15, roundTrip: 14, bata: 400, hillCharges: 300 },
-        'ETIOS': { oneWay: 16, roundTrip: 15, bata: 400, hillCharges: 300 },
-        'MUV': { oneWay: 20, roundTrip: 19, bata: 400, hillCharges: 300 },
-        'INNOVA': { oneWay: 21, roundTrip: 20, bata: 400, hillCharges: 300 }
-      };
-      
-      const carInfo = defaultRates[carName];
-      if (carInfo) {
-        const minDistance = formData.tripType === 'one-way' ? 130 : 250;
-        const rate = formData.tripType === 'one-way' ? carInfo.oneWay : carInfo.roundTrip;
-        const baseFare = rate * minDistance;
-        const driverBata = carInfo.bata;
-        const hillCharges = carInfo.hillCharges;
-        
-        setFareEstimate({
-          carName: carName,
-          rate: rate,
-          minDistance: minDistance,
-          baseFare: baseFare,
-          driverBata: driverBata,
-          hillCharges: hillCharges,
-          total: baseFare + driverBata
-        });
-        
-        toast.success(`${carName} selected - Fare calculated!`);
-      }
+      toast.info(`Please enter pickup and drop locations first for accurate fare`);
     }
   };
 
@@ -423,11 +706,14 @@ const Home = () => {
       `🔄 *Trip Type:* ${tripTypeText}\n` +
       `📍 *From:* ${booking.pickupLocation}\n` +
       `📍 *To:* ${booking.dropLocation}\n` +
+      `📏 *Distance:* ${booking.fareEstimate.actualDistance} km\n` +
       `📅 *Date:* ${formattedDate}\n` +
       `⏰ *Time:* ${booking.pickupTime}\n` +
       `━━━━━━━━━━━━━━━━━━━━━\n` +
       `💰 *Fare Details:*\n` +
-      `• Base Fare (Min ${booking.fareEstimate.minDistance}km): ₹${booking.fareEstimate.baseFare}\n` +
+      `• Rate: ₹${booking.fareEstimate.rate}/km\n` +
+      `• Total Distance: ${booking.fareEstimate.actualDistance} km\n` +
+      `• Base Fare: ₹${booking.fareEstimate.baseFare}\n` +
       `• Driver Bata: ₹${booking.fareEstimate.driverBata}\n` +
       `• *Total Fare: ₹${booking.fareEstimate.total}*\n` +
       `━━━━━━━━━━━━━━━━━━━━━\n` +
@@ -441,17 +727,12 @@ const Home = () => {
   const sendWhatsAppToClient = (message) => {
     const whatsappUrl = `https://wa.me/${CLIENT_WHATSAPP_NUMBER}?text=${message}`;
     window.open(whatsappUrl, '_blank');
-    console.log('WhatsApp sent to client:', CLIENT_WHATSAPP_NUMBER);
   };
 
   const saveBookingToBackend = async (bookingData) => {
     try {
       const token = localStorage.getItem('token');
-      if (!token) {
-        navigate('/login');
-        return null;
-      }
-
+      
       const backendBookingData = {
         tripType: bookingData.tripType,
         carType: bookingData.carType,
@@ -459,23 +740,45 @@ const Home = () => {
         dropLocation: bookingData.dropLocation,
         pickupDate: bookingData.pickupDate,
         pickupTime: bookingData.pickupTime,
-        distance: bookingData.fareEstimate.minDistance,
+        distance: bookingData.fareEstimate.actualDistance,
         estimatedFare: bookingData.fareEstimate.baseFare,
         driverBata: bookingData.fareEstimate.driverBata,
         totalFare: bookingData.fareEstimate.total,
-        notes: `Booking ID: ${bookingData.bookingId}`
+        customerName: bookingData.name,
+        customerMobile: bookingData.mobile,
+        bookingId: bookingData.bookingId,
+        status: 'confirmed'
       };
 
-      const response = await axios.post(`${API_URL}/bookings`, backendBookingData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      console.log('Booking saved to backend:', response.data);
-      return response.data.data;
+      if (token) {
+        const response = await axios.post(`${API_URL}/bookings`, backendBookingData, {
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        return response.data.data;
+      } else {
+        return null;
+      }
     } catch (error) {
       console.error('Error saving booking to backend:', error);
-      toast.error('Booking saved locally only');
       return null;
+    }
+  };
+
+  const saveToLocalStorage = (bookingData) => {
+    try {
+      const localBookings = JSON.parse(localStorage.getItem('localBookings') || '[]');
+      localBookings.unshift({
+        ...bookingData,
+        savedAt: new Date().toISOString()
+      });
+      localStorage.setItem('localBookings', JSON.stringify(localBookings.slice(0, 20)));
+      return true;
+    } catch (error) {
+      console.error('Error saving to localStorage:', error);
+      return false;
     }
   };
 
@@ -487,12 +790,12 @@ const Home = () => {
       return;
     }
 
-    if (!formData.name) {
-      toast.error('Please enter your name');
+    if (!formData.name || formData.name.trim().length < 2) {
+      toast.error('Please enter a valid name');
       return;
     }
 
-    if (!formData.mobile || formData.mobile.length !== 10 || !/^\d+$/.test(formData.mobile)) {
+    if (!formData.mobile || !/^[6-9]\d{9}$/.test(formData.mobile)) {
       toast.error('Please enter a valid 10-digit mobile number');
       return;
     }
@@ -503,34 +806,41 @@ const Home = () => {
     }
 
     if (!fareEstimate) {
-      selectCar(formData.carType);
-      if (!fareEstimate) {
-        toast.error('Could not calculate fare. Please try again.');
-        return;
-      }
+      toast.error('Please wait for fare calculation');
+      return;
     }
 
+    if (bookingInProgress) {
+      toast.info('Booking in progress...');
+      return;
+    }
+
+    setBookingInProgress(true);
     setLoading(true);
 
     try {
       const bookingData = {
         ...formData,
         fareEstimate,
-        bookingId: 'BOOK' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+        bookingId: `LEX${Date.now()}${Math.random().toString(36).substr(2, 4).toUpperCase()}`,
         bookingDate: new Date().toISOString(),
         status: 'confirmed'
       };
       
+      let savedBooking = null;
+      
       if (user) {
-        const savedBooking = await saveBookingToBackend(bookingData);
+        toast.info('Saving your booking...');
+        savedBooking = await saveBookingToBackend(bookingData);
         if (savedBooking) {
+          toast.success('Booking saved successfully!');
           bookingData._id = savedBooking._id;
+        } else {
+          toast.warning('Saved locally - backend not available');
         }
       }
       
-      const localBookings = JSON.parse(localStorage.getItem('localBookings') || '[]');
-      localBookings.unshift(bookingData);
-      localStorage.setItem('localBookings', JSON.stringify(localBookings.slice(0, 10)));
+      saveToLocalStorage(bookingData);
       
       const clientMessage = generateWhatsAppMessage(bookingData);
       sendWhatsAppToClient(clientMessage);
@@ -548,14 +858,16 @@ const Home = () => {
         carType: ''
       });
       setFareEstimate(null);
+      setCalculatedDistance(0);
       
-      toast.success('Booking confirmed! WhatsApp notification sent to admin.');
+      toast.success('✅ Booking confirmed! Admin will contact you shortly.');
       
     } catch (error) {
       console.error('Booking error:', error);
-      toast.error('Booking failed. Please try again.');
+      toast.error('Booking failed. Please try again or contact support.');
     } finally {
       setLoading(false);
+      setBookingInProgress(false);
     }
   };
 
@@ -576,8 +888,6 @@ const Home = () => {
       name: 'SEDAN',
       oneWayRate: 15,
       roundTripRate: 14,
-      minKmOneWay: 130,
-      minKmRoundTrip: 250,
       driverBata: 400,
       hillCharges: 300,
       permitCharge: 14,
@@ -597,8 +907,6 @@ const Home = () => {
       name: 'ETIOS',
       oneWayRate: 16,
       roundTripRate: 15,
-      minKmOneWay: 130,
-      minKmRoundTrip: 250,
       driverBata: 400,
       hillCharges: 300,
       permitCharge: 14,
@@ -618,8 +926,6 @@ const Home = () => {
       name: 'MUV',
       oneWayRate: 20,
       roundTripRate: 19,
-      minKmOneWay: 130,
-      minKmRoundTrip: 250,
       driverBata: 400,
       hillCharges: 300,
       permitCharge: 14,
@@ -639,8 +945,6 @@ const Home = () => {
       name: 'INNOVA',
       oneWayRate: 21,
       roundTripRate: 20,
-      minKmOneWay: 130,
-      minKmRoundTrip: 250,
       driverBata: 400,
       hillCharges: 300,
       permitCharge: 14,
@@ -662,10 +966,10 @@ const Home = () => {
     {
       from: 'kanniyakumari',
       to: 'chennai',
-      icon: <FaMountain />,
+      icon: <FaWater />,
       image: '/images/routess/kanniyakumari.jpg',
-      description: 'Princess of Hill Stations - Scenic beauty & pleasant ',
-      distance: '520 km',
+      description: 'Princess of Hill Stations - Scenic beauty & pleasant',
+      distance: '705 km',
       cars: [
         { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
         { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
@@ -676,9 +980,9 @@ const Home = () => {
     {
       from: 'Chennai',
       to: 'Coutralam',
-      icon: <FaWater />,
+      icon: <FaMountain />,
       image: '/images/routess/kuththalam.jpg',
-      description: 'Famous waterfalls & natural spa - The Spa of South ',
+      description: 'Famous waterfalls & natural spa - The Spa of South',
       distance: '650 km',
       cars: [
         { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
@@ -690,10 +994,10 @@ const Home = () => {
     {
       from: 'Chennai',
       to: 'madurai',
-      icon: <FaSun />,
+      icon: <FaRoad />,
       image: '/images/routess/madurai.jpg',
       description: 'Southernmost tip of India - Sunrise & sunset view',
-      distance: '720 km',
+      distance: '456 km',
       cars: [
         { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
         { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
@@ -704,10 +1008,10 @@ const Home = () => {
     {
       from: 'Tenkasi',
       to: 'Chennai',
-      icon: <FaRoad />,
+      icon: <FaSun />,
       image: '/images/routess/tenkasi.jpg',
       description: 'Temple town to Metropolitan city - Comfortable journey',
-      distance: '580 km',
+      distance: '634 km',
       cars: [
         { type: 'SEDAN', oneWay: 15, roundTrip: 14 },
         { type: 'ETIOS', oneWay: 16, roundTrip: 15 },
@@ -839,6 +1143,26 @@ const Home = () => {
       boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
       ...letterStyle
     },
+    suggestionList: {
+      position: 'absolute',
+      top: '100%',
+      left: 0,
+      right: 0,
+      backgroundColor: 'white',
+      border: '1px solid #ddd',
+      borderRadius: '8px',
+      maxHeight: '200px',
+      overflowY: 'auto',
+      zIndex: 1000,
+      boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+    },
+    suggestionItem: {
+      padding: '8px 12px',
+      cursor: 'pointer',
+      borderBottom: '1px solid #eee',
+      transition: 'background-color 0.2s ease',
+      ...letterStyle
+    },
     mobileStyles: `
       /* Desktop and Tablet Default */
       .hero-row {
@@ -864,6 +1188,33 @@ const Home = () => {
         font-size: 0.75rem;
         margin-right: 8px;
         margin-bottom: 8px;
+      }
+      
+      .suggestions-container {
+        position: relative;
+      }
+      
+      .suggestions-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1000;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+      
+      .suggestion-item {
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      
+      .suggestion-item:hover {
+        background: #f0f0f0;
       }
       
       /* Mobile Breakpoint */
@@ -1548,12 +1899,15 @@ const Home = () => {
                           }}
                           onClick={() => {
                             setFormData({...formData, tripType: 'one-way'});
-                            if (formData.carType) selectCar(formData.carType);
+                            if (formData.carType && formData.pickupLocation && formData.dropLocation) {
+                              const distance = calculateDistance(formData.pickupLocation, formData.dropLocation);
+                              updateFareWithDistance(distance);
+                            }
                           }}
                         >
                           <strong style={{ fontSize: '1.1rem', letterSpacing: '0px', ...boldStyle }}>ONE WAY</strong>
                           <br />
-                          <small className="text-muted" style={letterStyle}>(Min 130KM)</small>
+                          
                         </div>
                         <div 
                           className={`flex-fill border rounded text-center trip-type-box ${formData.tripType === 'round-trip' ? 'border-warning bg-warning bg-opacity-10' : ''}`}
@@ -1566,17 +1920,20 @@ const Home = () => {
                           }}
                           onClick={() => {
                             setFormData({...formData, tripType: 'round-trip'});
-                            if (formData.carType) selectCar(formData.carType);
+                            if (formData.carType && formData.pickupLocation && formData.dropLocation) {
+                              const distance = calculateDistance(formData.pickupLocation, formData.dropLocation);
+                              updateFareWithDistance(distance);
+                            }
                           }}
                         >
                           <strong style={{ fontSize: '1.1rem', letterSpacing: '0px', ...boldStyle }}>ROUND TRIP</strong>
                           <br />
-                          <small className="text-muted" style={letterStyle}>(Min 250KM)</small>
+                          
                         </div>
                       </div>
                     </div>
 
-                    <div className="mb-2">
+                    <div className="mb-2 position-relative">
                       <label className="fw-bold form-label" style={formStyles.label}>
                         <FaMapMarkerAlt className="me-1" style={{ color: '#FFD700' }} size={12} />
                         Pickup Location *
@@ -1585,15 +1942,33 @@ const Home = () => {
                         type="text"
                         name="pickupLocation"
                         value={formData.pickupLocation}
-                        onChange={handleChange}
+                        onChange={handlePickupChange}
+                        onFocus={() => formData.pickupLocation.length >= 2 && setShowPickupSuggestions(true)}
+                        onBlur={() => setTimeout(() => setShowPickupSuggestions(false), 200)}
                         className="form-control form-input"
                         style={formStyles.input}
-                        placeholder="Enter Pickup Location"
+                        placeholder="Enter Pickup Location (e.g., Chennai, Coimbatore)"
                         required
                       />
+                      {showPickupSuggestions && pickupSuggestions.length > 0 && (
+                        <div className="suggestions-list" style={formStyles.suggestionList}>
+                          {pickupSuggestions.map((city, idx) => (
+                            <div
+                              key={idx}
+                              className="suggestion-item"
+                              style={formStyles.suggestionItem}
+                              onClick={() => selectPickupSuggestion(city)}
+                              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f0f0f0'}
+                              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
+                            >
+                              {city}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
 
-                    <div className="mb-2">
+                    <div className="mb-2 position-relative">
                       <label className="fw-bold form-label" style={formStyles.label}>
                         <FaMapMarkerAlt className="me-1" style={{ color: '#FFD700' }} size={12} />
                         Drop Location *
@@ -1602,13 +1977,39 @@ const Home = () => {
                         type="text"
                         name="dropLocation"
                         value={formData.dropLocation}
-                        onChange={handleChange}
+                        onChange={handleDropChange}
+                        onFocus={() => formData.dropLocation.length >= 2 && setShowDropSuggestions(true)}
+                        onBlur={() => setTimeout(() => setShowDropSuggestions(false), 200)}
                         className="form-control form-input"
                         style={formStyles.input}
-                        placeholder="Enter Drop Location"
+                        placeholder="Enter Drop Location (e.g., Madurai, Salem)"
                         required
                       />
+                      {showDropSuggestions && dropSuggestions.length > 0 && (
+                        <div className="suggestions-list" style={formStyles.suggestionList}>
+                          {dropSuggestions.map((city, idx) => (
+                            <div
+                              key={idx}
+                              className="suggestion-item"
+                              style={formStyles.suggestionItem}
+                              onClick={() => selectDropSuggestion(city)}
+                              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f0f0f0'}
+                              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
+                            >
+                              {city}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
+
+                    {calculatedDistance > 0 && formData.pickupLocation && formData.dropLocation && (
+                      <div className="mb-2 text-center">
+                        <small className="text-white" style={{ ...letterStyle, backgroundColor: 'rgba(0,0,0,0.5)', padding: '4px 8px', borderRadius: '20px', display: 'inline-block' }}>
+                          📍 Distance: {calculatedDistance} km
+                        </small>
+                      </div>
+                    )}
 
                     <div className="mb-2">
                       <label className="fw-bold form-label" style={formStyles.label}>
@@ -1879,7 +2280,11 @@ const Home = () => {
                     {fareEstimate && (
                       <div className="bg-light rounded mb-3 fare-box" style={formStyles.fareBox}>
                         <div className="d-flex justify-content-between mb-1">
-                          <span style={letterStyle}>Base Fare (Min <OptimizedNumber num={fareEstimate.minDistance} />km):</span>
+                          <span style={letterStyle}>Distance:</span>
+                          <span className="fw-bold" style={{ color: '#8B0000', ...boldStyle }}><OptimizedNumber num={fareEstimate.actualDistance} /> km</span>
+                        </div>
+                        <div className="d-flex justify-content-between mb-1">
+                          <span style={letterStyle}>Base Fare (@ ₹<OptimizedNumber num={fareEstimate.rate} />/km):</span>
                           <span className="fw-bold" style={{ color: '#8B0000', ...boldStyle }}>₹<OptimizedNumber num={fareEstimate.baseFare} /></span>
                         </div>
                         <div className="d-flex justify-content-between mb-1">
@@ -1892,7 +2297,7 @@ const Home = () => {
                           <span className="fw-bold" style={{ color: '#8B0000', ...boldStyle, fontSize: '1.1rem' }}>₹<OptimizedNumber num={fareEstimate.total} /></span>
                         </div>
                         <small className="text-muted d-block mt-1" style={letterStyle}>
-                          *Toll, permit & hill charges (₹300) extra
+                          *Toll, permit & hill charges extra if applicable
                         </small>
                       </div>
                     )}
@@ -1974,7 +2379,7 @@ const Home = () => {
         </Modal.Body>
       </Modal>
 
-      {/* Stats Section */}
+      {/* Stats Section - Keeping as is */}
       <Container className="my-5" ref={statsRef}>
         <h2 className="text-center mb-5" style={{ 
           fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
@@ -2005,7 +2410,7 @@ const Home = () => {
         </Row>
       </Container>
 
-      {/* TARIFF SECTION */}
+      {/* TARIFF SECTION - Updated to remove min km from display */}
       <section className="py-5 bg-light">
         <Container>
           <h2 className="text-center mb-5" style={{ 
@@ -2083,7 +2488,7 @@ const Home = () => {
                               <h5 className="text-warning fw-bold mb-1" style={boldStyle}>
                                 <FaRupeeSign className="me-1" /> <OptimizedNumber num={car.oneWayRate} />/KM
                               </h5>
-                              <small className="text-muted" style={letterStyle}>(Min <OptimizedNumber num={car.minKmOneWay} /> KM)</small>
+                              <small className="text-muted" style={letterStyle}>(Actual Distance Only)</small>
                             </div>
                           </Col>
                           <Col xs={6}>
@@ -2092,7 +2497,7 @@ const Home = () => {
                               <h5 className="text-warning fw-bold mb-1" style={boldStyle}>
                                 <FaRupeeSign className="me-1" /> <OptimizedNumber num={car.roundTripRate} />/KM
                               </h5>
-                              <small className="text-muted" style={letterStyle}>(Min <OptimizedNumber num={car.minKmRoundTrip} /> KM)</small>
+                              <small className="text-muted" style={letterStyle}>(Actual Distance Only)</small>
                             </div>
                           </Col>
                         </Row>
@@ -2158,7 +2563,6 @@ const Home = () => {
                       loading="lazy"
                     />
                     <div className="position-absolute bottom-0 start-0 w-100 p-3" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: 'white' }}>
-                      
                       <p className="mb-0 small" style={letterStyle}>{route.description}</p>
                     </div>
                   </div>
@@ -2176,7 +2580,6 @@ const Home = () => {
                       <span className="fw-bold me-2" style={boldStyle}>SEDAN:</span> ₹<OptimizedNumber num={route.cars[0].oneWay} />/km | 
                       <span className="fw-bold ms-2 me-2" style={boldStyle}>MUV:</span> ₹<OptimizedNumber num={route.cars[2].oneWay} />/km
                     </div>
-                   
                   </Card.Body>
                 </Card>
               </Col>
@@ -2188,7 +2591,8 @@ const Home = () => {
         </Container>
       </section>
 
-            <section className="py-5">
+      {/* Popular Destinations Section - Keeping as is */}
+      <section className="py-5">
         <Container>
           <h2 className="text-center mb-5" style={{ 
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
@@ -2205,7 +2609,6 @@ const Home = () => {
                   overflow: 'hidden',
                   transition: 'transform 0.3s ease, box-shadow 0.3s ease'
                 }}>
-                  {/* Image Section with Gradient Overlay */}
                   <div className="position-relative" style={{ height: '220px', overflow: 'hidden' }}>
                     <img 
                       src={destination.image}
@@ -2243,12 +2646,10 @@ const Home = () => {
                   </div>
 
                   <Card.Body className="p-4">
-                    {/* Description */}
                     <p className="mb-3" style={letterStyle}>
                       {destination.description}
                     </p>
 
-                    {/* Popular Spots */}
                     <div className="mb-3">
                       <h6 className="fw-bold mb-2" style={{ ...boldStyle, fontSize: '0.85rem', color: '#666' }}>
                         <FaStar className="text-warning me-1" size={12} />
@@ -2272,7 +2673,6 @@ const Home = () => {
                       </div>
                     </div>
 
-                    {/* Action Buttons */}
                     <div className="d-flex gap-2 mt-3">
                       <Button 
                         variant="warning" 
@@ -2312,10 +2712,6 @@ const Home = () => {
               </Col>
             ))}
           </Row>
-          
-          <div className="text-center mt-5">
-            
-          </div>
         </Container>
       </section>
 
@@ -2363,9 +2759,6 @@ const Home = () => {
           </Row>
         </Container>
       </section>
-
-      
-
 
       {/* WHY CHOOSE US */}
       <section className="py-5 bg-light">
