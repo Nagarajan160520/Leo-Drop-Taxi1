@@ -367,7 +367,7 @@ const CustomerInfo = () => {
                 </p>
                 <div className="d-flex justify-content-center gap-3 flex-wrap">
                   <a 
-                    href="tel:+917200343435" 
+                    href="tel:+918148111516" 
                     className="btn btn-outline-dark rounded-pill px-4 btn-hover"
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'translateY(-3px)';

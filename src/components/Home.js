@@ -108,7 +108,6 @@ const tamilNaduCities = [
   { name: 'Sivaganga', lat: 9.8667, lng: 78.4833, district: 'Sivaganga' },
   { name: 'Devakottai', lat: 9.9500, lng: 78.8333, district: 'Sivaganga' },
   { name: 'Manamadurai', lat: 9.7000, lng: 78.4833, district: 'Sivaganga' },
-  // Courtallam / Kutralam added
   { name: 'Courtallam', lat: 8.9333, lng: 77.2667, district: 'Tenkasi' },
   { name: 'Kutralam', lat: 8.9333, lng: 77.2667, district: 'Tenkasi' },
   { name: 'Courtalam', lat: 8.9333, lng: 77.2667, district: 'Tenkasi' }
@@ -139,37 +138,32 @@ const distanceMatrix = {
 const calculateDistance = (from, to) => {
   if (!from || !to) return 0;
   
-  // Normalize city names
   let fromCity = from.trim().toLowerCase();
   let toCity = to.trim().toLowerCase();
   
-  // Special handling for Courtallam variations
   if (fromCity === 'courtallam' || fromCity === 'kutralam' || fromCity === 'courtalam') {
     fromCity = 'Courtallam';
   } else if (toCity === 'courtallam' || toCity === 'kutralam' || toCity === 'courtalam') {
     toCity = 'Courtallam';
   }
   
-  // Find matching cities from database
   const fromMatch = tamilNaduCities.find(city => city.name.toLowerCase() === fromCity);
   const toMatch = tamilNaduCities.find(city => city.name.toLowerCase() === toCity);
   
   if (!fromMatch || !toMatch) {
-    // Try to find partial matches
     const fromPartial = tamilNaduCities.find(city => fromCity.includes(city.name.toLowerCase()) || city.name.toLowerCase().includes(fromCity));
     const toPartial = tamilNaduCities.find(city => toCity.includes(city.name.toLowerCase()) || city.name.toLowerCase().includes(toCity));
     
     if (fromPartial && toPartial) {
       return calculateDistanceFromMatrix(fromPartial.name, toPartial.name);
     }
-    return 50; // Default distance if city not found
+    return 50;
   }
   
   return calculateDistanceFromMatrix(fromMatch.name, toMatch.name);
 };
 
 const calculateDistanceFromMatrix = (fromName, toName) => {
-  // Check direct distance
   if (distanceMatrix[fromName] && distanceMatrix[fromName][toName]) {
     return distanceMatrix[fromName][toName];
   }
@@ -178,7 +172,6 @@ const calculateDistanceFromMatrix = (fromName, toName) => {
     return distanceMatrix[toName][fromName];
   }
   
-  // If Chennai to any city not in matrix, estimate based on known distances
   if (fromName === 'Chennai') {
     const approximations = {
       'Kanchipuram': 70, 'Cuddalore': 185, 'Villupuram': 160, 'Nagapattinam': 320,
@@ -190,7 +183,6 @@ const calculateDistanceFromMatrix = (fromName, toName) => {
     if (approximations[toName]) return approximations[toName];
   }
   
-  // If Coimbatore to any city
   if (fromName === 'Coimbatore') {
     const approximations = {
       'Palani': 110, 'Dindigul': 200, 'Karur': 160, 'Namakkal': 130, 'Pollachi': 40,
@@ -199,7 +191,6 @@ const calculateDistanceFromMatrix = (fromName, toName) => {
     if (approximations[toName]) return approximations[toName];
   }
   
-  // If Madurai to any city
   if (fromName === 'Madurai') {
     const approximations = {
       'Courtallam': 180, 'Kutralam': 180, 'Tenkasi': 170
@@ -207,12 +198,11 @@ const calculateDistanceFromMatrix = (fromName, toName) => {
     if (approximations[toName]) return approximations[toName];
   }
   
-  // Default return using Haversine formula for approximate distance
   const fromCity = tamilNaduCities.find(c => c.name === fromName);
   const toCity = tamilNaduCities.find(c => c.name === toName);
   
   if (fromCity && toCity) {
-    const R = 6371; // Earth's radius in km
+    const R = 6371;
     const dLat = (toCity.lat - fromCity.lat) * Math.PI / 180;
     const dLon = (toCity.lng - fromCity.lng) * Math.PI / 180;
     const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
@@ -220,7 +210,7 @@ const calculateDistanceFromMatrix = (fromName, toName) => {
               Math.sin(dLon/2) * Math.sin(dLon/2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     const distance = Math.round(R * c);
-    return Math.max(distance, 10); // Minimum 10km for very close locations
+    return Math.max(distance, 10);
   }
   
   return 50;
@@ -380,15 +370,14 @@ const Home = () => {
     }
   ], []);
 
-  // Function to update fare based on distance - NO MINIMUM KM
+  // Function to update fare based on distance
   const updateFareWithDistance = useCallback((distance) => {
     if (!formData.carType) return;
     
     const selectedCar = cars.find(c => c.name === formData.carType);
     if (!selectedCar) return;
     
-    // Use actual distance directly - NO MINIMUM
-    const actualDistance = Math.max(distance, 1); // Just ensure at least 1km
+    const actualDistance = Math.max(distance, 1);
     const rate = formData.tripType === 'one-way' ? selectedCar.oneWayRate : selectedCar.roundTripRate;
     const baseFare = rate * actualDistance;
     const driverBata = selectedCar.driverBata || 400;
@@ -645,7 +634,6 @@ const Home = () => {
     const selectedCar = cars.find(c => c.name === carName);
     
     if (selectedCar && calculatedDistance > 0) {
-      // Use actual distance - NO MINIMUM
       const actualDistance = Math.max(calculatedDistance, 1);
       const rate = formData.tripType === 'one-way' ? selectedCar.oneWayRate : selectedCar.roundTripRate;
       const baseFare = rate * actualDistance;
@@ -687,39 +675,56 @@ const Home = () => {
     }
   };
 
+  // Convert 24-hour time to 12-hour format with AM/PM
+  const formatTimeTo12Hour = (time24) => {
+    if (!time24) return '';
+    
+    let [hours, minutes] = time24.split(':');
+    hours = parseInt(hours);
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    const minutesStr = minutes.padStart(2, '0');
+    return `${hours}:${minutesStr} ${ampm}`;
+  };
+
   const generateWhatsAppMessage = (booking) => {
     const tripTypeText = booking.tripType === 'one-way' ? 'ONE WAY' : 'ROUND TRIP';
+    
     const formattedDate = new Date(booking.pickupDate).toLocaleDateString('en-IN', {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
     });
     
+    const formattedTime = formatTimeTo12Hour(booking.pickupTime);
+    
+    // Using simple text without problematic emojis for better WhatsApp compatibility
     return encodeURIComponent(
-      `🚖 *NEW TAXI BOOKING - Lexus DROP TAXI* 🚖\n\n` +
-      `━━━━━━━━━━━━━━━━━━━━━\n` +
-      `✅ *Booking ID:* ${booking.bookingId}\n` +
-      `👤 *Customer Name:* ${booking.name}\n` +
-      `📱 *Customer Mobile:* ${booking.mobile}\n` +
-      `━━━━━━━━━━━━━━━━━━━━━\n` +
-      `🚗 *Car Type:* ${booking.carType}\n` +
-      `🔄 *Trip Type:* ${tripTypeText}\n` +
-      `📍 *From:* ${booking.pickupLocation}\n` +
-      `📍 *To:* ${booking.dropLocation}\n` +
-      `📏 *Distance:* ${booking.fareEstimate.actualDistance} km\n` +
-      `📅 *Date:* ${formattedDate}\n` +
-      `⏰ *Time:* ${booking.pickupTime}\n` +
-      `━━━━━━━━━━━━━━━━━━━━━\n` +
-      `💰 *Fare Details:*\n` +
-      `• Rate: ₹${booking.fareEstimate.rate}/km\n` +
-      `• Total Distance: ${booking.fareEstimate.actualDistance} km\n` +
-      `• Base Fare: ₹${booking.fareEstimate.baseFare}\n` +
-      `• Driver Bata: ₹${booking.fareEstimate.driverBata}\n` +
-      `• *Total Fare: ₹${booking.fareEstimate.total}*\n` +
-      `━━━━━━━━━━━━━━━━━━━━━\n` +
-      `⚠️ *Note:* Toll, state permit & hill charges extra if applicable\n` +
-      `🏔️ *Hill Station Charges:* ₹${booking.fareEstimate.hillCharges || 300} (if applicable)\n\n` +
-      `📞 *Contact Customer:* ${booking.mobile}\n` +
+      `*NEW TAXI BOOKING - Lexus DROP TAXI*\n\n` +
+      `----------------------------------------\n` +
+      `Booking ID: ${booking.bookingId}\n` +
+      `Customer Name: ${booking.name}\n` +
+      `Customer Mobile: ${booking.mobile}\n` +
+      `----------------------------------------\n` +
+      `Car Type: ${booking.carType}\n` +
+      `Trip Type: ${tripTypeText}\n` +
+      `From: ${booking.pickupLocation}\n` +
+      `To: ${booking.dropLocation}\n` +
+      `Distance: ${booking.fareEstimate.actualDistance} km\n` +
+      `Date: ${formattedDate}\n` +
+      `Time: ${formattedTime}\n` +
+      `----------------------------------------\n` +
+      `FARE DETAILS:\n` +
+      `Rate: Rs.${booking.fareEstimate.rate}/km\n` +
+      `Total Distance: ${booking.fareEstimate.actualDistance} km\n` +
+      `Base Fare: Rs.${booking.fareEstimate.baseFare}\n` +
+      `Driver Bata: Rs.${booking.fareEstimate.driverBata}\n` +
+      `TOTAL FARE: Rs.${booking.fareEstimate.total}\n` +
+      `----------------------------------------\n` +
+      `Note: Toll, state permit & hill charges extra if applicable\n` +
+      `Hill Station Charges: Rs.${booking.fareEstimate.hillCharges || 300} (if applicable)\n\n` +
+      `Contact Customer: ${booking.mobile}\n` +
       `Please confirm this booking with the customer.`
     );
   };
@@ -860,7 +865,7 @@ const Home = () => {
       setFareEstimate(null);
       setCalculatedDistance(0);
       
-      toast.success('✅ Booking confirmed! Admin will contact you shortly.');
+      toast.success('Booking confirmed! Admin will contact you shortly.');
       
     } catch (error) {
       console.error('Booking error:', error);
@@ -1743,7 +1748,7 @@ const Home = () => {
         </span>
       </a>
 
-      {/* Hero Section */}
+      {/* Hero Section - Keep as is from your original code */}
       <section 
         className="position-relative"
         style={{ 
@@ -2379,7 +2384,7 @@ const Home = () => {
         </Modal.Body>
       </Modal>
 
-      {/* Stats Section - Keeping as is */}
+      {/* Stats Section */}
       <Container className="my-5" ref={statsRef}>
         <h2 className="text-center mb-5" style={{ 
           fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
@@ -2410,7 +2415,7 @@ const Home = () => {
         </Row>
       </Container>
 
-      {/* TARIFF SECTION - Updated to remove min km from display */}
+      {/* TARIFF SECTION */}
       <section className="py-5 bg-light">
         <Container>
           <h2 className="text-center mb-5" style={{ 
@@ -2591,7 +2596,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Popular Destinations Section - Keeping as is */}
+      {/* Popular Destinations Section */}
       <section className="py-5">
         <Container>
           <h2 className="text-center mb-5" style={{ 
@@ -2819,7 +2824,7 @@ const Home = () => {
                     <FaPhone size={24} className="text-dark" />
                   </div>
                   <h5 className="fw-bold mb-3" style={boldStyle}>Call Us</h5>
-                  <p className="text-secondary mb-1" style={boldStyle}>+91 72003 43435</p>
+                  <p className="text-secondary mb-1" style={boldStyle}>+91 81481 11516</p>
                 </Card.Body>
               </Card>
             </Col>
@@ -2830,7 +2835,7 @@ const Home = () => {
                     <FaEnvelope size={24} className="text-dark" />
                   </div>
                   <h5 className="fw-bold mb-3" style={boldStyle}>Email Us</h5>
-                  <p className="text-secondary mb-1" style={letterStyle}>info@lexusdroptaxi.com</p>
+                  <p className="text-secondary mb-1" style={letterStyle}>lexusno1taxi@gmail.com</p>
                 </Card.Body>
               </Card>
             </Col>

@@ -172,7 +172,7 @@ const PopularRoutes = () => {
 
                   {/* Included With Section */}
                   <div className="mt-3">
-                    <h6 className="fw-bold mb-3" style={{ color: '#333' }}>INCLUDED WITH</h6>
+                    <h6 className="fw-bold mb-3" style={{ color: '#333' }}>EXCLUDED WITH</h6>
                     <Row>
                       <Col xs={6}>
                         <ul className="list-unstyled">

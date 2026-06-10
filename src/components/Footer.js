@@ -166,7 +166,7 @@ const Footer = () => {
           <span className="text-warning ms-2"> 
             Developed by{' '} <a href="tel:+916381095854" 
             className="text-warning text-decoration-none hover-warning" style={{ cursor: 'pointer' }} >
-               Nagarajan (6381095854) </a> </span> 
+               Snowking</a> </span> 
                </p> </Col> </Row>
       </Container>
 
