@@ -2744,7 +2744,7 @@ const Home = () => {
                 At <strong style={boldStyle}>Lexus DROP TAXI</strong>, we believe every journey should be safe, comfortable, and on time.
               </p>
               <p className="mb-4" style={letterStyle}>
-                Since 2023, we've been proudly serving Tamilnadu, Kerala, Andhra Pradesh, Karnataka, and Pondicherry with reliable taxi services.
+                Since 2025, we've been proudly serving Tamilnadu, Kerala, Andhra Pradesh, Karnataka, and Pondicherry with reliable taxi services.
               </p>
               <Row className="g-3">
                 {aboutStats.slice(0, 2).map((stat, idx) => (

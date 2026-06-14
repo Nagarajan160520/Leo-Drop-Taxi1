@@ -539,7 +539,7 @@ const About = () => {
               comfortable, and on time.
             </p>
             <p className="mb-4">
-              Since 2023, we've been proudly serving <strong>Tamilnadu, Kerala, Andra Pradesh, 
+              Since 2026, we've been proudly serving <strong>Tamilnadu, Kerala, Andra Pradesh, 
               Karnataka, and Pondicherry</strong> with reliable taxi services for locals, travelers, 
               and businesses. From quick city trips to long-distance rides, our professional drivers, 
               well-maintained vehicles, and 24/7 availability ensure you reach your destination 

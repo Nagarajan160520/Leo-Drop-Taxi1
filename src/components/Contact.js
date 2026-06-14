@@ -156,7 +156,7 @@ const Contact = () => {
   const faqs = [
     {
       question: 'How can I book a cab?',
-      answer: 'You can book a cab through our website by clicking on the "Booking" tab, or call us directly at +91 72003 43435. You can also book via WhatsApp.'
+      answer: 'You can book a cab through our website by clicking on the "Booking" tab, or call us directly at +91 81481 11516. You can also book via WhatsApp.'
     },
     {
       question: 'What are the payment options?',

@@ -164,9 +164,9 @@ const Footer = () => {
 
         <Row> <Col className="text-center" > <p className="text-light mb-0 small"> &copy; {currentYear} Lexus Drop Taxi. All rights reserved. | 
           <span className="text-warning ms-2"> 
-            Developed by{' '} <a href="tel:+916381095854" 
+            Developed by{' '} <a href="tel:+91" 
             className="text-warning text-decoration-none hover-warning" style={{ cursor: 'pointer' }} >
-               Snowking</a> </span> 
+               lexus drop taxi</a> </span> 
                </p> </Col> </Row>
       </Container>
 

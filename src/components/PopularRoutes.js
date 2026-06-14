@@ -230,7 +230,7 @@ const PopularRoutes = () => {
                     <span className="text-warning me-2 fw-bold">•</span>
                     <span>Minimum 130 KM applicable for one-way trips</span>
                   </li>
-                  <li className="mb-3 d-flex">
+                   <li className="mb-3 d-flex">
                     <span className="text-warning me-2 fw-bold">•</span>
                     <span>Round trip minimum 250 KM per day</span>
                   </li>
