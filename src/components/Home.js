@@ -493,7 +493,7 @@ const Home = () => {
         trips: 25000,
         rating: 48,
         awards: 10,
-        customers: 30000
+        customers: 20000
       };
 
       const duration = 1500;
@@ -1027,8 +1027,8 @@ const Home = () => {
   ], []);
 
   const aboutStats = useMemo(() => [
-    { icon: <FaCar />, value: '15000+', label: 'Trips Completed' },
-    { icon: <FaUsers />, value: '5000+', label: 'Happy Customers' },
+    { icon: <FaCar />, value: '25000+', label: 'Trips Completed' },
+    { icon: <FaUsers />, value: '20000+', label: 'Happy Customers' },
     { icon: <FaAward />, value: '10+', label: 'Awards' },
     { icon: <FaHeart />, value: '100+', label: 'Fleet Size' }
   ], []);
