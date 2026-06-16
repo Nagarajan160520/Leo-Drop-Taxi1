@@ -216,14 +216,46 @@ const calculateDistanceFromMatrix = (fromName, toName) => {
   return 50;
 };
 
-// Auto-suggest function for city names
-const getCitySuggestions = (input) => {
+// ============================================
+// ✅ CHANGE 1: WORLDWIDE AUTO-SUGGEST (India + Worldwide)
+// ============================================
+const getCitySuggestions = async (input) => {
   if (!input || input.length < 2) return [];
-  const inputLower = input.toLowerCase();
-  return tamilNaduCities
-    .filter(city => city.name.toLowerCase().includes(inputLower))
-    .slice(0, 5)
-    .map(city => city.name);
+  
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(input)}&format=json&addressdetails=1&limit=10`,
+      {
+        headers: {
+          'User-Agent': 'LexusDropTaxi/1.0'
+        }
+      }
+    );
+    const data = await response.json();
+    
+    if (!data || data.length === 0) return [];
+    
+    const suggestions = data.map(item => {
+      const city = item.address.city || item.address.town || item.address.village || '';
+      const state = item.address.state || '';
+      const country = item.address.country || '';
+      
+      if (city && country) {
+        return state ? `${city}, ${state}, ${country}` : `${city}, ${country}`;
+      }
+      return item.display_name.split(',')[0];
+    });
+    
+    return suggestions.filter((v, i, a) => a.indexOf(v) === i);
+    
+  } catch (error) {
+    console.error('Error fetching location suggestions:', error);
+    const inputLower = input.toLowerCase();
+    return tamilNaduCities
+      .filter(city => city.name.toLowerCase().includes(inputLower))
+      .slice(0, 5)
+      .map(city => `${city.name}, Tamil Nadu, India`);
+  }
 };
 
 // ============================================
@@ -406,13 +438,13 @@ const Home = () => {
     }
   }, [formData.pickupLocation, formData.dropLocation, formData.tripType, formData.carType, updateFareWithDistance]);
 
-  // Handle pickup location change with suggestions
-  const handlePickupChange = (e) => {
+  // ✅ CHANGE 2: Handle pickup location change with suggestions (ASYNC)
+  const handlePickupChange = async (e) => {
     const value = e.target.value;
     setFormData(prev => ({ ...prev, pickupLocation: value }));
     
     if (value.length >= 2) {
-      const suggestions = getCitySuggestions(value);
+      const suggestions = await getCitySuggestions(value);
       setPickupSuggestions(suggestions);
       setShowPickupSuggestions(true);
     } else {
@@ -421,13 +453,13 @@ const Home = () => {
     }
   };
 
-  // Handle drop location change with suggestions
-  const handleDropChange = (e) => {
+  // ✅ CHANGE 3: Handle drop location change with suggestions (ASYNC)
+  const handleDropChange = async (e) => {
     const value = e.target.value;
     setFormData(prev => ({ ...prev, dropLocation: value }));
     
     if (value.length >= 2) {
-      const suggestions = getCitySuggestions(value);
+      const suggestions = await getCitySuggestions(value);
       setDropSuggestions(suggestions);
       setShowDropSuggestions(true);
     } else {
@@ -1952,7 +1984,7 @@ const Home = () => {
                         onBlur={() => setTimeout(() => setShowPickupSuggestions(false), 200)}
                         className="form-control form-input"
                         style={formStyles.input}
-                        placeholder="Enter Pickup Location (e.g., Chennai, Coimbatore)"
+                        placeholder="Enter Pickup Location (Anywhere in World)"
                         required
                       />
                       {showPickupSuggestions && pickupSuggestions.length > 0 && (
@@ -1987,7 +2019,7 @@ const Home = () => {
                         onBlur={() => setTimeout(() => setShowDropSuggestions(false), 200)}
                         className="form-control form-input"
                         style={formStyles.input}
-                        placeholder="Enter Drop Location (e.g., Madurai, Salem)"
+                        placeholder="Enter Drop Location (Anywhere in World)"
                         required
                       />
                       {showDropSuggestions && dropSuggestions.length > 0 && (
