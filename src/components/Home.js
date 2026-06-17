@@ -31,7 +31,7 @@ import {
 // ============================================
 // CONFIGURATION - UPDATE THIS WITH YOUR BACKEND URL
 // ============================================
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://taxi-backend-6qgz.onrender.com/api';
 const CLIENT_WHATSAPP_NUMBER = '918148111516';
 const CLIENT_PHONE_NUMBER = '918148111516';
 

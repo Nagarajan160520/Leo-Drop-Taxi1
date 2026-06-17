@@ -15,7 +15,7 @@ import {
   FaPlusCircle
 } from 'react-icons/fa';
 
-const API_URL = 'https://leo-drop-taxi.onrender.com/api';
+const API_URL = 'https://taxi-backend-6qgz.onrender.com/api';
 
 const MyBookings = () => {
   const { user } = useAuth();

@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   // API URL
-  const API_URL = '';
+  const API_URL = 'https://taxi-backend-6qgz.onrender.com/api';
   axios.defaults.baseURL = API_URL;
 
   useEffect(() => {
