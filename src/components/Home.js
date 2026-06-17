@@ -952,7 +952,7 @@ const Home = () => {
           model: 'NISSIAN SUNNY', 
           bgColor: '#FFD700' },
         { url: '/images/sedan2/etios-2.jpg', 
-          model: 'TOYOTA ETIOS', 
+          model: 'TOYOTA ', 
           bgColor: '#FFD700' },
         { url: '/images/sedan2/ciaz-1.jpg', 
           model: 'MARUTI CIAZ', 
@@ -987,13 +987,13 @@ const Home = () => {
       permitCharge: 14,
       images: [
         { url: '/images/innova/innova-1.jpg', 
-          model: 'INNOVA', 
+          model: '', 
           bgColor: '#FFD700' },
         { url: '/images/innova/innova-crysta-1.jpg', 
-          model: 'INNOVA CRYSTA', 
+          model: ' CRYSTA', 
           bgColor: '#FFD700' },
         { url: '/images/innova/innova-vehicle-1.jpg', 
-          model: 'INNOVA VEHICLE', 
+          model: ' VEHICLE', 
           bgColor: '#FFD700' }
       ]
     }
