@@ -1385,14 +1385,17 @@ const Home = () => {
           width: 65px !important;
           height: 65px !important;
           font-size: 35px !important;
+          bottom: 80px !important;
         }
         
         .floating-icon.whatsapp-icon {
           left: 15px !important;
+          bottom: 80px !important;
         }
         
         .floating-icon.phone-icon {
           right: 15px !important;
+          bottom: 80px !important;
         }
         
         .floating-icon .whatsapp-tooltip,
@@ -1435,6 +1438,7 @@ const Home = () => {
           width: 65px !important;
           height: 65px !important;
           font-size: 32px !important;
+           bottom: 70px !important;
         }
         
         .destination-card .popular-spots {
@@ -1678,7 +1682,7 @@ const Home = () => {
         style={{
           position: 'fixed',
           left: '20px',
-          top: '50%',
+          bottom: '100px',
           transform: 'translateY(-50%)',
           width: '60px',
           height: '60px',
@@ -1732,7 +1736,7 @@ const Home = () => {
         style={{
           position: 'fixed',
           right: '20px',
-          top: '50%',
+          bottom: '100px', 
           transform: 'translateY(-50%)',
           width: '60px',
           height: '60px',
